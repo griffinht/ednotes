@@ -1,10 +1,11 @@
 FROM node
 
-COPY package.json
+WORKDIR /usr/app
+COPY package.json .
+COPY tsconfig.json .
 RUN npm install
 
-VOLUME /src
-VOLUME /build
-WORKDIR /src
+VOLUME /usr/app/src
+VOLUME /usr/app/build
 
-ENTRYPOINT ["sleep 10000"]
+ENTRYPOINT ["npx", "tsc", "--watch"]
