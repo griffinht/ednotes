@@ -7,23 +7,23 @@
 ```
 docker compose -f docker-compose.dev.yml up
 ```
-(http://localhost:8080)
+http://localhost:8080
 
 ### Build
 
-Scratch image with static files in `/ednotes`.
+Build scratch image with static files in `/ednotes`.
 ```
 docker build --tag stzups/ednotes:latest .
 ```
 
-Convenience image which serves the static files via an HTTP server on port 80.
+Build convenience image which serves the static files via an HTTP server on port 80.
 ```
 docker build --tag stzups/ednotes:nginx -f nginx.Dockerfile .
 ```
 
 ## Production
 
-Example `Dockerfile` which uses an `nginx` server to serve the static files in `/ednotes`.
+Example `Dockerfile` which uses an `nginx` server to serve the static files via HTTP in `/ednotes`.
 ```
 FROM nginx
 
