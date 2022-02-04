@@ -7,7 +7,10 @@ services:
             - ./build/scripts:/usr/share/nginx/html/scripts
             - ./src:/usr/share/nginx/html
     node:
-        build: .
+        image: node
         volumes:
+            - ./package.json:/usr/app/package.json
+            - ./tsconfig.json:/usr/app/tsconfig.json
             - ./src:/usr/app/src
             - ./build:/usr/app/build/
+        entrypoint: ["sh", "-c", "cd /usr/app && npm install && npx tsc --watch"]
