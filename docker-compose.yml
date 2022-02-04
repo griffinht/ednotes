@@ -1,16 +1,5 @@
 services:
-    nginx:
-        image: nginx
+    ednotes:
+        image: stzups/ednotes:nginx
         ports:
             - 8080:80
-        volumes:
-            - ./build/scripts:/usr/share/nginx/html/scripts
-            - ./src:/usr/share/nginx/html
-    node:
-        image: node
-        volumes:
-            - ./package.json:/usr/app/package.json
-            - ./tsconfig.json:/usr/app/tsconfig.json
-            - ./src:/usr/app/src
-            - ./build:/usr/app/build/
-        entrypoint: ["sh", "-c", "cd /usr/app && npm install && npx tsc --watch"]
