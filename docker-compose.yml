@@ -1,5 +1,0 @@
-services:
-    ednotes:
-        image: stzups/ednotes:nginx
-        ports:
-            - 8080:80
