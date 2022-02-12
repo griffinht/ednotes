@@ -23,19 +23,29 @@ header {
     justify-content: space-between;
     background-color: var(--header);
 }
-main {
+nav {
     flex-wrap: wrap;
-    flex-basis: 100%;
+    //flex-basis: 100%;
     background-color: var(--background);
     display: flex;
     overflow: auto;
     gap: 1em;
     padding: 1em;
+    resize: vertical;
 }
-main > div {
+nav > div {
     width: 40em;
     height: 40em;
     background-color: var(--header);
+}
+main > section {
+    display: flex;
+}
+main > section > div {
+    height: auto;
+}
+main > header {
+    justify-content: flex-end;
 }
 footer {
     margin-top: auto;
@@ -47,8 +57,25 @@ footer {
     <h1>EdNotes</h1>
     <button>+</button>
 </header>
+<nav>
+    <div>sdf</div>
+    <div>sdf</div>
+    <div>sdf</div>
+    <div>sdf</div>
+    <div>sdf</div>
+</nav>
 <main>
-
+    <header>
+        <button>x</button>
+    </header>
+    <div>main content</div>
+    <section>
+        <div>adf</div>
+        <div>adf</div>
+        <div>adf</div>
+        <div>adf</div>
+        <div>adf</div>
+    </section>
 </main>
 <footer>
 </footer>
