@@ -1,3 +1,6 @@
+import { Video } from "video/Video.js";
+import {YoutubeVideo} from "./video/YoutubeVideo.js";
+
 /*const fileUpload = document.getElementById("fileUpload") as HTMLInputElement;
 fileUpload.addEventListener("change", (e) => {
     let target = e.target as HTMLInputElement;
@@ -49,3 +52,21 @@ function openVideo(parent: HTMLElement, child: HTMLElement) {
     parent.insertBefore(main, child);
 }
 openVideo(document.body, footer);
+
+const videos = [];
+videos.push(new YoutubeVideo(""));
+videos.push(new YoutubeVideo(""));
+videos.push(new YoutubeVideo(""));
+videos.push(new YoutubeVideo(""));
+videos.push(new YoutubeVideo("dlIQWp1YPkw"));
+const nav = document.getElementsByTagName("nav")[0];
+for (let video of videos) {
+    let div = document.createElement("div");
+    div.append(video.getThumbnail());
+    {
+        let title = document.createElement("h2");
+        title.innerText = video.title;
+        div.append(video.title);
+    }
+    nav.append(div);
+}
