@@ -1,7 +1,6 @@
-import {Video} from "./Video.js";
 import {isYoutubeVideo, YoutubeVideo} from "./YoutubeVideo.js";
 import {loadVideo} from "./HTML5Video.js";
-import {closeModal, urlInput} from "../newModal/NewModal.js";
+import {closeModal} from "../newModal/NewModal.js";
 import {addVideo, openVideo} from "../main.js";
 
 export async function openUrl(url: string): Promise<void> {
@@ -22,7 +21,16 @@ export async function openUrl(url: string): Promise<void> {
     console.log("open", url)
 }
 
-export async function openFile(file: File): Promise<Video> {
-    console.log("file", file);
-    return await loadVideo("url");
+export async function openFile(file: File): Promise<void> {
+    //todo
+    let video;
+    try {
+        video = await loadVideo("file");
+    } catch (e) {
+        alert("Error opening " + file)
+        return;
+    }
+    addVideo(video);
+    closeModal();
+    openVideo(video);
 }

@@ -23,15 +23,7 @@ newModal.addEventListener("drop", async (e) => {
         return
     }
     for (let file of e.dataTransfer.files) {
-        //todo
-        let video = await openFile(file);
-        if (!video) {
-            console.log("error")
-            return
-        }
-        addVideo(video);
-        closeModal();
-        openVideo(video);
+        await openFile(file)
     }
     for (let item of e.dataTransfer.items) {
         if (item.type === "text/uri-list") {
