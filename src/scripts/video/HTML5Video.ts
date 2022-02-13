@@ -1,11 +1,12 @@
 import {Video} from "./Video.js";
 
 export class HTML5Video implements Video {
-    title: string = "test";
+    title: string;
     video: HTMLVideoElement;
 
     constructor(video: HTMLVideoElement) {
         this.video = video;
+        this.title = video.src.substring(video.src.lastIndexOf("/") + 1, video.src.length);
     }
 
     getThumbnail(): HTMLElement {
