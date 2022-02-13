@@ -1,23 +1,27 @@
-export const newModal = document.getElementById("newModal")!;
+export class NewModal {
+    element: HTMLElement;
+    urlInput: HTMLInputElement
 
-newModal.addEventListener("click", (e) => {
-    if (e.target === newModal) {
-        closeModal()
+    constructor() {
+        this.element = document.getElementById("newModal")!;
+        this.urlInput = document.getElementById("urlInput") as HTMLInputElement;
+        this.element.addEventListener("click", (e) => {
+            if (e.target === this.element) {
+                this.closeModal()
+            }
+        });
+        document.getElementById("newModalOpen")!.addEventListener("click", () => {
+            this.openModal();
+        })
     }
-});
+    closeModal() {
+        this.element.style.display = "none";
+        this.urlInput.blur();
+        this.urlInput.value = "";
+    }
 
-export const urlInput = document.getElementById("urlInput") as HTMLInputElement;
-export function closeModal() {
-    newModal.style.display = "none";
-    urlInput.blur();
-    urlInput.value = "";
+    openModal() {
+        this.element.style.display = "flex";
+        this.urlInput.focus();
+    }
 }
-
-export function openModal() {
-    newModal.style.display = "flex";
-    urlInput.focus();
-}
-
-document.getElementById("newModalOpen")!.addEventListener("click", () => {
-    openModal();
-})

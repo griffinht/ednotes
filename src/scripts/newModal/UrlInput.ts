@@ -1,14 +1,18 @@
-import {openUrl} from "../video/NewVideo.js";
-import {closeModal, urlInput} from "./NewModal.js";
-import {addVideo, openVideo} from "../main.js";
+import {NewModal} from "./NewModal.js";
+import {NewVideo} from "../video/NewVideo.js";
 
-urlInput.addEventListener("keypress", async (e) => {
-    if (e.key === "Enter") {
-        await openUrl(urlInput.value);
+export class UrlInput {
+    constructor(modal: NewModal, newVideo: NewVideo) {
+        modal.urlInput.addEventListener("keypress", async (e) => {
+            if (e.key === "Enter") {
+                await newVideo.openUrl(modal.urlInput.value);
+            }
+        })
+        modal.urlInput.addEventListener("keyup", (e) => {
+            if (e.key === "Escape") {
+                modal.closeModal();
+            }
+        })
     }
-})
-urlInput.addEventListener("keyup", (e) => {
-    if (e.key === "Escape") {
-        closeModal();
-    }
-})
+
+}
