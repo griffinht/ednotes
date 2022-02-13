@@ -1,4 +1,4 @@
-import {Video} from "Video.js";
+import {Video} from "./Video.js";
 
 export class YoutubeVideo extends Video {
     id: string;

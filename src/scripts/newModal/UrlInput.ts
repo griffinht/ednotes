@@ -4,14 +4,7 @@ import {addVideo, openVideo} from "../main.js";
 
 urlInput.addEventListener("keypress", async (e) => {
     if (e.key === "Enter") {
-        let video = await openUrl(urlInput.value);
-        if (!video) {
-            console.log("error")
-            return
-        }
-        addVideo(video);
-        closeModal();
-        openVideo(video);
+        await openUrl(urlInput.value);
     }
 })
 urlInput.addEventListener("keyup", (e) => {

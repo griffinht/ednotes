@@ -36,15 +36,7 @@ newModal.addEventListener("drop", async (e) => {
     for (let item of e.dataTransfer.items) {
         if (item.type === "text/uri-list") {
             let url = e.dataTransfer.getData(item.type);
-            //todo
-            let video = await openUrl(url)
-            if (!video) {
-                console.log("error")
-                return
-            }
-            addVideo(video);
-            closeModal();
-            openVideo(video);
+            await openUrl(url)
         }
     }
     e.preventDefault();

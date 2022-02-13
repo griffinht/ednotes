@@ -40,10 +40,14 @@ export function loadVideo(src: string): Promise<HTML5Video> {
     video.addEventListener("canplay", (e) => {
         console.log("canplay", e);
     })
-    return new Promise<HTML5Video>((resolve) => {
+
+    return new Promise<HTML5Video>((resolve, reject) => {
         video.addEventListener("loadedmetadata", (e) => {
             console.log("loadedmetadata", e);
             resolve(new HTML5Video(video));
+        })
+        video.addEventListener("error", (e) => {
+            reject(e)
         })
     })
 }
