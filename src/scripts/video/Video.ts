@@ -13,7 +13,7 @@ export function openVideo(parent: HTMLElement, child: HTMLElement, hide: HTMLEle
             button.innerText = "x";
             button.addEventListener("click", () => {
                 main.remove();
-                hide.style.display = "flex";
+                hide.style.display = "grid";
             })
             header.append(button);
         }
