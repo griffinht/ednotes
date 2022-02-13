@@ -89,3 +89,13 @@ document.addEventListener("dragend", (e) => {
 document.addEventListener("dragexit", (e) => {
     console.log("exit")
 })
+
+
+document.getElementById("screenInput")!.addEventListener("click", (e) => {
+    console.log("capture")
+})
+
+async function openUrl(url: string) {
+    console.log("open", url)
+    for (let i = 0; i < 10000; i++) {}
+}
