@@ -20,6 +20,9 @@ export class HTML5Video extends Video {
         return this.video;
     }
 
+    getCurrentTime(): number {
+        return this.video.currentTime;
+    }
 }
 export function loadVideo(src: string): Promise<HTML5Video> {
     let video = document.createElement("video");

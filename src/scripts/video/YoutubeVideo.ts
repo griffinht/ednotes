@@ -20,6 +20,10 @@ export class YoutubeVideo extends Video {
         div.innerText = "video";
         return div;
     }
+
+    getCurrentTime(): number {
+        return 0;
+    }
 }
 
 export function isYoutubeVideo(url: string) {

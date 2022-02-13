@@ -1,5 +1,10 @@
-export interface Note {
+export class Note {
+    time: number
+    text: string = "";
 
+    constructor(time: number) {
+        this.time = time;
+    }
 }
 export abstract class Video {
     abstract title: string;
@@ -7,6 +12,7 @@ export abstract class Video {
 
     abstract getThumbnail(): HTMLElement;
     abstract getVideo(): HTMLElement;
+    abstract getCurrentTime(): number;
 }
 
 export function openVideo(parent: HTMLElement, child: HTMLElement, hide: HTMLElement, video: Video) {
@@ -33,6 +39,22 @@ export function openVideo(parent: HTMLElement, child: HTMLElement, hide: HTMLEle
             let div = document.createElement("div");
             div.innerText = "section div";
             section.append(div)
+        }
+        {
+            let button = document.createElement("button")
+            button.innerText = "+";
+            button.addEventListener("click", () => {
+                let time = video.getCurrentTime();
+                let index = 0;
+                for (let i = 0; i < video.notes.length; i++) {
+                    if (video.notes[i].time < time) {
+                        index = i + 1;
+                    }
+                }
+                console.log("fgsdlo", index, time, video.notes);
+                video.notes.splice(index, 0, new Note(time))
+            })
+            section.append(button);
         }
         main.append(section);
     }
