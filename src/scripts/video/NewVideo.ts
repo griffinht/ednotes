@@ -14,6 +14,5 @@ export async function openUrl(url: string): Promise<Video | null> {
 
 export async function openFile(file: File): Promise<Video | null> {
     console.log("file", file);
-    for (let i = 0; i < 10000; i++) {}
-    return null;
+    return new HTML5Video("");
 }
