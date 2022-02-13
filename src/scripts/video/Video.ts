@@ -35,10 +35,19 @@ export function openVideo(parent: HTMLElement, child: HTMLElement, hide: HTMLEle
     }
     {
         let section = document.createElement("section");
-        for (let i = 0; i < 5; i++) {
-            let div = document.createElement("div");
-            div.innerText = "section div";
-            section.append(div)
+        video.notes.push(new Note(0))
+        video.notes.push(new Note(1))
+        video.notes.push(new Note(2))
+        video.notes.push(new Note(3))
+        for (let note of video.notes) {
+            let element = document.createElement("input")
+            element.type = "textarea"
+            element.value = note.text;
+            element.addEventListener("change", (e) => {
+                console.log("change")
+                note.text = element.value;
+            });
+            section.append(element);
         }
         {
             let button = document.createElement("button")
@@ -51,7 +60,6 @@ export function openVideo(parent: HTMLElement, child: HTMLElement, hide: HTMLEle
                         index = i + 1;
                     }
                 }
-                console.log("fgsdlo", index, time, video.notes);
                 video.notes.splice(index, 0, new Note(time))
             })
             section.append(button);
