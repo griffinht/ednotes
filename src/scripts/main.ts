@@ -1,5 +1,5 @@
 import {YoutubeVideo} from "./video/YoutubeVideo.js";
-import {Video} from "./video/Video.js";
+import {openVideo, Video} from "./video/Video.js";
 import "./New.js";
 
 /*const fileUpload = document.getElementById("fileUpload") as HTMLInputElement;
@@ -22,38 +22,7 @@ fileUpload.addEventListener("change", (e) => {
     }
 })*/
 const footer = document.getElementsByTagName("footer")[0];
-function openVideo(parent: HTMLElement, child: HTMLElement, video: Video) {
-    let main = document.createElement("main");
-    {
-        let header = document.createElement("header");
-        {
-            let button = document.createElement("button");
-            button.innerText = "x";
-            button.addEventListener("click", () => {
-                main.remove();
-                nav.style.display = "flex";
-            })
-            header.append(button);
-        }
-        main.append(header);
-    }
-    {
-        let div = document.createElement("div");
-        div.innerText = "video" + video.title;
-        main.append(div);
-    }
-    {
-        let section = document.createElement("section");
-        for (let i = 0; i < 5; i++) {
-            let div = document.createElement("div");
-            div.innerText = "section div";
-            section.append(div)
-        }
-        main.append(section);
-    }
-    parent.insertBefore(main, child);
-    nav.style.display = "none";
-}
+
 
 const videos = [];
 videos.push(new YoutubeVideo(""));
@@ -68,7 +37,7 @@ const nav = document.getElementsByTagName("nav")[0];
 for (let video of videos) {
     let div = document.createElement("div");
     div.addEventListener("click", () => {
-        openVideo(document.body, footer, video);
+        openVideo(document.body, footer, nav, video);
     });
     div.append(video.getThumbnail());
     {
