@@ -1,4 +1,3 @@
-import {YoutubeVideo} from "./video/YoutubeVideo.js";
 import {openVideo as _openVideo, Video} from "./video/Video.js";
 import "./newModal/Drag.js";
 import "./newModal/FileInput.js";
@@ -29,9 +28,6 @@ const footer = document.getElementsByTagName("footer")[0];
 
 
 const nav = document.getElementsByTagName("nav")[0];
-for (let i = 0; i < 10; i++) {
-    addVideo(new YoutubeVideo("dlIQWp1YPkw"))
-}
 export function addVideo(video: Video) {
     let div = document.createElement("div");
     div.addEventListener("click", () => {
@@ -41,7 +37,7 @@ export function addVideo(video: Video) {
     {
         let title = document.createElement("h2");
         title.innerText = video.title;
-        div.append(video.title);
+        div.append(title);
     }
     nav.append(div);
 }

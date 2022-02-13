@@ -55,7 +55,7 @@ nav > div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 40em;
+    //height: 20em;
     background-color: var(--header);
 }
 main {

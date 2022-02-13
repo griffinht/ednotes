@@ -8,17 +8,10 @@ export class HTML5Video implements Video {
         this.video = video;
     }
 
-    getThumbnail(): HTMLCanvasElement {
-        let canvas = document.createElement("canvas");
-        let ctx = canvas.getContext("2d");
-        if (!ctx) {
-            console.log("ctx is null");
-            return canvas;
-        }
-        canvas.width = this.video.videoWidth;
-        canvas.height = this.video.videoHeight;
-        ctx.drawImage(this.video, 0, 0, canvas.width, canvas.height);
-        return canvas;
+    getThumbnail(): HTMLElement {
+        let video = document.createElement("video")
+        video.src = this.video.src;
+        return video;
     }
 
     getVideo(): HTMLElement {
