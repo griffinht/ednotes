@@ -20,9 +20,7 @@ export function openVideo(parent: HTMLElement, child: HTMLElement, hide: HTMLEle
         main.append(header);
     }
     {
-        let div = document.createElement("div");
-        div.innerText = "video" + video.title;
-        main.append(div);
+        main.append(video.getVideo())
     }
     {
         let section = document.createElement("section");
