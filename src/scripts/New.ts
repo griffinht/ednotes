@@ -34,3 +34,15 @@ urlInput.addEventListener("keyup", (e) => {
         close();
     }
 })
+
+const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+fileInput.addEventListener("change", () => {
+    if (fileInput.files === null) {
+        close();
+        return;
+    }
+    for (let file of fileInput.files) {
+        console.log(file)
+    }
+    close();
+})
