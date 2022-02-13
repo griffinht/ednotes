@@ -1,6 +1,6 @@
 export interface Video {
     title: string;
-    getThumbnail(): HTMLImageElement;
+    getThumbnail(): HTMLElement;
     getVideo(): HTMLElement;
 }
 
