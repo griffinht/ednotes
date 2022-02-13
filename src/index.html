@@ -35,6 +35,18 @@ header {
     align-items: center;
     justify-content: center;
 }
+input[type=file] {
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+input[type=file] + label {
+    background-color: white;
+    cursor: pointer;
+}
+input[type=file]:focus + label {
+    outline: invert;
+}
 nav {
     flex-basis: 100%;
     background-color: var(--background);
@@ -74,9 +86,13 @@ footer {
     <button id="newModalOpen">+</button>
 </header>
 <div id="newModal" class="modal">
-    <label>
-        <input id="urlInput" type="text"/>
-    </label>
+    <div>
+        <label>
+            <input id="urlInput" type="text"/>
+        </label>
+        <input type="file" id="fileInput">
+        <label for="fileInput">Upload</label>
+    </div>
 </div>
 <nav>
 </nav>
