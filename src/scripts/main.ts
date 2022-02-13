@@ -1,6 +1,6 @@
 import {YoutubeVideo} from "./video/YoutubeVideo.js";
 import {openVideo as _openVideo, Video} from "./video/Video.js";
-import "./NewModal.js";
+import "./newModal/NewModal.js";
 
 /*const fileUpload = document.getElementById("fileUpload") as HTMLInputElement;
 fileUpload.addEventListener("change", (e) => {
