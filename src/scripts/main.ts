@@ -1,5 +1,6 @@
 import {YoutubeVideo} from "./video/YoutubeVideo.js";
 import {Video} from "./video/Video.js";
+import "./New.js";
 
 /*const fileUpload = document.getElementById("fileUpload") as HTMLInputElement;
 fileUpload.addEventListener("change", (e) => {
