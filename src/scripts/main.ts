@@ -60,7 +60,7 @@ videos.push(new YoutubeVideo(""));
 videos.push(new YoutubeVideo(""));
 videos.push(new YoutubeVideo(""));
 videos.push(new YoutubeVideo("dlIQWp1YPkw"));
-const nav = document.getElementsByTagName("nav")[0];
+const nav = document.getElementById("browser")!;
 for (let video of videos) {
     let div = document.createElement("div");
     div.addEventListener("click", () => {
