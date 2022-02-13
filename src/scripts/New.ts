@@ -1,14 +1,35 @@
-import "./Modal.js";
 
 const newModal = document.getElementById("newModal")!;
-document.getElementById("newModalOpen")!.addEventListener("click", () => {
+
+newModal.addEventListener("click", (e) => {
+    if (e.target === newModal) {
+        close()
+    }
+});
+
+function close() {
+    newModal.style.display = "none";
+    urlInput.value = "";
+}
+
+function open() {
     newModal.style.display = "flex";
+    urlInput.focus();
+}
+
+document.getElementById("newModalOpen")!.addEventListener("click", () => {
+    open();
 })
 
-const urlInput = document.getElementById("urlInput")!;
+const urlInput = document.getElementById("urlInput") as HTMLInputElement;
 urlInput.addEventListener("keypress", (e) => {
-    if (e.code !== "Enter") {
-        return;
+    if (e.key === "Enter") {
+        console.log(urlInput.value);
+        close();
     }
-    alert("submit");
+})
+urlInput.addEventListener("keyup", (e) => {
+    if (e.key === "Escape") {
+        close();
+    }
 })
