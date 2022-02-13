@@ -1,10 +1,11 @@
 import {Video} from "Video.js";
 
-export class YoutubeVideo implements Video {
+export class YoutubeVideo extends Video {
     id: string;
     title: string = "ur mom";
 
     constructor(url: String) {
+        super();
         this.id = "dlIQWp1YPkw";
     }
 

@@ -1,10 +1,11 @@
 import {Video} from "./Video.js";
 
-export class HTML5Video implements Video {
+export class HTML5Video extends Video {
     title: string;
     video: HTMLVideoElement;
 
     constructor(video: HTMLVideoElement) {
+        super();
         this.video = video;
         this.title = video.src.substring(video.src.lastIndexOf("/") + 1, video.src.length);
     }

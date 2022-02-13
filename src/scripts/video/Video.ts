@@ -1,7 +1,12 @@
-export interface Video {
-    title: string;
-    getThumbnail(): HTMLElement;
-    getVideo(): HTMLElement;
+export interface Note {
+
+}
+export abstract class Video {
+    abstract title: string;
+    notes: Note[] = [];
+
+    abstract getThumbnail(): HTMLElement;
+    abstract getVideo(): HTMLElement;
 }
 
 export function openVideo(parent: HTMLElement, child: HTMLElement, hide: HTMLElement, video: Video) {
