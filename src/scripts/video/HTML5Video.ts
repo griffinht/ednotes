@@ -22,6 +22,7 @@ export class HTML5Video implements Video {
 }
 export function loadVideo(src: string): Promise<HTML5Video> {
     let video = document.createElement("video");
+    video.controls = true;
     video.src = src;
     video.addEventListener("suspend", (e) => {
         console.log("suspend", e);
