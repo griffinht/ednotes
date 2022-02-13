@@ -8,6 +8,7 @@ newModal.addEventListener("click", (e) => {
 });
 
 function close() {
+    urlInput.blur();
     newModal.style.display = "none";
     urlInput.value = "";
 }
