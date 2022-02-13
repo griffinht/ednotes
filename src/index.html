@@ -35,6 +35,12 @@ header {
     align-items: center;
     justify-content: center;
 }
+#newModal > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5em;
+}
 input[type=file] {
     width: 0;
     height: 0;
@@ -88,10 +94,10 @@ footer {
 <div id="newModal" class="modal">
     <div>
         <label>
-            <input id="urlInput" type="text"/>
+            <input id="urlInput" type="text" placeholder="enter url"/>
         </label>
         <input type="file" id="fileInput">
-        <label for="fileInput">Upload</label>
+        <label for="fileInput">Select File</label>
     </div>
 </div>
 <nav>
