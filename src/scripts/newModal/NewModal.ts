@@ -1,3 +1,4 @@
+import {openFile, openUrl} from "../video/NewVideo.js";
 
 const newModal = document.getElementById("newModal")!;
 
@@ -23,9 +24,9 @@ document.getElementById("newModalOpen")!.addEventListener("click", () => {
 })
 
 const urlInput = document.getElementById("urlInput") as HTMLInputElement;
-urlInput.addEventListener("keypress", (e) => {
+urlInput.addEventListener("keypress", async (e) => {
     if (e.key === "Enter") {
-        console.log(urlInput.value);
+        await openUrl(urlInput.value);
         closeModal();
     }
 })
@@ -36,19 +37,20 @@ urlInput.addEventListener("keyup", (e) => {
 })
 
 const fileInput = document.getElementById("fileInput") as HTMLInputElement;
-fileInput.addEventListener("change", () => {
+fileInput.addEventListener("change", async () => {
     if (fileInput.files === null) {
         closeModal();
         return;
     }
     for (let file of fileInput.files) {
-        console.log(file)
+        //todo
+        await openFile(file);
+        //done
     }
     closeModal();
 })
 
 
-const nav = document.getElementsByTagName("nav")[0]
 document.addEventListener("dragenter", (e) => {
     console.log("enter");
     if (!e.dataTransfer) {
@@ -65,37 +67,37 @@ newModal.addEventListener("dragover", (e) => {
     console.log("dragover")
     e.preventDefault();
 })
-newModal.addEventListener("drop", (e) => {
+newModal.addEventListener("drop", async (e) => {
     if (!e.dataTransfer) {
         return
     }
     for (let file of e.dataTransfer.files) {
-        console.log(file)
+        //todo
+        await openFile(file);
+        //done
     }
     for (let item of e.dataTransfer.items) {
         if (item.type === "text/uri-list") {
-            console.log(e.dataTransfer.getData(item.type))
+            let url = e.dataTransfer.getData(item.type);
+            //todo
+            await openUrl(url)
+            //done
         }
     }
     e.preventDefault();
 });
-newModal.addEventListener("dragleave", (e) => {
+newModal.addEventListener("dragleave", () => {
     console.log("leave");
     closeModal()
 })
-document.addEventListener("dragend", (e) => {
+document.addEventListener("dragend", () => {
     console.log("end")
 })
-document.addEventListener("dragexit", (e) => {
+document.addEventListener("dragexit", () => {
     console.log("exit")
 })
 
 
 document.getElementById("screenInput")!.addEventListener("click", (e) => {
-    console.log("capture")
+    console.log("capture", e)
 })
-
-async function openUrl(url: string) {
-    console.log("open", url)
-    for (let i = 0; i < 10000; i++) {}
-}
