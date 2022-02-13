@@ -1,5 +1,6 @@
 import {openFile, openUrl} from "../video/NewVideo.js";
 import {closeModal, newModal, openModal} from "./NewModal.js";
+import {addVideo, openVideo} from "../main.js";
 
 document.addEventListener("dragenter", (e) => {
     console.log("enter");
@@ -23,15 +24,27 @@ newModal.addEventListener("drop", async (e) => {
     }
     for (let file of e.dataTransfer.files) {
         //todo
-        await openFile(file);
-        //done
+        let video = await openFile(file);
+        if (!video) {
+            console.log("error")
+            return
+        }
+        addVideo(video);
+        closeModal();
+        openVideo(video);
     }
     for (let item of e.dataTransfer.items) {
         if (item.type === "text/uri-list") {
             let url = e.dataTransfer.getData(item.type);
             //todo
-            await openUrl(url)
-            //done
+            let video = await openUrl(url)
+            if (!video) {
+                console.log("error")
+                return
+            }
+            addVideo(video);
+            closeModal();
+            openVideo(video);
         }
     }
     e.preventDefault();

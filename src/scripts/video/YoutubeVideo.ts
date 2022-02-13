@@ -20,3 +20,7 @@ export class YoutubeVideo implements Video {
         return div;
     }
 }
+
+export function isYoutubeVideo(url: string) {
+    return url.startsWith("https://www.youtube.com") || url.startsWith("https://youtu.be/")
+}

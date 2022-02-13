@@ -1,5 +1,6 @@
 import {openFile} from "../video/NewVideo.js";
 import {closeModal} from "./NewModal.js";
+import {addVideo, openVideo} from "../main.js";
 
 const fileInput = document.getElementById("fileInput") as HTMLInputElement;
 fileInput.addEventListener("change", async () => {
@@ -9,8 +10,14 @@ fileInput.addEventListener("change", async () => {
     }
     for (let file of fileInput.files) {
         //todo
-        await openFile(file);
-        //done
+        let video = await openFile(file);
+        if (!video) {
+            console.log("error")
+            return
+        }
+        addVideo(video);
+        closeModal();
+        openVideo(video);
     }
     closeModal();
 })

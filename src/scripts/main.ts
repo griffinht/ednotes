@@ -1,5 +1,5 @@
 import {YoutubeVideo} from "./video/YoutubeVideo.js";
-import {openVideo, Video} from "./video/Video.js";
+import {openVideo as _openVideo, Video} from "./video/Video.js";
 import "./NewModal.js";
 
 /*const fileUpload = document.getElementById("fileUpload") as HTMLInputElement;
@@ -24,20 +24,14 @@ fileUpload.addEventListener("change", (e) => {
 const footer = document.getElementsByTagName("footer")[0];
 
 
-const videos = [];
-videos.push(new YoutubeVideo(""));
-videos.push(new YoutubeVideo(""));
-videos.push(new YoutubeVideo(""));
-videos.push(new YoutubeVideo(""));
-videos.push(new YoutubeVideo(""));
-videos.push(new YoutubeVideo(""));
-videos.push(new YoutubeVideo(""));
-videos.push(new YoutubeVideo("dlIQWp1YPkw"));
 const nav = document.getElementsByTagName("nav")[0];
-for (let video of videos) {
+for (let i = 0; i < 10; i++) {
+    addVideo(new YoutubeVideo("dlIQWp1YPkw"))
+}
+export function addVideo(video: Video) {
     let div = document.createElement("div");
     div.addEventListener("click", () => {
-        openVideo(document.body, footer, nav, video);
+        openVideo(video);
     });
     div.append(video.getThumbnail());
     {
@@ -46,4 +40,7 @@ for (let video of videos) {
         div.append(video.title);
     }
     nav.append(div);
+}
+export function openVideo(video: Video) {
+    _openVideo(document.body, footer, nav, video);
 }
