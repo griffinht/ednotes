@@ -23,11 +23,6 @@ header {
     justify-content: space-between;
     background-color: var(--header);
 }
-.modalWrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
 .modal {
     position: absolute;
     top: 0;
@@ -48,18 +43,15 @@ header {
     flex-basis: 100%;
 }
 nav {
-    overflow: auto;
-    //flex-basis: 100%;
-
-}
-#browser {
-    flex-wrap: wrap;
+    flex-basis: 100%;
     background-color: var(--background);
+    overflow: auto;
+    flex-wrap: wrap;
     display: flex;
     gap: 1em;
     padding: 1em;
 }
-#browser > div {
+nav > div {
     width: 40em;
     height: 40em;
     background-color: var(--header);
@@ -86,19 +78,14 @@ footer {
     <h1>EdNotes</h1>
     <button>+</button>
 </header>
-<nav>
-    <div class="modalWrapper">
-        <div id="browser">
-
-        </div>
-        <div class="modal">
-            <button>x</button>
-            <div>
-                <button>Upload</button>
-                <button>Youtube</button>
-            </div>
-        </div>
+<div class="modal">
+    <button>x</button>
+    <div>
+        <button>asdasd</button>
+        <button>sdf</button>
     </div>
+</div>
+<nav>
 </nav>
 <footer>test</footer>
 </body>
