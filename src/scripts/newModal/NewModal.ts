@@ -1,5 +1,3 @@
-import {openFile, openUrl} from "../video/NewVideo.js";
-
 export const newModal = document.getElementById("newModal")!;
 
 newModal.addEventListener("click", (e) => {
@@ -22,9 +20,4 @@ export function openModal() {
 
 document.getElementById("newModalOpen")!.addEventListener("click", () => {
     openModal();
-})
-
-
-document.getElementById("screenInput")!.addEventListener("click", (e) => {
-    console.log("capture", e)
 })
