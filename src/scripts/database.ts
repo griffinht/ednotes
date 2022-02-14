@@ -1,5 +1,6 @@
 import {Video} from "./video/Video.js";
 import ByteBuffer from "./common/ByteBuffer.js";
+import {deserialize} from "./video/VideoType.js";
 
 export interface Database {
     getVideos(): Promise<any>;
@@ -13,11 +14,20 @@ class IndexedDatabase implements Database {
         this.database = database;
     }
 
-    async getVideos(): Promise<any> {
-        let request = this.database.transaction("videos", "readwrite").objectStore("videos").getAll();
+    async getVideos(): Promise<Map<ArrayBuffer, Video>> {
+        let request = this.database.transaction("videos", "readwrite").objectStore("videos").openCursor();
         return new Promise((resolve, reject) => {
-            request.addEventListener("success", () => {
-                resolve(request.result)
+            let map = new Map();
+            request.addEventListener("success", (e) => {
+                let cursor = request.result;
+                if (!cursor) {
+                    resolve(map)
+                    return;
+                }
+                if (cursor.primaryKey && cursor.value) {
+                    map.set(cursor.primaryKey, deserialize(new ByteBuffer(cursor.value)));
+                }
+                cursor.continue();
             });
             request.addEventListener("error", (e) => {
                 reject(e)
@@ -54,7 +64,7 @@ class IndexedDatabase implements Database {
 }
 export async function loadDatabase(): Promise<Database> {
     let database = await new Promise<IDBDatabase>((resolve, reject) => {
-        indexedDB.deleteDatabase("ednotes");
+        //indexedDB.deleteDatabase("ednotes");
         let open = indexedDB.open("ednotes");
         open.addEventListener("error", (e) => {
             reject(e);

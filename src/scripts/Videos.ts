@@ -1,5 +1,7 @@
 import {Note, Video} from "./video/Video.js";
 import {Database} from "./database.js";
+import {deserialize, VideoType} from "./video/VideoType.js";
+import ByteBuffer from "./common/ByteBuffer.js";
 
 const footer = document.getElementsByTagName("footer")[0];
 const nav = document.getElementsByTagName("nav")[0];
@@ -12,8 +14,11 @@ export class Videos {
         this.database = database;
         this.database
             .getVideos()
-            .then((videos) => {
+            .then((videos: Map<ArrayBuffer, Video>) => {
                 console.log(videos)
+                for (let [id, video] of videos.entries()) {
+                    this._addVideo(id, video)
+                }
             });
     }
 
