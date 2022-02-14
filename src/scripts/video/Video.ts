@@ -3,7 +3,7 @@ import {VideoType} from "./VideoType.js";
 
 export class Note {
     time: number
-    text: string = "";
+    text: string;
 
     constructor(buffer: ByteBuffer) {
         this.time = buffer.readFloat32();
@@ -18,6 +18,7 @@ export class Note {
     static create(time: number): Note {
         let object = Object.create(this.prototype);
         object.time = time;
+        object.text = "";
         return object;
     }
 }

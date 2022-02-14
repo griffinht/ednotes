@@ -37,6 +37,7 @@ export class HTML5Video extends Video {
     static create(video: HTMLVideoElement) {
         let object = Object.create(this.prototype);
         object.video = video;
+        object.notes = [];
         object.title = video.src.substring(video.src.lastIndexOf("/") + 1, video.src.length);
         return object;
     }

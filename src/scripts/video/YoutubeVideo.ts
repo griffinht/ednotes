@@ -39,6 +39,7 @@ export class YoutubeVideo extends Video {
         let object = Object.create(this.prototype);
         object.id = "dlIQWp1YPkw";
         object.title = "ur mom";
+        object.notes = [];
         return object;
     }
 }
