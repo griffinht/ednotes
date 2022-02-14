@@ -1,12 +1,13 @@
 import {Video} from "./Video.js";
+import ByteBuffer from "../common/ByteBuffer.js";
+import {VideoType} from "./VideoType.js";
 
 export class YoutubeVideo extends Video {
     id: string;
-    title: string = "ur mom";
 
-    constructor(url: String) {
-        super();
-        this.id = "dlIQWp1YPkw";
+    constructor(buffer: ByteBuffer) {
+        super(buffer)
+        this.id = buffer.readString8();
     }
 
     getThumbnail(): HTMLImageElement {
@@ -23,6 +24,22 @@ export class YoutubeVideo extends Video {
 
     getCurrentTime(): number {
         return 0;
+    }
+
+    getType(): VideoType {
+        return VideoType.YOUTUBE_VIDEO;
+    }
+
+    serialize(buffer: ByteBuffer) {
+        super.serialize(buffer);
+        buffer.writeString8(this.id);
+    }
+
+    static create(url: string): YoutubeVideo {
+        let object = Object.create(this.prototype);
+        object.id = "dlIQWp1YPkw";
+        object.title = "ur mom";
+        return object;
     }
 }
 

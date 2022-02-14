@@ -1,7 +1,8 @@
 import {Video} from "./video/Video.js";
+import ByteBuffer from "./common/ByteBuffer.js";
 
 export interface Database {
-    getVideos(): Promise<Video[]>;
+    getVideos(): Promise<any>;
     updateVideo(id: ArrayBuffer, video: Video): Promise<void>;
     removeVideo(id: ArrayBuffer): Promise<void>;
 }
@@ -12,11 +13,11 @@ class IndexedDatabase implements Database {
         this.database = database;
     }
 
-    async getVideos(): Promise<Video[]> {
+    async getVideos(): Promise<any> {
         let request = this.database.transaction("videos", "readwrite").objectStore("videos").getAll();
         return new Promise((resolve, reject) => {
             request.addEventListener("success", () => {
-                resolve(request.result as Video[])
+                resolve(request.result)
             });
             request.addEventListener("error", (e) => {
                 reject(e)
@@ -37,7 +38,9 @@ class IndexedDatabase implements Database {
     }
 
     async updateVideo(id: ArrayBuffer, video: Video): Promise<void> {
-        let request = this.database.transaction("videos", "readwrite").objectStore("videos").put(video, id);
+        let buffer = new ByteBuffer();
+        video.serialize(buffer)
+        let request = this.database.transaction("videos", "readwrite").objectStore("videos").put(buffer.getBuffer(), id);
         return new Promise((resolve, reject) => {
             request.addEventListener("success", () => {
                 resolve()

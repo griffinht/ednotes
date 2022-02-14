@@ -16,7 +16,7 @@ export class NewVideo {
         let video;
         try {
             if (isYoutubeVideo(url)) {
-                video = new YoutubeVideo(url);
+                video = YoutubeVideo.create(url);
             } else {
                 video = await loadVideo(url);
             }

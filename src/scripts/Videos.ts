@@ -5,20 +5,27 @@ const footer = document.getElementsByTagName("footer")[0];
 const nav = document.getElementsByTagName("nav")[0];
 
 export class Videos {
-    videos: Video[];
+    videos: Map<ArrayBuffer, Video> = new Map<ArrayBuffer, Video>();
+    database: Database
 
     constructor(database: Database) {
-        this.videos = [];
-        database
+        this.database = database;
+        this.database
             .getVideos()
             .then((videos) => {
-                for (let video of videos) {
-                    this.addVideo(video);
-                }
+                console.log(videos)
             });
     }
 
     addVideo(video: Video) {
+        let id = new Uint8Array(4)
+        window.crypto.getRandomValues(id);
+        this._addVideo(id, video);
+        this.database.updateVideo(id, video).then();
+    }
+    _addVideo(id: ArrayBuffer, video: Video) {
+        this.videos.set(id, video);
+
         let div = document.createElement("div");
         div.addEventListener("click", () => {
             this.openVideo(video);
@@ -52,10 +59,10 @@ export class Videos {
         }
         {
             let section = document.createElement("section");
-            video.notes.push(new Note(0))
-            video.notes.push(new Note(1))
-            video.notes.push(new Note(2))
-            video.notes.push(new Note(3))
+            video.notes.push(Note.create(0))
+            video.notes.push(Note.create(1))
+            video.notes.push(Note.create(2))
+            video.notes.push(Note.create(3))
             for (let note of video.notes) {
                 let element = document.createElement("input")
                 element.type = "textarea"
@@ -77,7 +84,7 @@ export class Videos {
                             index = i + 1;
                         }
                     }
-                    video.notes.splice(index, 0, new Note(time))
+                    video.notes.splice(index, 0, Note.create(time))
                 })
                 section.append(button);
             }

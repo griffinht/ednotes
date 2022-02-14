@@ -1,13 +1,14 @@
 import {Video} from "./Video.js";
+import ByteBuffer from "../common/ByteBuffer.js";
+import {VideoType} from "./VideoType.js";
 
 export class HTML5Video extends Video {
-    title: string;
     video: HTMLVideoElement;
 
-    constructor(video: HTMLVideoElement) {
-        super();
-        this.video = video;
-        this.title = video.src.substring(video.src.lastIndexOf("/") + 1, video.src.length);
+    constructor(buffer: ByteBuffer) {
+        super(buffer)
+        this.video = document.createElement("video")
+        this.video.src = buffer.readString8();
     }
 
     getThumbnail(): HTMLElement {
@@ -22,6 +23,22 @@ export class HTML5Video extends Video {
 
     getCurrentTime(): number {
         return this.video.currentTime;
+    }
+
+    getType(): VideoType {
+        return VideoType.HTML5_VIDEO;
+    }
+
+    serialize(buffer: ByteBuffer) {
+        super.serialize(buffer);
+        buffer.writeString8(this.video.src);
+    }
+
+    static create(video: HTMLVideoElement) {
+        let object = Object.create(this.prototype);
+        object.video = video;
+        object.title = video.src.substring(video.src.lastIndexOf("/") + 1, video.src.length);
+        return object;
     }
 }
 export function loadVideo(src: string): Promise<HTML5Video> {
@@ -47,7 +64,7 @@ export function loadVideo(src: string): Promise<HTML5Video> {
     return new Promise<HTML5Video>((resolve, reject) => {
         video.addEventListener("loadedmetadata", (e) => {
             console.log("loadedmetadata", e);
-            resolve(new HTML5Video(video));
+            resolve(HTML5Video.create(video));
         })
         video.addEventListener("error", (e) => {
             reject(e)
