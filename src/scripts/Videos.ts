@@ -21,7 +21,7 @@ export class Videos {
         let id = new Uint8Array(4)
         window.crypto.getRandomValues(id);
         this._addVideo(id, video);
-        this.database.updateVideo(id, video).then();
+        this.database.putVideo(id, video).then();
     }
     _addVideo(id: ArrayBuffer, video: Video) {
         this.videos.set(id, video);

@@ -3,7 +3,7 @@ import ByteBuffer from "./common/ByteBuffer.js";
 
 export interface Database {
     getVideos(): Promise<any>;
-    updateVideo(id: ArrayBuffer, video: Video): Promise<void>;
+    putVideo(id: ArrayBuffer, video: Video): Promise<void>;
     removeVideo(id: ArrayBuffer): Promise<void>;
 }
 class IndexedDatabase implements Database {
@@ -37,7 +37,7 @@ class IndexedDatabase implements Database {
         });
     }
 
-    async updateVideo(id: ArrayBuffer, video: Video): Promise<void> {
+    async putVideo(id: ArrayBuffer, video: Video): Promise<void> {
         let buffer = new ByteBuffer();
         video.serialize(buffer)
         let request = this.database.transaction("videos", "readwrite").objectStore("videos").put(buffer.getBuffer(), id);
