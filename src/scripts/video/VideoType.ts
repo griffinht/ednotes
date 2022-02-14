@@ -1,6 +1,7 @@
 import ByteBuffer from "../common/ByteBuffer.js";
 import {Video} from "./Video.js";
 import {HTML5Video} from "./HTML5Video.js";
+import {YoutubeVideo} from "./YoutubeVideo.js";
 
 export enum VideoType {
     HTML5_VIDEO,
@@ -12,7 +13,7 @@ export function deserialize(buffer: ByteBuffer): Video {
         case VideoType.HTML5_VIDEO:
             return new HTML5Video(buffer)
         case VideoType.YOUTUBE_VIDEO:
-            return new HTML5Video(buffer)
+            return new YoutubeVideo(buffer)
         default:
             throw new Error("unknown type");
     }
