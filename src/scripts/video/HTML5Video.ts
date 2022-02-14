@@ -9,6 +9,7 @@ export class HTML5Video extends Video {
         super(buffer)
         this.video = document.createElement("video")
         this.video.src = buffer.readString8();
+        this.video.controls = true;
     }
 
     getThumbnail(): HTMLElement {
