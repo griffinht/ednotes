@@ -40,7 +40,7 @@ export class Videos {
                     this.openVideo(video);
                     break;
                 case "Delete":
-                    await this.removeVideo(id);
+                    await this.removeVideo(id, e.ctrlKey);
                     div.remove();
                     break;
                 default:
@@ -59,7 +59,7 @@ export class Videos {
             deleteButton.innerText = "x";
             deleteButton.addEventListener("click", async (e) => {
                 e.stopPropagation();
-                await this.removeVideo(id);
+                await this.removeVideo(id, false);
                 div.remove();
             })
             div.append(deleteButton);
@@ -122,8 +122,8 @@ export class Videos {
         nav.style.display = "none";
     }
 
-    async removeVideo(id: ArrayBuffer) {
-        if (!window.confirm("Delete video?")) { return; }
+    async removeVideo(id: ArrayBuffer, confirmation: boolean) {
+        if (!confirmation && !window.confirm("Delete video?")) { return; }
         this.videos.delete(id);
         await this.database.removeVideo(id);
     }
