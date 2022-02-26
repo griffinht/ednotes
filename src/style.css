@@ -58,6 +58,10 @@ nav > div {
     //height: 20em;
     background-color: var(--header);
 }
+nav > div > video {
+    width: 100%;
+    height: auto;
+}
 main {
 //flex-basis: 100%;
 }
