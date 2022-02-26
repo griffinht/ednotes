@@ -62,7 +62,8 @@ export abstract class Video {
                     videos.openVideo(this);
                     break;
                 case "Delete":
-                    await videos.removeVideo(id, e.ctrlKey);
+                    if (!e.ctrlKey && confirmRemoveVideo()) { return; }
+                    await videos.removeVideo(id);
                     div.remove();
                     break;
                 default:
@@ -82,11 +83,19 @@ export abstract class Video {
             deleteButton.innerText = "x";
             deleteButton.addEventListener("click", async (e) => {
                 e.stopPropagation();
-                await videos.removeVideo(id, false);
+                if (confirmRemoveVideo()) { return; }
+                await videos.removeVideo(id);
                 div.remove();
             })
             div.append(deleteButton);
         }
         return div;
     }
+}
+
+/**
+ * @return true if video should be removed
+ */
+function confirmRemoveVideo(): boolean {
+   return !window.confirm("Delete video?");
 }

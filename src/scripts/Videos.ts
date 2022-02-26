@@ -103,8 +103,7 @@ export class Videos {
         nav.style.display = "none";
     }
 
-    async removeVideo(id: ArrayBuffer, confirmation: boolean) {
-        if (!confirmation && !window.confirm("Delete video?")) { return; }
+    async removeVideo(id: ArrayBuffer) {
         this.videos.delete(id);
         await this.database.removeVideo(id);
     }
