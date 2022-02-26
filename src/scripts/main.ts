@@ -7,7 +7,6 @@ import {NewVideo} from "./video/NewVideo.js";
 import {UrlInput} from "./newModal/UrlInput.js";
 
 const database = await loadDatabase();
-
 const videos = new Videos(database);
 const modal = new NewModal();
 const newVideo = new NewVideo(modal, videos);

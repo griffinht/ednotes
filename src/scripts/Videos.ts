@@ -32,7 +32,7 @@ export class Videos {
         div.tabIndex = 0;
         div.addEventListener("click", () => {
             this.openVideo(video);
-        });
+        })
         div.addEventListener("keypress", async (e) => {
             console.log(e)
             switch (e.key) {
@@ -71,6 +71,23 @@ export class Videos {
     openVideo(video: Video) {
         let main = document.createElement("main");
         main.classList.add("item")
+
+        main.addEventListener("keypress", (e) => {
+            console.log(e.key)
+            if (e.key === "Escape") {
+                e.stopPropagation();
+                main.remove();
+                nav.style.display = "grid";
+            }
+        });
+        let listener = (e: KeyboardEvent) => {
+            if (e.key !== "Escape") { return; }
+            e.stopPropagation();
+            main.remove();
+            nav.style.display = "grid";
+            document.removeEventListener("keyup", listener);
+        };
+        document.addEventListener("keyup", listener)
         {
             let header = document.createElement("header");
             {
@@ -95,9 +112,9 @@ export class Videos {
             video.notes.push(Note.create(3))
             for (let note of video.notes) {
                 let element = document.createElement("input")
-                element.type = "textarea"
+                element.type = "textarea";
                 element.value = note.text;
-                element.addEventListener("change", (e) => {
+                element.addEventListener("change", () => {
                     console.log("change")
                     note.text = element.value;
                 });
