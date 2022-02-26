@@ -13,6 +13,9 @@ export class NewModal {
         document.getElementById("newModalOpen")!.addEventListener("click", () => {
             this.openModal();
         })
+        document.addEventListener("keypress", (e) => {
+            console.log(e)
+        })
     }
     closeModal() {
         this.element.style.display = "none";

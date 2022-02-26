@@ -29,9 +29,25 @@ export class Videos {
         this.videos.set(id, video);
 
         let div = document.createElement("div");
+        div.tabIndex = 0;
         div.addEventListener("click", () => {
             this.openVideo(video);
         });
+        div.addEventListener("keypress", async (e) => {
+            console.log(e)
+            switch (e.key) {
+                case "Enter":
+                    this.openVideo(video);
+                    break;
+                case "Delete":
+                    await this.removeVideo(id);
+                    div.remove();
+                    break;
+                default:
+                    return;
+            }
+            e.stopPropagation();
+        })
         div.append(video.getThumbnail());
         {
             let title = document.createElement("h2");
@@ -43,7 +59,6 @@ export class Videos {
             deleteButton.innerText = "x";
             deleteButton.addEventListener("click", async (e) => {
                 e.stopPropagation();
-                if (!window.confirm("Delete video?")) { return; }
                 await this.removeVideo(id);
                 div.remove();
             })
@@ -108,6 +123,7 @@ export class Videos {
     }
 
     async removeVideo(id: ArrayBuffer) {
+        if (!window.confirm("Delete video?")) { return; }
         this.videos.delete(id);
         await this.database.removeVideo(id);
     }
