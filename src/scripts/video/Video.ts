@@ -49,7 +49,12 @@ export abstract class Video {
         }
     }
 
-    createThumbnailElement(videos: Videos, id: ArrayBuffer): HTMLElement {
+    createThumbnailElement(videos:
+                               {
+                                   openVideo: (video: Video) => void,
+                                   removeVideo: (id: ArrayBuffer) => void
+                               },
+                           id: ArrayBuffer): HTMLElement {
         let div = document.createElement("div");
         div.tabIndex = 0;
         div.addEventListener("click", () => {

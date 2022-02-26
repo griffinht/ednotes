@@ -1,4 +1,4 @@
-import {Note, Video} from "./video/Video.js";
+import {Video} from "./video/Video.js";
 import {Database} from "./database.js";
 
 const footer = document.getElementsByTagName("footer")[0];
