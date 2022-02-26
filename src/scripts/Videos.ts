@@ -56,6 +56,7 @@ export class Videos {
         }
         {
             let deleteButton = document.createElement("button");
+            deleteButton.tabIndex = -1;
             deleteButton.innerText = "x";
             deleteButton.addEventListener("click", async (e) => {
                 e.stopPropagation();
