@@ -27,79 +27,11 @@ export class Videos {
     }
     _addVideo(id: ArrayBuffer, video: Video) {
         this.videos.set(id, video);
-        nav.append(video.createElement(this, id));
+        nav.append(video.createThumbnailElement(this, id));
     }
 
     openVideo(video: Video) {
-        let main = document.createElement("main");
-        main.classList.add("item")
-
-        main.addEventListener("keypress", (e) => {
-            console.log(e.key)
-            if (e.key === "Escape") {
-                e.stopPropagation();
-                main.remove();
-                nav.style.display = "grid";
-            }
-        });
-        let listener = (e: KeyboardEvent) => {
-            if (e.key !== "Escape") { return; }
-            e.stopPropagation();
-            main.remove();
-            nav.style.display = "grid";
-            document.removeEventListener("keyup", listener);
-        };
-        document.addEventListener("keyup", listener)
-        {
-            let header = document.createElement("header");
-            {
-                let button = document.createElement("button");
-                button.innerText = "x";
-                button.addEventListener("click", () => {
-                    main.remove();
-                    nav.style.display = "grid";
-                })
-                header.append(button);
-            }
-            main.append(header);
-        }
-        {
-            main.append(video.getVideo())
-        }
-        {
-            let section = document.createElement("section");
-            video.notes.push(Note.create(0))
-            video.notes.push(Note.create(1))
-            video.notes.push(Note.create(2))
-            video.notes.push(Note.create(3))
-            for (let note of video.notes) {
-                let element = document.createElement("input")
-                element.type = "textarea";
-                element.value = note.text;
-                element.addEventListener("change", () => {
-                    console.log("change")
-                    note.text = element.value;
-                });
-                section.append(element);
-            }
-            {
-                let button = document.createElement("button")
-                button.innerText = "+";
-                button.addEventListener("click", () => {
-                    let time = video.getCurrentTime();
-                    let index = 0;
-                    for (let i = 0; i < video.notes.length; i++) {
-                        if (video.notes[i].time < time) {
-                            index = i + 1;
-                        }
-                    }
-                    video.notes.splice(index, 0, Note.create(time))
-                })
-                section.append(button);
-            }
-            main.append(section);
-        }
-        document.body.insertBefore(main, footer);
+        document.body.insertBefore(video.createElement(() => { nav.style.display = "grid"; }), footer);
         nav.style.display = "none";
     }
 
