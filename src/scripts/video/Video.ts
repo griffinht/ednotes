@@ -1,5 +1,6 @@
 import ByteBuffer from "../common/ByteBuffer.js";
 import {VideoType} from "./VideoType.js";
+import {Videos} from "../Videos.js";
 
 export class Note {
     time: number
@@ -46,5 +47,46 @@ export abstract class Video {
         for (let note of this.notes) {
             note.serialize(buffer);
         }
+    }
+
+    createElement(videos: Videos, id: ArrayBuffer): HTMLElement {
+        let div = document.createElement("div");
+        div.tabIndex = 0;
+        div.addEventListener("click", () => {
+            videos.openVideo(this);
+        })
+        div.addEventListener("keypress", async (e) => {
+            console.log(e)
+            switch (e.key) {
+                case "Enter":
+                    videos.openVideo(this);
+                    break;
+                case "Delete":
+                    await videos.removeVideo(id, e.ctrlKey);
+                    div.remove();
+                    break;
+                default:
+                    return;
+            }
+            e.stopPropagation();
+        })
+        div.append(this.getThumbnail());
+        {
+            let title = document.createElement("h2");
+            title.innerText = this.title;
+            div.append(title);
+        }
+        {
+            let deleteButton = document.createElement("button");
+            deleteButton.tabIndex = -1;
+            deleteButton.innerText = "x";
+            deleteButton.addEventListener("click", async (e) => {
+                e.stopPropagation();
+                await videos.removeVideo(id, false);
+                div.remove();
+            })
+            div.append(deleteButton);
+        }
+        return div;
     }
 }

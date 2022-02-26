@@ -27,45 +27,7 @@ export class Videos {
     }
     _addVideo(id: ArrayBuffer, video: Video) {
         this.videos.set(id, video);
-
-        let div = document.createElement("div");
-        div.tabIndex = 0;
-        div.addEventListener("click", () => {
-            this.openVideo(video);
-        })
-        div.addEventListener("keypress", async (e) => {
-            console.log(e)
-            switch (e.key) {
-                case "Enter":
-                    this.openVideo(video);
-                    break;
-                case "Delete":
-                    await this.removeVideo(id, e.ctrlKey);
-                    div.remove();
-                    break;
-                default:
-                    return;
-            }
-            e.stopPropagation();
-        })
-        div.append(video.getThumbnail());
-        {
-            let title = document.createElement("h2");
-            title.innerText = video.title;
-            div.append(title);
-        }
-        {
-            let deleteButton = document.createElement("button");
-            deleteButton.tabIndex = -1;
-            deleteButton.innerText = "x";
-            deleteButton.addEventListener("click", async (e) => {
-                e.stopPropagation();
-                await this.removeVideo(id, false);
-                div.remove();
-            })
-            div.append(deleteButton);
-        }
-        nav.append(div);
+        nav.append(video.createElement(this, id));
     }
 
     openVideo(video: Video) {
