@@ -38,6 +38,17 @@ export class Videos {
             title.innerText = video.title;
             div.append(title);
         }
+        {
+            let deleteButton = document.createElement("button");
+            deleteButton.innerText = "x";
+            deleteButton.addEventListener("click", async (e) => {
+                e.stopPropagation();
+                if (!window.confirm("Delete video?")) { return; }
+                await this.removeVideo(id);
+                div.remove();
+            })
+            div.append(deleteButton);
+        }
         nav.append(div);
     }
 
@@ -94,5 +105,10 @@ export class Videos {
         }
         document.body.insertBefore(main, footer);
         nav.style.display = "none";
+    }
+
+    async removeVideo(id: ArrayBuffer) {
+        this.videos.delete(id);
+        await this.database.removeVideo(id);
     }
 }
