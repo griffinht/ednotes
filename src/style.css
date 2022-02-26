@@ -42,7 +42,7 @@ input[type=file] + label {
 input[type=file]:focus + label {
     outline: invert;
 }
-nav {
+.browser {
     flex-basis: 100%;
     background-color: var(--background);
     overflow: auto;
@@ -51,27 +51,27 @@ nav {
     grid-gap: 1em;
     padding: 1em;
 }
-nav > div {
+.browser > div {
     display: flex;
     flex-direction: column;
     align-items: center;
     //height: 20em;
     background-color: var(--header);
 }
-nav > div > video {
+.browser > div > video {
     width: 100%;
     height: auto;
 }
-main {
+.item {
 //flex-basis: 100%;
 }
-main > section {
+.item > section {
     display: flex;
 }
-main > section > div {
+.item > section > div {
     height: auto;
 }
-main > header {
+.item > header {
     justify-content: flex-end;
 }
 footer {

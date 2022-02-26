@@ -70,6 +70,7 @@ export class Videos {
 
     openVideo(video: Video) {
         let main = document.createElement("main");
+        main.classList.add("item")
         {
             let header = document.createElement("header");
             {
