@@ -1,4 +1,5 @@
 export class NewModal {
+    static display = "flex";
     element: HTMLElement;
     urlInput: HTMLInputElement
 
@@ -7,13 +8,24 @@ export class NewModal {
         this.urlInput = document.getElementById("urlInput") as HTMLInputElement;
         this.element.addEventListener("click", (e) => {
             if (e.target === this.element) {
-                this.closeModal()
+                this.closeModal();
             }
         });
         document.getElementById("newModalOpen")!.addEventListener("click", () => {
             this.openModal();
         })
+        document.addEventListener("keypress", (e) => {
+          if (e.code === "Slash" && !this.isOpen()) {
+           this.openModal();
+           e.preventDefault(); 
+          }
+        });
     }
+    
+    isOpen() {
+      return this.element.style.display === NewModal.display;
+    }
+    
     closeModal() {
         this.element.style.display = "none";
         this.urlInput.blur();
@@ -21,7 +33,7 @@ export class NewModal {
     }
 
     openModal() {
-        this.element.style.display = "flex";
+        this.element.style.display = NewModal.display;
         this.urlInput.focus();
     }
 }

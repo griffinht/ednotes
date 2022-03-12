@@ -57,6 +57,7 @@ export abstract class Video {
                            id: ArrayBuffer): HTMLElement {
         let div = document.createElement("div");
         div.tabIndex = 0;
+        div.title = "Open (Enter)";
         div.addEventListener("click", () => {
             videos.openVideo(this);
         })
@@ -85,6 +86,7 @@ export abstract class Video {
         {
             let deleteButton = document.createElement("button");
             deleteButton.tabIndex = -1;
+            deleteButton.title = "Delete (Delete)";
             deleteButton.innerText = "x";
             deleteButton.addEventListener("click", async (e) => {
                 e.stopPropagation();
@@ -125,6 +127,7 @@ export abstract class Video {
             {
                 let button = document.createElement("button");
                 button.innerText = "x";
+                button.title = "Close (Escape)";
                 button.addEventListener("click", () => close());
                 header.append(button);
             }
