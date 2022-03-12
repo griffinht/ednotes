@@ -2,7 +2,7 @@ import {Video} from "./video/Video.js";
 import {Database} from "./database.js";
 
 const footer = document.getElementsByTagName("footer")[0];
-const element = document.getElementsByClassName("browser")[0];
+const element = document.getElementsByClassName("browser")[0] as HTMLElement;
 
 export class Videos {
     videos: Map<ArrayBuffer, Video> = new Map<ArrayBuffer, Video>();
