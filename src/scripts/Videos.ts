@@ -1,14 +1,13 @@
 import {Video} from "./video/Video.js";
 import {Database} from "./database.js";
 
-const footer = document.getElementsByTagName("footer")[0];
-const element = document.getElementsByClassName("browser")[0] as HTMLElement;
-
 export class Videos {
     videos: Map<ArrayBuffer, Video> = new Map<ArrayBuffer, Video>();
     database: Database
+    element: HTMLElement
+    before: Element
 
-    constructor(database: Database) {
+    constructor(database: Database, element: HTMLElement, before: Element) {
         this.database = database;
         this.database
             .getVideos()
@@ -17,6 +16,8 @@ export class Videos {
                     this._addVideo(id, video)
                 }
             });
+        this.element = element;
+        this.before = before;
     }
 
     addVideo(video: Video) {
@@ -27,12 +28,12 @@ export class Videos {
     }
     _addVideo(id: ArrayBuffer, video: Video) {
         this.videos.set(id, video);
-        element.append(video.createThumbnailElement(this, id));
+        this.element.append(video.createThumbnailElement(this, id));
     }
 
     openVideo(video: Video) {
-        document.body.insertBefore(video.createElement(() => { element.style.display = "grid"; }), footer);
-        element.style.display = "none";
+        document.body.insertBefore(video.createElement(() => { this.element.style.display = "grid"; }), this.before);
+        this.element.style.display = "none";
     }
 
     async removeVideo(id: ArrayBuffer) {

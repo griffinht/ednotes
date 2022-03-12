@@ -3,9 +3,9 @@ export class NewModal {
     element: HTMLElement;
     urlInput: HTMLInputElement
 
-    constructor() {
-        this.element = document.getElementById("newModal")!;
-        this.urlInput = document.getElementById("urlInput") as HTMLInputElement;
+    constructor(element: HTMLElement, urlInput: HTMLInputElement) {
+        this.element = element;
+        this.urlInput = urlInput;
         this.element.addEventListener("click", (e) => {
             if (e.target === this.element) {
                 this.closeModal();

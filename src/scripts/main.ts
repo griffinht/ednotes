@@ -7,8 +7,8 @@ import {NewVideo} from "./video/NewVideo.js";
 import {UrlInput} from "./newModal/UrlInput.js";
 
 const database = await loadDatabase();
-const videos = new Videos(database);
-const modal = new NewModal();
+const videos = new Videos(database, document.getElementsByClassName("browser")[0] as HTMLElement, document.getElementsByTagName("footer")[0]);
+const modal = new NewModal(document.getElementById("newModal")!, document.getElementById("urlInput") as HTMLInputElement);
 const newVideo = new NewVideo(modal, videos);
 new Drag(modal, newVideo);
 new FileInput(modal, newVideo);
