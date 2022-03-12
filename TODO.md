@@ -8,3 +8,6 @@
 - export
 - import
 - server backend/accounts/store/sync
+
+# bugs
+- firefox kb shortcuts don't work
