@@ -26,52 +26,6 @@ header {
     align-items: center;
     justify-content: center;
 }
-#newModal > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5em;
-}
-input[type=file] {
-    width: 0;
-    height: 0;
-    position: absolute;
-}
-input[type=file] + label {
-    background-color: white;
-    cursor: pointer;
-}
-input[type=file]:focus + label {
-    outline: invert;
-}
-.browser {
-    flex-basis: 100%;
-    background-color: var(--background);
-    overflow: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
-    grid-gap: 1em;
-    padding: 1em;
-}
-.browser > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--header);
-}
-.browser > div > video {
-    width: 100%;
-    height: auto;
-}
-.item > section {
-    display: flex;
-}
-.item > section > div {
-    height: auto;
-}
-.item > header {
-    justify-content: flex-end;
-}
 footer {
     margin-top: auto;
 }
