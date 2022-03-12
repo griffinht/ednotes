@@ -2,7 +2,7 @@ import {Video} from "./video/Video.js";
 import {Database} from "./database.js";
 
 const footer = document.getElementsByTagName("footer")[0];
-const nav = document.getElementsByTagName("nav")[0];
+const element = document.getElementsByClassName("browser")[0];
 
 export class Videos {
     videos: Map<ArrayBuffer, Video> = new Map<ArrayBuffer, Video>();
@@ -27,12 +27,12 @@ export class Videos {
     }
     _addVideo(id: ArrayBuffer, video: Video) {
         this.videos.set(id, video);
-        nav.append(video.createThumbnailElement(this, id));
+        element.append(video.createThumbnailElement(this, id));
     }
 
     openVideo(video: Video) {
-        document.body.insertBefore(video.createElement(() => { nav.style.display = "grid"; }), footer);
-        nav.style.display = "none";
+        document.body.insertBefore(video.createElement(() => { element.style.display = "grid"; }), footer);
+        element.style.display = "none";
     }
 
     async removeVideo(id: ArrayBuffer) {
