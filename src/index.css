@@ -10,7 +10,7 @@
     overflow: auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
-    grid-gap: 1em;
+    grid-gap: 2em;
     padding: 1em;
 }
 .browser > div {
@@ -43,6 +43,18 @@ input[type=file] + label {
 }
 input[type=file]:focus + label {
     outline: invert;
+}
+.thumbnail {
+  box-shadow: 0em 1em 1em -.5em var(--neutral);
+  border-radius: 0.5em;
+}
+.thumbnail:hover, .thumbnail:focus {
+  box-shadow: 0em 1em 1em -.5em var(--primary);
+  transform: translate(0, -0.5em) scale(1.01);
+  transition: 50ms linear;
+}
+.thumbnail:active {
+  box-shadow: inherit;
 }
 .thumbnail > div {
   display: flex;
