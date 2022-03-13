@@ -69,7 +69,7 @@ export abstract class Video {
                     videos.openVideo(this);
                     break;
                 case "Delete":
-                    if (!e.ctrlKey && confirmRemoveVideo()) { return; }
+                    if (!e.ctrlKey && confirmRemoveVideo(this.title)) { return; }
                     await videos.removeVideo(id);
                     thumbnail.remove();
                     break;
@@ -110,7 +110,7 @@ export abstract class Video {
                     deleteButton.innerText = "🗑️";
                     deleteButton.addEventListener("click", async (e) => {
                         e.stopPropagation();
-                        if (confirmRemoveVideo()) { return; }
+                        if (confirmRemoveVideo(this.title)) { return; }
                         await videos.removeVideo(id);
                         thumbnail.remove();
                     });
@@ -204,6 +204,6 @@ export abstract class Video {
 /**
  * @return true if video should be removed
  */
-function confirmRemoveVideo(): boolean {
-   return !window.confirm("Delete?");
+function confirmRemoveVideo(video: string): boolean {
+   return !window.confirm("Delete " + video + "?");
 }
