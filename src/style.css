@@ -44,8 +44,23 @@ footer {
     justify-content: center;
 }
 button {
-  background-color: var(--primary);
+    color: var(--primary-foreground);
+    background-color: var(--primary);
 }
 button:hover {
-  background-color: var(--primary-highlight);
+    background-color: var(--primary-highlight);
+}
+.card {
+    box-shadow: 0em 1em 1em -.5em var(--neutral);
+    border-radius: 0.5em;
+    transition: 30ms linear;
+}
+.card:hover, .card:focus {
+    box-shadow: 0em 1em 1em -.5em var(--primary);
+    transform: translate(0, -0.5em) scale(1.01);
+    transition: 30ms linear;
+    outline: 0;
+}
+.card:active {
+    box-shadow: inherit;
 }

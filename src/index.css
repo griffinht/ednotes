@@ -13,15 +13,25 @@
     grid-gap: 2em;
     padding: 1em;
 }
-.browser > div {
+.browser > .card {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: var(--neutral-background);
 }
-.browser > div > video {
+.browser > .card > video {
     width: 100%;
     height: auto;
+}
+.browser > .card > div {
+    display: flex;
+    color: var(--primary-foreground);
+    background-color: var(--primary);
+    justify-content: space-between;
+    width: 100%;
+}
+.browser > .card > div > div {
+    display: flex;
 }
 .item > section {
     display: flex;
@@ -44,27 +54,4 @@ input[type=file] + label {
 input[type=file]:focus + label {
     outline: invert;
 }
-.thumbnail {
-    box-shadow: 0em 1em 1em -.5em var(--neutral);
-    border-radius: 0.5em;
-    transition: 30ms linear;
-}
-.thumbnail:hover, .thumbnail:focus {
-    box-shadow: 0em 1em 1em -.5em var(--primary);
-    transform: translate(0, -0.5em) scale(1.01);
-    transition: 30ms linear;
-    outline: 0;
-}
-.thumbnail:active {
-    box-shadow: inherit;
-}
-.thumbnail > div {
-    display: flex;
-    color: var(--primary-foreground);
-    background-color: var(--primary);
-    justify-content: space-between;
-    width: 100%;
-}
-.thumbnail > div > div {
-    display: flex;
-}
+

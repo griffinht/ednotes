@@ -56,7 +56,7 @@ export abstract class Video {
                                },
                            id: ArrayBuffer): HTMLElement {
         let thumbnail = document.createElement("div");
-        thumbnail.classList.add("thumbnail");
+        thumbnail.classList.add("card");
         thumbnail.tabIndex = 0;
         thumbnail.title = "Open (Enter)";
         thumbnail.addEventListener("click", () => {
