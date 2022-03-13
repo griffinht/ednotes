@@ -44,3 +44,9 @@ input[type=file] + label {
 input[type=file]:focus + label {
     outline: invert;
 }
+.thumbnail > div {
+  display: flex;
+  background-color: var(--primary);
+  justify-content: space-between;
+  width: 100%;
+}
