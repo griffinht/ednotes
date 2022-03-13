@@ -1,14 +1,14 @@
 :root {
     --primary-background: black;
-    --primary-dark: darkgreen;
+    --primary-lowlight: darkgreen;
     --primary: green;
-    --primary-light: lightgreen;
+    --primary-highlight: lightgreen;
     --primary-foreground: white;
 
     --neutral-foreground: black;
-    --neutral-dark: darkgray;
+    --neutral-lowlight: darkgray;
     --neutral: gray;
-    --neutral-light: lightgray;
+    --neutral-highlight: lightgray;
     --neutral-background: white;
     
     --font: serif;
@@ -28,6 +28,10 @@ header {
     background-color: var(--primary);
     color: var(--neutral-background);
 }
+
+footer {
+    margin-top: auto;
+}
 .modal {
     display: none;
     position: absolute;
@@ -39,6 +43,9 @@ header {
     align-items: center;
     justify-content: center;
 }
-footer {
-    margin-top: auto;
+button {
+  background-color: var(--primary);
+}
+button:hover {
+  background-color: var(--primary-highlight);
 }
