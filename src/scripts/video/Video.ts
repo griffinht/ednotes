@@ -80,31 +80,47 @@ export abstract class Video {
         })
         thumbnail.append(this.getThumbnail());
         {
-          let div = document.createElement("div");
-          thumbnail.append(div);
-          {
-              let title = document.createElement("h2");
-              div.append(title);
-              title.innerText = this.title; 
-          }
-          {
-              let deleteButton = document.createElement("button");
-              div.append(deleteButton);
-              deleteButton.tabIndex = -1;
-              deleteButton.title = "Delete (Delete)";
-              deleteButton.innerText = "x";
-              deleteButton.addEventListener("click", async (e) => {
-                  e.stopPropagation();
-                  if (confirmRemoveVideo()) { return; }
-                  await videos.removeVideo(id);
-                  div.remove();
-              })
-          }
+            let titleDiv = document.createElement("div");
+            thumbnail.append(titleDiv);
+            {
+                let title = document.createElement("h2");
+                titleDiv.append(title);
+                title.innerText = this.title; 
+            }
+            {
+                let buttonDiv = document.createElement("div");
+                titleDiv.append(buttonDiv);
+                {
+                    let renameButton = document.createElement("button");
+                    buttonDiv.append(renameButton);
+                    renameButton.tabIndex = -1;
+                    renameButton.title = "Rename (F2)";
+                    renameButton.innerText = "✏️";
+                    renameButton.addEventListener("click", async (e) => {
+                        e.stopPropagation();
+                        let title = prompt("Rename to:", this.title);
+                        console.log(title);
+                    });
+                }
+                {
+                    let deleteButton = document.createElement("button");
+                    buttonDiv.append(deleteButton);
+                    deleteButton.tabIndex = -1;
+                    deleteButton.title = "Delete (Delete)";
+                    deleteButton.innerText = "🗑️";
+                    deleteButton.addEventListener("click", async (e) => {
+                        e.stopPropagation();
+                        if (confirmRemoveVideo()) { return; }
+                        await videos.removeVideo(id);
+                        thumbnail.remove();
+                    });
+                }
+            }
         }
         {
-          let p = document.createElement("p");
-          thumbnail.append(p);
-          p.innerText = "a new note";
+            let p = document.createElement("p");
+            thumbnail.append(p);
+            p.innerText = "a new note";
         }
         return thumbnail;
     }
@@ -189,5 +205,5 @@ export abstract class Video {
  * @return true if video should be removed
  */
 function confirmRemoveVideo(): boolean {
-   return !window.confirm("Delete video?");
+   return !window.confirm("Delete?");
 }
