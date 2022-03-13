@@ -47,12 +47,12 @@ input[type=file]:focus + label {
 .thumbnail {
     box-shadow: 0em 1em 1em -.5em var(--neutral);
     border-radius: 0.5em;
-    transition: 50ms linear;
+    transition: 30ms linear;
 }
 .thumbnail:hover, .thumbnail:focus {
     box-shadow: 0em 1em 1em -.5em var(--primary);
     transform: translate(0, -0.5em) scale(1.01);
-    transition: 50ms linear;
+    transition: 30ms linear;
 }
 .thumbnail:active {
     box-shadow: inherit;
