@@ -28,7 +28,11 @@ export class Videos {
     }
     _addVideo(id: ArrayBuffer, video: Video) {
         this.videos.set(id, video);
-        this.element.append(video.createThumbnailElement(this, id));
+        this.element.append(video.createThumbnailElement(
+            () => this.openVideo(video), 
+            () => this.removeVideo(id), 
+            (title: string) => this.renameVideo(id, title)
+        ));
     }
 
     openVideo(video: Video) {
@@ -39,5 +43,10 @@ export class Videos {
     async removeVideo(id: ArrayBuffer) {
         this.videos.delete(id);
         await this.database.removeVideo(id);
+    }
+    
+    async renameVideo(id: ArrayBuffer, title: string) {
+        //todo
+        //await this.database.renameVideo(id, title);
     }
 }

@@ -48,36 +48,53 @@ export abstract class Video {
             note.serialize(buffer);
         }
     }
+    
+    rename(renameVideo: (title: string) => void) {
+        let title = prompt("Rename to:", this.title);
+        console.log(title, this.title);
+        if (title && title !== this.title) {
+            this.title = title;
+            //todo database
+        }
+    }
+    
+    /* true if video was removed */
+    async remove(removeVideo: () => void, confirm: boolean): Promise<boolean> {
+        if (confirm && !window.confirm("Delete " + this.title + "?")) { return false; }
+        await removeVideo();
+        return true;
+    }
 
-    createThumbnailElement(videos:
-                               {
-                                   openVideo: (video: Video) => void,
-                                   removeVideo: (id: ArrayBuffer) => void
-                               },
-                           id: ArrayBuffer): HTMLElement {
+    createThumbnailElement(openVideo: () => void, removeVideo: () => void, renameVideo: (title: string) => void): HTMLElement {
         let thumbnail = document.createElement("div");
         thumbnail.classList.add("card");
         thumbnail.tabIndex = 0;
         thumbnail.title = "Open (Enter)";
         thumbnail.addEventListener("click", () => {
-            videos.openVideo(this);
+            openVideo();
         })
         thumbnail.addEventListener("keypress", async (e) => {
-            console.log(e)
             switch (e.key) {
                 case "Enter":
-                    videos.openVideo(this);
+                    openVideo();
                     break;
                 case "Delete":
-                    if (!e.ctrlKey && confirmRemoveVideo(this.title)) { return; }
-                    await videos.removeVideo(id);
-                    thumbnail.remove();
+                    if (await this.remove(removeVideo, !e.ctrlKey)) { thumbnail.remove(); }
                     break;
                 default:
                     return;
             }
             e.stopPropagation();
         })
+        thumbnail.addEventListener("keydown", (e) => {
+            switch (e.key) {
+                case "F2":
+                    this.rename(renameVideo);
+                default:
+                    return;
+            }
+            e.stopPropagation();
+        });
         thumbnail.append(this.getThumbnail());
         {
             let titleDiv = document.createElement("div");
@@ -98,8 +115,7 @@ export abstract class Video {
                     renameButton.innerText = "✏️";
                     renameButton.addEventListener("click", async (e) => {
                         e.stopPropagation();
-                        let title = prompt("Rename to:", this.title);
-                        console.log(title);
+                        this.rename(renameVideo);
                     });
                 }
                 {
@@ -110,9 +126,7 @@ export abstract class Video {
                     deleteButton.innerText = "🗑️";
                     deleteButton.addEventListener("click", async (e) => {
                         e.stopPropagation();
-                        if (confirmRemoveVideo(this.title)) { return; }
-                        await videos.removeVideo(id);
-                        thumbnail.remove();
+                        if (await this.remove(removeVideo, false)) { thumbnail.remove(); }
                     });
                 }
             }
@@ -199,11 +213,4 @@ export abstract class Video {
 
         return main;
     }
-}
-
-/**
- * @return true if video should be removed
- */
-function confirmRemoveVideo(video: string): boolean {
-   return !window.confirm("Delete " + video + "?");
 }
