@@ -2,12 +2,12 @@
   "compilerOptions": {
     "outDir": "./build/scripts",
     "inlineSourceMap": true,
-    "inlineSources": true,
+    "inlineSources": false,
     "allowJs": false,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
   },
   "include": ["./src/**/*"],
 }
