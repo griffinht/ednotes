@@ -101,6 +101,11 @@ export abstract class Video {
               })
           }
         }
+        {
+          let p = document.createElement("p");
+          thumbnail.append(p);
+          p.innerText = "a new note";
+        }
         return thumbnail;
     }
 

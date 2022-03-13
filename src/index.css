@@ -46,6 +46,7 @@ input[type=file]:focus + label {
 }
 .thumbnail > div {
   display: flex;
+  color: var(--primary-foreground);
   background-color: var(--primary);
   justify-content: space-between;
   width: 100%;
