@@ -13,6 +13,10 @@
     
     --font: serif;
 }
+h1, h2, h3, h4, h5, h6, p {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
 body {
     font-family: var(--font);
     color: var(--neutral-foreground);
