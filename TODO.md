@@ -11,3 +11,5 @@
 
 # bugs
 - firefox kb shortcuts don't work
+- firefox margin-top
+- make video state mutable
