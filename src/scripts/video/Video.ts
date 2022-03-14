@@ -128,7 +128,7 @@ export abstract class Video {
                     deleteButton.classList.add("danger");
                     deleteButton.addEventListener("click", async (e) => {
                         e.stopPropagation();
-                        if (await this.remove(removeVideo, false)) { thumbnail.remove(); }
+                        if (await this.remove(removeVideo, true)) { thumbnail.remove(); }
                     });
                 }
             }
