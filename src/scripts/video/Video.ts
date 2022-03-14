@@ -49,12 +49,11 @@ export abstract class Video {
         }
     }
     
-    rename(renameVideo: (title: string) => void) {
+    rename(updateVideo: () => void) {
         let title = prompt("Rename to:", this.title);
-        console.log(title, this.title);
         if (title && title !== this.title) {
             this.title = title;
-            //todo database
+            updateVideo();
         }
     }
     
@@ -65,7 +64,7 @@ export abstract class Video {
         return true;
     }
 
-    createThumbnailElement(openVideo: () => void, removeVideo: () => void, renameVideo: (title: string) => void): HTMLElement {
+    createThumbnailElement(openVideo: () => void, removeVideo: () => void, updateVideo: () => void): HTMLElement {
         let thumbnail = document.createElement("div");
         thumbnail.classList.add("card");
         thumbnail.tabIndex = 0;
@@ -89,7 +88,7 @@ export abstract class Video {
         thumbnail.addEventListener("keydown", (e) => {
             switch (e.key) {
                 case "F2":
-                    this.rename(renameVideo);
+                    this.rename(updateVideo);
                 default:
                     return;
             }
@@ -102,7 +101,7 @@ export abstract class Video {
             {
                 let title = document.createElement("h2");
                 titleDiv.append(title);
-                title.innerText = this.title; 
+                title.innerText = this.title;
             }
             {
                 let buttonDiv = document.createElement("div");
@@ -115,7 +114,7 @@ export abstract class Video {
                     renameButton.innerText = "✏️";
                     renameButton.addEventListener("click", async (e) => {
                         e.stopPropagation();
-                        this.rename(renameVideo);
+                        this.rename(updateVideo);
                     });
                 }
                 {
@@ -148,7 +147,6 @@ export abstract class Video {
         main.classList.add("item")
 
         main.addEventListener("keypress", (e) => {
-            console.log(e.key)
             if (e.key === "Escape") {
                 e.stopPropagation();
                 main.remove();
