@@ -11,6 +11,8 @@
     --neutral-highlight: lightgray;
     --neutral-background: white;
     
+    --danger: red;
+    
     --font: serif;
 }
 h1, h2, h3, h4, h5, h6, p {
@@ -48,12 +50,17 @@ footer {
     justify-content: center;
     z-index: 1;
 }
-button {
+button.icon {
+    font-size: 2em;
+    border: none;
     color: var(--primary-foreground);
     background-color: var(--primary);
 }
-button:hover {
+button.icon:hover {
     background-color: var(--primary-highlight);
+}
+button.icon.danger:hover {
+    background-color: var(--danger);
 }
 .card {
     box-shadow: 0em 1em 1em -.5em var(--neutral);

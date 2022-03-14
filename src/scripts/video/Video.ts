@@ -111,7 +111,8 @@ export abstract class Video {
                     buttonDiv.append(renameButton);
                     renameButton.tabIndex = -1;
                     renameButton.title = "Rename (F2)";
-                    renameButton.innerText = "✏️";
+                    renameButton.innerText = "✎";
+                    renameButton.classList.add("icon");
                     renameButton.addEventListener("click", async (e) => {
                         e.stopPropagation();
                         this.rename(updateVideo);
@@ -122,7 +123,9 @@ export abstract class Video {
                     buttonDiv.append(deleteButton);
                     deleteButton.tabIndex = -1;
                     deleteButton.title = "Delete (Delete)";
-                    deleteButton.innerText = "🗑️";
+                    deleteButton.innerText = "🗑";
+                    deleteButton.classList.add("icon");
+                    deleteButton.classList.add("danger");
                     deleteButton.addEventListener("click", async (e) => {
                         e.stopPropagation();
                         if (await this.remove(removeVideo, false)) { thumbnail.remove(); }
