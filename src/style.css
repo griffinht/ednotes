@@ -36,12 +36,18 @@ body {
     z-index: 0;
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
+    align-items: center;
     background-color: var(--primary-lowlight);
     color: var(--neutral-background);
     box-shadow: 0em .5em 1.5em -.5em var(--neutral);
     padding-left: 1%;
     padding-right: 1%;
+    max-height: 10%;
+}
+
+.logo {
+    max-width: fit-content;
+    max-height: fit-content;
 }
 
 /*
