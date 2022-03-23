@@ -1,32 +1,33 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>EdNotes</title>
-    <link rel="manifest" href="webmanifest">
-    <meta name="description" content="ednotes description todo">
-    <meta name="theme-color" content="#ff00ff">
-    <link rel="icon" href="favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script type="module" src="scripts/main.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-<header>
-    <h1>EdNotes</h1>
-    <button id="newModalOpen" title="Open (/)">+</button>
-</header>
-<div id="newModal" class="modal">
-    <div>
-        <label>
-            <input id="urlInput" type="text" placeholder="enter url"/>
-        </label>
-        <input type="file" id="fileInput">
-        <label for="fileInput">Select File</label>
-        <button id="screenInput">Capture Screen</button>
-    </div>
-</div>
-<div class="browser"></div>
-<footer>test</footer>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <title>EdNotes</title>
+        <link rel="manifest" href="webmanifest">
+        <meta name="description" content="ednotes description todo">
+        <meta name="theme-color" content="#ff00ff">
+        <link rel="icon" href="favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <script type="module" src="scripts/main.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <header>
+            <h1>EdNotes</h1>
+            <button id="newModalOpen" title="Open (/)">+</button>
+        </header>
+        <div id="newModal" class="modal">
+            <div>
+                <label>
+                    <input id="urlInput" type="text" placeholder="enter url"/>
+                </label>
+                <input type="file" id="fileInput">
+                <label for="fileInput">Select File</label>
+                <button id="screenInput">Capture Screen</button>
+            </div>
+        </div>
+        <div class="browser"></div>
+        <footer>test</footer>
+    </body>
 </html>
