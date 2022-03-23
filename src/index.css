@@ -1,9 +1,12 @@
+
+
 #newModal > div {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5em;
 }
+
 .browser {
     flex-basis: 100%;
     background-color: var(--neutral-highlight);
@@ -26,7 +29,7 @@
 .browser > .card > div {
     display: flex;
     color: var(--primary-foreground);
-    background-color: var(--primary);
+    background-color: var(--primary-lowlight);
     justify-content: space-between;
     width: 100%;
 }

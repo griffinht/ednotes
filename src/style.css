@@ -2,9 +2,9 @@
 
 :root {
     --primary-background: black;
-    --primary-lowlight: darkgreen;
-    --primary: green;
-    --primary-highlight: lightgreen;
+    --primary-lowlight: rgb(0, 0, 90);
+    --primary: rgb(64, 64, 252);
+    --primary-highlight: lightblue;
     --primary-foreground: white;
 
     --neutral-foreground: black;
@@ -14,6 +14,8 @@
     --neutral-background: white;
     
     --danger: red;
+
+
     
     --font: tahoma, serif;
 }
@@ -30,12 +32,26 @@ body {
     margin: 0;
     max-height: 100vh;
 }
-header {
+.header {
+    z-index: 0;
     display: flex;
     justify-content: space-between;
-    background-color: var(--primary);
+    /* align-items: center; */
+    background-color: var(--primary-lowlight);
     color: var(--neutral-background);
+    box-shadow: 0em .5em 1.5em -.5em var(--neutral);
+    padding-left: 1%;
+    padding-right: 1%;
 }
+
+/*
+#newModalOpen {
+    background-color: var(--primary-highlight);
+    border: none;
+    width: 5%;
+    height: ;
+}
+*/
 
 footer {
     margin-top: auto;
@@ -66,7 +82,7 @@ button.icon.danger:hover {
 }
 .card {
     box-shadow: 0em 1em 1em -.5em var(--neutral);
-    border-radius: 0.5em;
+    border-radius: var(--shadow);
     transition: 30ms linear;
 }
 .card:hover, .card:focus {
