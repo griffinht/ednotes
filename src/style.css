@@ -48,6 +48,7 @@ body {
 .logo {
     max-width: fit-content;
     max-height: fit-content;
+    object-fit: contain;
 }
 
 /*
