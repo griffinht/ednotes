@@ -1,13 +1,13 @@
 services:
     nginx:
-        image: nginx
+        image: nginx:alpine
         ports:
             - 8080:80
         volumes:
             - ./build/scripts:/usr/share/nginx/html/scripts
             - ./src:/usr/share/nginx/html
     node:
-        image: node
+        image: node:alpine
         volumes:
             - ./package.json:/usr/app/package.json
             - ./tsconfig.json:/usr/app/tsconfig.json
