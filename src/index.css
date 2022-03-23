@@ -4,11 +4,15 @@
     align-items: center;
     gap: 5em;
 }
+body {
+    height: 100vh;
+}
 .browser {
-    flex-basis: 100%;
+    flex: 1;
     background-color: var(--neutral-highlight);
     overflow: auto;
     display: grid;
+    align-content: start;
     grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
     grid-gap: 2em;
     padding: 1em;
