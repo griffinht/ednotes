@@ -43,22 +43,21 @@ body {
     padding-left: 1%;
     padding-right: 1%;
     max-height: 10%;
+    
 }
 
 .logo {
-    max-width: fit-content;
-    max-height: fit-content;
-    object-fit: contain;
+    max-height: 50%;
 }
 
-/*
+
 #newModalOpen {
     background-color: var(--primary-highlight);
     border: none;
     width: 5%;
-    height: ;
+    height: 100%;
 }
-*/
+
 
 footer {
     margin-top: auto;
