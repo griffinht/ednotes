@@ -54,10 +54,9 @@ body {
 
 #newModalOpen {
     background-color: var(--primary-highlight);
-    border: 2%;
     border: solid;
     border-color: var(--very-bright);
-    -webkit-border-radius: 2em;
+    border-radius: 2em;
     width: 5%;
     height: 35%;
     transition-duration: .4s;
@@ -102,7 +101,6 @@ button.icon.danger:hover {
 }
 .card:hover, .card:focus {
     box-shadow: 0em 1em 1em -.5em var(--primary);
-    transform: translate(0, -0.5em) scale(1.01);
     transition: 30ms linear;
     outline: 0;
 }
