@@ -2,9 +2,10 @@
 
 :root {
     --primary-background: black;
-    --primary-lowlight: rgb(0, 0, 90);
-    --primary: rgb(64, 64, 252);
-    --primary-highlight: lightblue;
+    --primary-lowlight: #051367;
+    --primary: #2D31FA;
+    --primary-highlight: #5D8BF4;
+    --very-bright: #DFF6FF;
     --primary-foreground: white;
 
     --neutral-foreground: black;
@@ -53,9 +54,17 @@ body {
 
 #newModalOpen {
     background-color: var(--primary-highlight);
-    border: none;
+    border: 2%;
+    border: solid;
+    border-color: var(--very-bright);
+    -webkit-border-radius: 2em;
     width: 5%;
-    height: 100%;
+    height: 35%;
+    transition-duration: .4s;
+}
+
+#newModalOpen:hover {
+    background-color: var(--very-bright);
 }
 
 
