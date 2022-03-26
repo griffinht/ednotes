@@ -1,11 +1,11 @@
-import {Video} from "./video/Video.js";
+import {Note} from "./note/Note.js";
 import ByteBuffer from "./common/ByteBuffer.js";
-import {deserialize} from "./video/VideoType.js";
+import {deserialize} from "./note/NoteType.js";
 
 export interface Database {
-    getVideos(): Promise<any>;
-    putVideo(id: ArrayBuffer, video: Video): Promise<void>;
-    removeVideo(id: ArrayBuffer): Promise<void>;
+    getNotes(): Promise<any>;
+    putNote(id: ArrayBuffer, note: Note): Promise<void>;
+    removeNote(id: ArrayBuffer): Promise<void>;
 }
 class IndexedDatabase implements Database {
     database: IDBDatabase
@@ -14,8 +14,8 @@ class IndexedDatabase implements Database {
         this.database = database;
     }
 
-    async getVideos(): Promise<Map<ArrayBuffer, Video>> {
-        let request = this.database.transaction("videos", "readwrite").objectStore("videos").openCursor();
+    async getNotes(): Promise<Map<ArrayBuffer, Note>> {
+        let request = this.database.transaction("notes", "readwrite").objectStore("notes").openCursor();
         return new Promise((resolve, reject) => {
             let map = new Map();
             request.addEventListener("success", (e) => {
@@ -35,8 +35,8 @@ class IndexedDatabase implements Database {
         });
     }
 
-    async removeVideo(id: ArrayBuffer): Promise<void> {
-        let request = this.database.transaction("videos", "readwrite").objectStore("videos").delete(id);
+    async removeNote(id: ArrayBuffer): Promise<void> {
+        let request = this.database.transaction("notes", "readwrite").objectStore("notes").delete(id);
         return new Promise((resolve, reject) => {
             request.addEventListener("success", () => {
                 resolve()
@@ -47,10 +47,10 @@ class IndexedDatabase implements Database {
         });
     }
 
-    async putVideo(id: ArrayBuffer, video: Video): Promise<void> {
+    async putNote(id: ArrayBuffer, note: Note): Promise<void> {
         let buffer = new ByteBuffer();
-        video.serialize(buffer)
-        let request = this.database.transaction("videos", "readwrite").objectStore("videos").put(buffer.getBuffer(), id);
+        note.serialize(buffer)
+        let request = this.database.transaction("notes", "readwrite").objectStore("notes").put(buffer.getBuffer(), id);
         return new Promise((resolve, reject) => {
             request.addEventListener("success", () => {
                 resolve()
@@ -64,14 +64,14 @@ class IndexedDatabase implements Database {
 }
 export async function loadDatabase(): Promise<Database> {
     let database = await new Promise<IDBDatabase>((resolve, reject) => {
-        //indexedDB.deleteDatabase("ednotes");
+        indexedDB.deleteDatabase("ednotes");
         let open = indexedDB.open("ednotes");
         open.addEventListener("error", (e) => {
             reject(e);
         });
         open.addEventListener("upgradeneeded", () => {
             let database = open.result;
-            database.createObjectStore("videos");
+            database.createObjectStore("notes");
         })
         open.addEventListener("success", () => {
             resolve(open.result);
