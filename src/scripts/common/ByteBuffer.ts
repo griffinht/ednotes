@@ -1,7 +1,19 @@
+/**
+ * The ByteBuffer class encapsulates a buffer which can be modified with read/write methods.
+ * This is useful for serializing/deserializing data.
+ * A ByteBuffer can be thought of as a stream, which can be consumed either by reading or writing data.
+ * When writing data, the underlying buffer will be automatically expanded if it fills up.
+ */
 export default class ByteBuffer {
     position: number;
     view: DataView;
 
+    /**
+     * Constructs a new ByteBuffer instance with an existing buffer to use as the underlying buffer.
+     * If no existing buffer is provided, a new one will be generated.
+     *
+     * @param buffer The existing buffer to use with the new ByteBuffer instance
+     */
     constructor(buffer?: ArrayBufferLike) {
         this.position = 0;
         if (buffer === undefined) {
@@ -10,7 +22,13 @@ export default class ByteBuffer {
         this.view = new DataView(buffer);
     }
 
-    static create(size?: number) {
+    /**
+     * Creates a new ByteBuffer instance with a new underlying buffer of a certain size.
+     * This can be used to reduce the number of dyamic resize operations performed on the buffer when writing data.
+     *
+     * @param size The size of the new buffer to create
+     */
+    static create(size?: number): ByteBuffer {
         if (size === undefined) {
             size = 0;
         }
@@ -18,11 +36,16 @@ export default class ByteBuffer {
     }
 
 
-
+    /**
+     * @returns Whether the buffer has more data to read
+     */
     hasNext() {
         return this.position < this.view.byteLength;
     }
 
+    /**
+     * @returns The underlying buffer
+     */
     getBuffer() {
         if (this.view.byteLength > this.position) {
             return this.view.buffer.slice(0, this.position);
@@ -32,7 +55,15 @@ export default class ByteBuffer {
     }
 
 
-
+    /**
+     * Checks if the buffer needs to be expanded before more data is written.
+     * If the buffer needs to be expanded, then an entirely new larger array will be created, and the original data will be copied over.
+     * This makes this operation potentially expensive.
+     * Should be called each time before data is written to the buffer, to prevent the data from overflowing the buffer.
+     *
+     * @param extraLength The additional length the buffer should hold. This will be added to the current position.
+     *
+     */
     private checkResize(extraLength: number) {
         let targetLength = this.position + extraLength;
         if (targetLength > this.view.byteLength) {
