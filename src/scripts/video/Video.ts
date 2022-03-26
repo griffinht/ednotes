@@ -1,7 +1,7 @@
 import ByteBuffer from "../common/ByteBuffer.js";
 import {VideoType} from "./VideoType.js";
 import {Videos} from "../Videos.js";
-import {TextNote} from "../note/TextNote.js";
+import {TextNote} from "../note/notes/TextNote.js";
 
 
 export class Note {
