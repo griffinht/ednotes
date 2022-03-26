@@ -1,5 +1,6 @@
 import { Note } from "Note.js"
 import ByteBuffer from "../common/ByteBuffer.js";
+import { Video } from "../video/Video.js";
 
 export class TextNote extends Note {
     text: string;
@@ -14,10 +15,12 @@ export class TextNote extends Note {
         buffer.writeString16(this.text);
     }
     
+    // New TextNote instance
     static create() {
         let object = Object.create(this.prototype);
         object.created = Date.now();
         object.title = "Blank text note";
         return object;
     }
+
 }

@@ -1,6 +1,8 @@
 import ByteBuffer from "../common/ByteBuffer.js";
 import {VideoType} from "./VideoType.js";
 import {Videos} from "../Videos.js";
+import {TextNote} from "../note/TextNote.js";
+
 
 export class Note {
     time: number
@@ -181,19 +183,21 @@ export abstract class Video {
             let section = document.createElement("section");
             main.append(section);
             this.notes.push(Note.create(0))
-            this.notes.push(Note.create(1))
-            this.notes.push(Note.create(2))
-            this.notes.push(Note.create(3))
+            // this.notes.push(Note.create(1))
+            // this.notes.push(Note.create(2))
+            // this.notes.push(Note.create(3))
             for (let note of this.notes) {
-                let element = document.createElement("input")
+                let element = document.createElement("textarea")
                 section.append(element);
-                element.type = "textarea";
+                //element.type = "textarea";
                 element.value = note.text;
                 element.addEventListener("change", () => {
                     console.log("change")
                     note.text = element.value;
                 });
             }
+
+            
             {
                 let button = document.createElement("button")
                 section.append(button);
@@ -206,7 +210,7 @@ export abstract class Video {
                             index = i + 1;
                         }
                     }
-                    this.notes.splice(index, 0, Note.create(time))
+                    this.notes.splice(index, 0, Note.create(time));
                 })
 
             }
