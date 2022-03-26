@@ -33,7 +33,7 @@ body {
     margin: 0;
     max-height: 100vh;
 }
-.header {
+header {
     z-index: 0;
     display: flex;
     justify-content: space-between;
