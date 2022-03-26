@@ -1,5 +1,13 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    max-height: 100vh;
+}
 
 
+/* div is an extra wrapper between the modal and contents of the modal */
 #newModal > div {
     display: flex;
     flex-direction: column;
@@ -7,10 +15,21 @@
     gap: 5em;
 }
 
-
-body {
-    height: 100vh;
+/* todo standardize button looks */
+#newModalOpenButton {
+    background-color: var(--primary-highlight);
+    border: var(--very-bright) solid;
+    border-radius: 2em;
+    /* todo don't use relative percents instead use font sizes like 5em */
+    width: 5%;
+    height: 35%;
+    transition-duration: .4s;
 }
+
+#newModalOpenButton:hover {
+    background-color: var(--very-bright);
+}
+
 
 .browser {
     flex: 1;

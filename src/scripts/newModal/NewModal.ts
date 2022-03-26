@@ -11,7 +11,7 @@ export class NewModal {
                 this.closeModal();
             }
         });
-        document.getElementById("newModalOpen")!.addEventListener("click", () => {
+        document.getElementById("newModalOpenButton")!.addEventListener("click", () => {
             this.openModal();
         })
         document.addEventListener("keypress", (e) => {

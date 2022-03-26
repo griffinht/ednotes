@@ -1,6 +1,8 @@
-
-
 :root {
+    --font: tahoma, serif;
+    
+    
+    /* colors */    
     --primary-background: black;
     --primary-lowlight: #051367;
     --primary: #2D31FA;
@@ -15,10 +17,6 @@
     --neutral-background: white;
     
     --danger: red;
-
-
-    
-    --font: tahoma, serif;
 }
 h1, h2, h3, h4, h5, h6, p {
   padding-left: 0.5em;
@@ -28,10 +26,6 @@ body {
     font-family: var(--font);
     color: var(--neutral-foreground);
     background-color: var(--neutral-background);
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    max-height: 100vh;
 }
 header {
     z-index: 0;
@@ -46,25 +40,9 @@ header {
     max-height: 10%;
     
 }
-
+/* todo use padding instead? and move to index.css */
 .logo {
     max-height: 50%;
-}
-
-
-/* todo standardize button looks */
-#newModalOpen {
-    background-color: var(--primary-highlight);
-    border: var(--very-bright) solid;
-    border-radius: 2em;
-    /* todo don't use relative percents instead use font sizes like 5em */
-    width: 5%;
-    height: 35%;
-    transition-duration: .4s;
-}
-
-#newModalOpen:hover {
-    background-color: var(--very-bright);
 }
 
 
