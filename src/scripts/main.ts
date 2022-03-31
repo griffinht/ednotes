@@ -1,10 +1,5 @@
 import {loadDatabase} from "./database.js";
-import {Videos} from "./Videos.js";
 import {NewModal} from "./newModal/NewModal.js";
-import {Drag} from "./newModal/Drag.js";
-import {FileInput} from "./newModal/FileInput.js";
-import {NewVideo} from "./video/NewVideo.js";
-import {UrlInput} from "./newModal/UrlInput.js";
 import {Notes} from "./note/Notes.js";
 import {Viewer} from "./Viewer.js";
 
@@ -29,8 +24,4 @@ document.addEventListener("keypress", (e) => {
 
 
 const viewer = new Viewer(document.getElementsByClassName("viewer")[0] as HTMLElement);
-/*
-const newVideo = new NewVideo(modal, videos);
-new Drag(modal, newVideo);
-new FileInput(modal, newVideo);
-new UrlInput(modal, newVideo);*/
+

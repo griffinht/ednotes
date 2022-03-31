@@ -1,18 +1,10 @@
-/*
-            <div>
-                <label>
-                    <input id="urlInput" type="text" placeholder="enter url"/>
-                </label>
-                <input type="file" id="fileInput">
-                <label for="fileInput">Select File</label>
-                <button id="screenInput">Capture Screen</button>
-            </div>
-            */
 export class UrlInput {
     element: HTMLInputElement;
     
     constructor(parent: HTMLElement, onSubmit: (value: string) => void) {
         this.element = document.createElement("input") as HTMLInputElement;
+        this.element.type = "text";
+        this.element.placeholder = "enter url";
         parent.appendChild(this.element);
         this.element.addEventListener("keypress", async (e) => {
             if (e.key === "Enter") {
