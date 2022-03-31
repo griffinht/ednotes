@@ -11,8 +11,17 @@ const notes = new Notes(database, document.getElementsByClassName("browser")[0] 
 const modal = new NewModal(
     document.getElementById("newModal")!, 
     document.getElementById("newModalOpenButton")!,
-    (url: string) => {
+    async () => {
+        console.log("submit");
+        return true;
+    },
+    async (url: string) => {
         console.log(url);
+        return true;
+    },
+    async (file: File) => {
+        console.log(file);
+        return true;
     });
 document.addEventListener("keypress", (e) => {
   if (e.code === "Slash" && modal.openModal()) {

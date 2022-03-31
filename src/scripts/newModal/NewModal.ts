@@ -7,7 +7,12 @@ export class NewModal {
     form: HTMLElement;
     urlInput: UrlInput;
 
-    constructor(element: HTMLElement, openElement: HTMLElement, onSubmitUrl: (url: string) => void) {
+    constructor(
+        element: HTMLElement, 
+        openElement: HTMLElement, 
+        onSubmit: () => Promise<boolean>, 
+        onSubmitUrl: (url: string) => Promise<boolean>, 
+        onSubmitFile: (file: File) => Promise<boolean>) {
         this.element = element;
         
         // external openElement
@@ -32,15 +37,16 @@ export class NewModal {
         // form
         this.form = document.createElement("form");
         this.element.appendChild(this.form);
-        this.form.addEventListener("submit", (e) => { 
+        this.form.addEventListener("submit", async (e) => { 
+            e.preventDefault(); // prevent page reload
             console.log("submitted");
             let url = this.urlInput.getValue();
             if (url !== "") {
-                console.log("create new with url " + url);
+                if (await onSubmitUrl(url)) { this.closeModal(); }
             } else {
-                console.log("create new text note");
+                if (await onSubmit()) { this.closeModal(); }
             }
-            e.preventDefault(); // prevent page reload
+
         });
         
         // form elements
@@ -55,8 +61,8 @@ export class NewModal {
             this.element, 
             () => this.openModal(), 
             () => this.closeModal(), 
-            (uri: string) => { console.log(uri); }, 
-            (file: File) => { console.log(file); }
+            async (url: string) => { if (await onSubmitUrl(url)) { this.closeModal(); } }, 
+            async (file: File) => { if (await onSubmitFile(file)) { this.closeModal(); } }
         );
     }
     
