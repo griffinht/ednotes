@@ -1,9 +1,9 @@
 export class Drag {
     constructor(
-        parent: HTMLElement, 
-        onDragEnter: () => void, 
+        parent: HTMLElement,
+        onDragEnter: () => void,
         onDragLeave: () => void,
-        onDragUri: (uri: string) => void, 
+        onDragUri: (uri: string) => void,
         onDragFile: (file: File) => void) {
         document.addEventListener("dragenter", (e) => {
             if (!e.dataTransfer) {
