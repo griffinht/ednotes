@@ -3,8 +3,6 @@ import ByteBuffer from "../common/ByteBuffer.js";
 export abstract class Note {
     created: Date;
     title: string;
-    abstract thumbnail: HTMLElement;
-    abstract element: HTMLElement; 
     
     protected constructor(buffer: any) {
         if (buffer instanceof ByteBuffer) { 
