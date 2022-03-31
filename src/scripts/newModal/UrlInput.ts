@@ -1,16 +1,15 @@
 export class UrlInput {
     element: HTMLInputElement;
     
-    constructor(parent: HTMLElement, onSubmit: (value: string) => void) {
+    constructor(parent: HTMLElement) {
         this.element = document.createElement("input") as HTMLInputElement;
         this.element.type = "text";
         this.element.placeholder = "enter url";
         parent.appendChild(this.element);
-        this.element.addEventListener("keypress", async (e) => {
-            if (e.key === "Enter") {
-                onSubmit(this.element.value);
-            }
-        })
+    }
+    
+    getValue(): string {
+        return this.element.value;
     }
     
     focus() {
