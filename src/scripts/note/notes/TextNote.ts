@@ -5,9 +5,9 @@ import { Video } from "../../video/Video.js";
 export class TextNote extends Note {
     text: string;
     
-    constructor(buffer: any) {
+    constructor(buffer?: ByteBuffer) {
         super(buffer);
-        if (buffer instanceof ByteBuffer) {
+        if (buffer) {
             this.text = buffer.readString16();
         } else {
             this.text = "Blank text note";
