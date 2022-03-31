@@ -1,4 +1,5 @@
 import ByteBuffer from "../common/ByteBuffer.js";
+import {NoteType} from "./NoteType.js";
 
 export abstract class Note {
     created: Date;
@@ -14,7 +15,10 @@ export abstract class Note {
         }
     }
     
+    abstract getType(): NoteType;
+    
     serialize(buffer: ByteBuffer) {
+        buffer.writeUint8(this.getType());
         buffer.writeUint32(this.created.getTime());
         buffer.writeString8(this.title);
     }

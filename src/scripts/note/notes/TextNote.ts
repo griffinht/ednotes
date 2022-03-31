@@ -1,6 +1,7 @@
 import { Note } from "../Note.js"
 import ByteBuffer from "../../common/ByteBuffer.js";
 import { Video } from "../../video/Video.js";
+import { NoteType } from "../NoteType.js";
 
 export class TextNote extends Note {
     text: string;
@@ -12,6 +13,10 @@ export class TextNote extends Note {
         } else {
             this.text = "Blank text note";
         }
+    }
+    
+    getType(): NoteType {
+        return NoteType.TEXT;
     }
     
     serialize(buffer: ByteBuffer) {
