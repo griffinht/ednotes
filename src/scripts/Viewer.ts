@@ -18,7 +18,7 @@ export class Viewer {
     
     close() {
         if (this.note === null) {
-            console.warn7("tried to close when there is no note to close");
+            console.warn("tried to close when there is no note to close");
         }
         this.note = null;
     }

@@ -1,11 +1,13 @@
+import {UrlInput} from "./UrlInput.js"
+
 export class NewModal {
     static display = "flex";
     element: HTMLElement;
-    urlInput: HTMLInputElement
+    urlInput: UrlInput;
 
-    constructor(element: HTMLElement, urlInput: HTMLInputElement) {
+    constructor(element: HTMLElement, openElement: HTMLElement, onSubmitUrl: (url: string) => void) {
         this.element = element;
-        this.urlInput = urlInput;
+        this.urlInput = new UrlInput(element, onSubmitUrl);
         this.element.addEventListener("click", (e) => {
             if (e.target === this.element) { //make sure click was the background and not an element within the modal
                 this.closeModal();
@@ -18,7 +20,7 @@ export class NewModal {
                 e.preventDefault();
             }
         });
-        document.getElementById("newModalOpenButton")!.addEventListener("click", () => {
+        openElement.addEventListener("click", () => {
             this.openModal();
         })
     }
@@ -30,7 +32,6 @@ export class NewModal {
     closeModal() {
         this.element.style.display = "none";
         this.urlInput.blur();
-        this.urlInput.value = "";
     }
 
     openModal() {

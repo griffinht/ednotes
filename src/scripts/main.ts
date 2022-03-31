@@ -13,9 +13,14 @@ const notes = new Notes(database, document.getElementsByClassName("browser")[0] 
 
 
 
-const modal = new NewModal(document.getElementById("newModal")!, document.getElementById("urlInput") as HTMLInputElement);
+const modal = new NewModal(
+    document.getElementById("newModal")!, 
+    document.getElementById("newModalOpenButton")!,
+    (url: string) => {
+        console.log(url);
+    });
 document.addEventListener("keypress", (e) => {
-  if (e.code === "Slash" && !this.isOpen()) {
+  if (e.code === "Slash" && !modal.isOpen()) {
    modal.openModal();
    e.preventDefault(); 
   }
