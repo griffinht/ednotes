@@ -1,6 +1,6 @@
 import {loadDatabase} from "./database.js";
 import {NewModal} from "./newModal/NewModal.js";
-import {Notes} from "./note/Notes.js";
+import {Browser} from "./Browser.js";
 import {Editor} from "./Editor.js";
 
 
@@ -9,7 +9,7 @@ import {TextNote} from "./note/notes/TextNote.js";
 
 const database = await loadDatabase();
 const editor = new Editor(document.getElementsByClassName("viewer")[0] as HTMLElement);
-const notes = new Notes(
+const browser = new Browser(
     database,
     editor,
     document.getElementsByClassName("browser")[0] as HTMLElement,
@@ -22,7 +22,7 @@ const modal = new NewModal(
     document.getElementById("newModalOpenButton")!,
     async () => {
         let note = new TextNote();
-        notes.add(note);
+        browser.add(note);
         return true;
     },
     async (url: string) => {

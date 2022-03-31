@@ -1,8 +1,8 @@
-import {Database} from "../database.js";
-import {Note} from "./Note.js";
-import {Editor} from "../Editor.js";
+import {Database} from "./database.js";
+import {Note} from "./note/Note.js";
+import {Editor} from "./Editor.js";
 
-export class Notes {
+export class Browser {
     notes: Map<ArrayBuffer, Note> = new Map<ArrayBuffer, Note>();
     
     database: Database;
