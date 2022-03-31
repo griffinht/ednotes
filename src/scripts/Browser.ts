@@ -1,4 +1,4 @@
-import {Database} from "./database.js";
+import {Database} from "./database/Database.js";
 import {Note} from "./note/Note.js";
 import {Editor} from "./Editor.js";
 

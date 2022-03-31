@@ -1,12 +1,8 @@
-import {Note} from "./note/Note.js";
-import ByteBuffer from "./common/ByteBuffer.js";
-import {deserialize} from "./note/NoteType.js";
+import { Note } from "../../note/Note.js";
+import { Database } from "../Database.js";
+import ByteBuffer from "../../common/ByteBuffer.js";
+import { deserialize } from "../../note/NoteType.js";
 
-export interface Database {
-    getNotes(): Promise<any>;
-    putNote(id: ArrayBuffer, note: Note): Promise<void>;
-    removeNote(id: ArrayBuffer): Promise<void>;
-}
 class IndexedDatabase implements Database {
     database: IDBDatabase
 

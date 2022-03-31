@@ -1,5 +1,5 @@
 import {Video} from "./video/Video.js";
-import {Database} from "./database.js";
+import {Database} from "./database/Database.js";
 
 export class Videos {
     videos: Map<ArrayBuffer, Video> = new Map<ArrayBuffer, Video>();

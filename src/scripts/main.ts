@@ -1,4 +1,4 @@
-import {loadDatabase} from "./database.js";
+import {loadDatabase} from "./database/databases/IndexedDatabase.js";
 import {NewModal} from "./newModal/NewModal.js";
 import {Browser} from "./Browser.js";
 import {Editor} from "./Editor.js";
