@@ -1,11 +1,10 @@
-import {UrlInput} from "./UrlInput.js";
+import {Form} from "./Form.js";
 import {Drag} from "./Drag.js";
 
 export class NewModal {
     static display = "flex";
     element: HTMLElement;
-    form: HTMLElement;
-    urlInput: UrlInput;
+    form: Form;
 
     constructor(
         element: HTMLElement, 
@@ -22,7 +21,7 @@ export class NewModal {
         
         // modal
         this.element.addEventListener("click", (e) => {
-            if (e.target === this.element) { //make sure click was the background and not an element within the modal
+            if (e.target === this.element) { // make sure click was the background and not an element within the modal
                 this.closeModal();
                 //todo e.preventDefault()?
             }
@@ -33,34 +32,24 @@ export class NewModal {
                 e.preventDefault();
             }
         });
-        
-        // form
-        this.form = document.createElement("form");
-        this.element.appendChild(this.form);
-        this.form.addEventListener("submit", async (e) => { 
-            e.preventDefault(); // prevent page reload
-            console.log("submitted");
-            let url = this.urlInput.getValue();
-            if (url !== "") {
-                if (await onSubmitUrl(url)) { this.closeModal(); }
-            } else {
-                if (await onSubmit()) { this.closeModal(); }
-            }
 
-        });
-        
-        // form elements
-        this.urlInput = new UrlInput(this.form);
-        {
-            // submit button
-            let submitButton = document.createElement("input");
-            this.form.appendChild(submitButton);
-            submitButton.type = "submit";
-        }
+        // form
+        this.form = new Form(
+            this.element,
+            async (url: string) => {
+                console.log("submitted");
+                if (url !== "") {
+                    if (await onSubmitUrl(url)) { this.closeModal(); }
+                } else {
+                    if (await onSubmit()) { this.closeModal(); }
+                }
+            });
+
+        // drag
         new Drag(
             this.element, 
-            () => this.openModal(), 
-            () => this.closeModal(), 
+            () => this.openModal(),
+            () => this.closeModal(),
             async (url: string) => { if (await onSubmitUrl(url)) { this.closeModal(); } }, 
             async (file: File) => { if (await onSubmitFile(file)) { this.closeModal(); } }
         );
@@ -70,12 +59,8 @@ export class NewModal {
       return this.element.style.display === NewModal.display;
     }
     
-    closeModal() {
-        this.element.style.display = "none";
-        this.urlInput.blur();
-    }
-
     /**
+     * Make the modal visible and focus on the form.
      * @return true if the modal was opened, or false if the modal was already opened
      */
     openModal(): boolean {
@@ -83,7 +68,15 @@ export class NewModal {
             return false;
         }
         this.element.style.display = NewModal.display;
-        this.urlInput.focus();
+        this.form.focus();
         return true;
+    }
+    
+    /**
+     * Make the modal invisibile and blur on the form
+     */
+    closeModal() {
+        this.element.style.display = "none";
+        this.form.blur();
     }
 }

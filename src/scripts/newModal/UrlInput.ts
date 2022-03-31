@@ -1,3 +1,6 @@
+/**
+ * Represents a text input which takes a url value.
+ */
 export class UrlInput {
     element: HTMLInputElement;
     
