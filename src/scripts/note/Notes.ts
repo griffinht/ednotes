@@ -2,7 +2,7 @@ import {Database} from "../database.js";
 import {Note} from "./Note.js";
 
 export class Notes {
-    videos: Map<ArrayBuffer, Note> = new Map<ArrayBuffer, Note>();
+    notes: Map<ArrayBuffer, Note> = new Map<ArrayBuffer, Note>();
     database: Database
     element: HTMLElement
     before: Element
@@ -13,18 +13,22 @@ export class Notes {
             .getNotes()
             .then((notes: Map<ArrayBuffer, Note>) => {
                 for (let [id, note] of notes.entries()) {
-                    //this._addNote(id, video)
+                    this._add(id, video)
                 }
             });
         this.element = element;
         this.before = before;
     }
 
-    addNote(note: Note) {
+    add(note: Note) {
         let id = new Uint8Array(4)
         window.crypto.getRandomValues(id);
-        //this._addNote(id, note);
         this.database.putNote(id, note).then();
+    }
+    
+    _add(id: ArrayBuffer, note: Note) {
+        notes.put(id, note);
+        element.appendChild(note.thumbnail);
     }
 /*
     openVideo(video: Video) {

@@ -3,6 +3,10 @@ import {NewModal} from "./newModal/NewModal.js";
 import {Notes} from "./note/Notes.js";
 import {Viewer} from "./Viewer.js";
 
+
+
+import {TextNote} from "./note/notes/TextNote.js";
+
 const database = await loadDatabase();
 const notes = new Notes(database, document.getElementsByClassName("browser")[0] as HTMLElement, document.getElementsByTagName("footer")[0]);
 
@@ -13,6 +17,8 @@ const modal = new NewModal(
     document.getElementById("newModalOpenButton")!,
     async () => {
         console.log("submit");
+        let note = new TextNote();
+        notes.add(note);
         return true;
     },
     async (url: string) => {
