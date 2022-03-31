@@ -13,7 +13,7 @@ export class Notes {
             .getNotes()
             .then((notes: Map<ArrayBuffer, Note>) => {
                 for (let [id, note] of notes.entries()) {
-                    this._add(id, video)
+                    this._add(id, note)
                 }
             });
         this.element = element;
@@ -27,8 +27,8 @@ export class Notes {
     }
     
     _add(id: ArrayBuffer, note: Note) {
-        notes.put(id, note);
-        element.appendChild(note.thumbnail);
+        this.notes.set(id, note);
+        this.element.appendChild(note.thumbnail);
     }
 /*
     openVideo(video: Video) {
