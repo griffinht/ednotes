@@ -1,5 +1,5 @@
 export class Drag {
-    constructor(parent: HTMLElement, onDragStart: () => void, onDragEnd: () => void, onDragUri: (uri: string) => void, onDragFile: (file: File) => void) {
+    constructor(parent: HTMLElement, onDragEnter: () => void, onDragLeave: () => void, onDragUri: (uri: string) => void, onDragFile: (file: File) => void) {
         document.addEventListener("dragenter", (e) => {
             console.log("enter");
             if (!e.dataTransfer) {
@@ -8,7 +8,7 @@ export class Drag {
             for (let item of e.dataTransfer.items) {
                 if (item.type === "text/uri-list" || item.kind === "file") {
                     e.preventDefault();
-                    onDragStart();
+                    onDragEnter();
                 }
             }
         })
@@ -20,6 +20,8 @@ export class Drag {
             if (!e.dataTransfer) {
                 return
             }
+            e.preventDefault();
+            
             for (let file of e.dataTransfer.files) {
                 onDragFile(file);
             }
@@ -28,11 +30,10 @@ export class Drag {
                     onDragUri(e.dataTransfer.getData(item.type));
                 }
             }
-            e.preventDefault();
         });
         parent.addEventListener("dragleave", () => {
             console.log("leave");
-            onDragEnd();
+            onDragLeave();
         })
         document.addEventListener("dragend", () => {
             console.log("end")
