@@ -7,19 +7,20 @@ export class NewModal {
         this.element = element;
         this.urlInput = urlInput;
         this.element.addEventListener("click", (e) => {
-            if (e.target === this.element) {
+            if (e.target === this.element) { //make sure click was the background and not an element within the modal
                 this.closeModal();
+                //todo e.preventDefault()?
+            }
+        });
+        this.element.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                this.closeModal();
+                e.preventDefault();
             }
         });
         document.getElementById("newModalOpenButton")!.addEventListener("click", () => {
             this.openModal();
         })
-        document.addEventListener("keypress", (e) => {
-          if (e.code === "Slash" && !this.isOpen()) {
-           this.openModal();
-           e.preventDefault(); 
-          }
-        });
     }
     
     isOpen() {
