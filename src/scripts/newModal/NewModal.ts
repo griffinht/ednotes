@@ -37,7 +37,6 @@ export class NewModal {
         this.form = new Form(
             this.element,
             async (url: string) => {
-                console.log("submitted");
                 if (url !== "") {
                     if (await onSubmitUrl(url)) { this.closeModal(); }
                 } else {

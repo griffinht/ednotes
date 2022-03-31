@@ -16,17 +16,14 @@ const modal = new NewModal(
     document.getElementById("newModal")!, 
     document.getElementById("newModalOpenButton")!,
     async () => {
-        console.log("submit");
         let note = new TextNote();
         notes.add(note);
         return true;
     },
     async (url: string) => {
-        console.log(url);
         return true;
     },
     async (file: File) => {
-        console.log(file);
         return true;
     });
 document.addEventListener("keypress", (e) => {

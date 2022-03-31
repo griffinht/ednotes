@@ -1,7 +1,11 @@
 export class Drag {
-    constructor(parent: HTMLElement, onDragEnter: () => void, onDragLeave: () => void, onDragUri: (uri: string) => void, onDragFile: (file: File) => void) {
+    constructor(
+        parent: HTMLElement, 
+        onDragEnter: () => void, 
+        onDragLeave: () => void,
+        onDragUri: (uri: string) => void, 
+        onDragFile: (file: File) => void) {
         document.addEventListener("dragenter", (e) => {
-            console.log("enter");
             if (!e.dataTransfer) {
                 return
             }
@@ -13,7 +17,6 @@ export class Drag {
             }
         })
         parent.addEventListener("dragover", (e) => {
-            console.log("dragover")
             e.preventDefault();
         })
         parent.addEventListener("drop", async (e) => {
@@ -32,14 +35,15 @@ export class Drag {
             }
         });
         parent.addEventListener("dragleave", () => {
-            console.log("leave");
             onDragLeave();
         })
+        /*
         document.addEventListener("dragend", () => {
-            console.log("end")
+            
         })
         document.addEventListener("dragexit", () => {
-            console.log("exit")
+            
         })
+        */
     }
 }
