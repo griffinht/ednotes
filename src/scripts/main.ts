@@ -15,9 +15,8 @@ const modal = new NewModal(
         console.log(url);
     });
 document.addEventListener("keypress", (e) => {
-  if (e.code === "Slash" && !modal.isOpen()) {
-   modal.openModal();
-   e.preventDefault(); 
+  if (e.code === "Slash" && modal.openModal()) {
+    e.preventDefault(); 
   }
 });
 

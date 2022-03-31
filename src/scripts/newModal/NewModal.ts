@@ -8,15 +8,26 @@ export class NewModal {
 
     constructor(element: HTMLElement, openElement: HTMLElement, onSubmitUrl: (url: string) => void) {
         this.element = element;
+        // external openElement
+        openElement.addEventListener("click", () => {
+            this.openModal();
+        })
+        
+        // modal
         this.element.addEventListener("click", (e) => {
             if (e.target === this.element) { //make sure click was the background and not an element within the modal
                 this.closeModal();
                 //todo e.preventDefault()?
             }
         });
+        this.element.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                this.closeModal();
+                e.preventDefault();
+            }
+        });
         
-        
-        
+        // form
         this.form = document.createElement("form");
         this.element.appendChild(this.form);
         this.form.addEventListener("submit", (e) => { 
@@ -30,23 +41,12 @@ export class NewModal {
             e.preventDefault(); // prevent page reload
         });
         
+        // form elements
         this.urlInput = new UrlInput(this.form);
 
         let submitButton = document.createElement("input");
         this.form.appendChild(submitButton);
         submitButton.type = "submit";
-      
-        
-        
-        this.element.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                this.closeModal();
-                e.preventDefault();
-            }
-        });
-        openElement.addEventListener("click", () => {
-            this.openModal();
-        })
     }
     
     isOpen() {
@@ -58,8 +58,15 @@ export class NewModal {
         this.urlInput.blur();
     }
 
-    openModal() {
+    /**
+     * @return true if the modal was opened, or false if the modal was already opened
+     */
+    openModal(): boolean {
+        if (this.isOpen()) {
+            return false;
+        }
         this.element.style.display = NewModal.display;
         this.urlInput.focus();
+        return true;
     }
 }
