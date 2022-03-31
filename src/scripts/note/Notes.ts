@@ -1,14 +1,22 @@
 import {Database} from "../database.js";
 import {Note} from "./Note.js";
+import {Editor} from "../Editor.js";
 
 export class Notes {
     notes: Map<ArrayBuffer, Note> = new Map<ArrayBuffer, Note>();
-    database: Database
-    element: HTMLElement
-    before: Element
+    
+    database: Database;
+    editor: Editor;
+    element: HTMLElement;
+    before: Element;
 
-    constructor(database: Database, element: HTMLElement, before: Element) {
+    constructor(
+        database: Database,
+        editor: Editor,
+        element: HTMLElement,
+        before: Element) {
         this.database = database;
+        this.editor = editor;
         this.database
             .getNotes()
             .then((notes: Map<ArrayBuffer, Note>) => {
@@ -24,41 +32,27 @@ export class Notes {
         let id = new Uint8Array(4)
         window.crypto.getRandomValues(id);
         this.database.putNote(id, note).then();
+        this._add(id, note);
     }
     
     _add(id: ArrayBuffer, note: Note) {
         this.notes.set(id, note);
-        this.element.appendChild(createThumbnail(note));
+        this.element.appendChild(createThumbnail(note, () => this.editor.open(note)));
     }
-/*
-    openVideo(video: Video) {
-        document.body.insertBefore(video.createElement(() => { this.element.style.display = "grid"; }), this.before);
-        this.element.style.display = "none";
-    }
-
-    async removeVideo(id: ArrayBuffer) {
-        this.videos.delete(id);
-        await this.database.removeVideo(id);
-    }
-    
-    async updateVideo(id: ArrayBuffer, video: Video) {
-        await this.database.putVideo(id, video);
-    }
-*/
 }
 
-function createThumbnail(note: Note): HTMLElement {
+function createThumbnail(note: Note, open: () => void): HTMLElement {
     let thumbnail = document.createElement("div");
     thumbnail.classList.add("card");
     thumbnail.tabIndex = 0;
     thumbnail.title = "Open (Enter)";
     thumbnail.addEventListener("click", () => {
-        //openVideo();
+        open();
     })
     thumbnail.addEventListener("keypress", async (e) => {
         switch (e.key) {
             case "Enter":
-                //openVideo();
+                open();
                 break;
             case "Delete":
                 //if (await this.remove(removeVideo, !e.ctrlKey)) { thumbnail.remove(); }

@@ -77,14 +77,14 @@ input[type=file]:focus + label {
 .browser > .card > div > div {
     display: flex;
 }
-/* .browser > .item ?? */
-.item > section {
+/* editor */
+.editor > section {
     display: flex;
 }
-.item > section > div {
+.editor > section > div {
     height: auto;
 }
-.item > header {
+.editor > header {
     justify-content: flex-end;
 }
 

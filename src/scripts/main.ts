@@ -1,14 +1,19 @@
 import {loadDatabase} from "./database.js";
 import {NewModal} from "./newModal/NewModal.js";
 import {Notes} from "./note/Notes.js";
-import {Viewer} from "./Viewer.js";
+import {Editor} from "./Editor.js";
 
 
 
 import {TextNote} from "./note/notes/TextNote.js";
 
 const database = await loadDatabase();
-const notes = new Notes(database, document.getElementsByClassName("browser")[0] as HTMLElement, document.getElementsByTagName("footer")[0]);
+const editor = new Editor(document.getElementsByClassName("viewer")[0] as HTMLElement);
+const notes = new Notes(
+    database,
+    editor,
+    document.getElementsByClassName("browser")[0] as HTMLElement,
+    document.getElementsByTagName("footer")[0]);
 
 
 
@@ -34,5 +39,4 @@ document.addEventListener("keypress", (e) => {
 
 
 
-const viewer = new Viewer(document.getElementsByClassName("viewer")[0] as HTMLElement);
 
