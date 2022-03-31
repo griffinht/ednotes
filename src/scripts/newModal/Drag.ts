@@ -1,8 +1,5 @@
-import {NewModal} from "./NewModal.js";
-import {NewVideo} from "../video/NewVideo.js";
-
 export class Drag {
-    constructor(modal: NewModal, newVideo: NewVideo) {
+    constructor(parent: HTMLElement, onDragStart: () => void, onDragEnd: () => void, onDragUri: (uri: string) => void, onDragFile: (file: File) => void) {
         document.addEventListener("dragenter", (e) => {
             console.log("enter");
             if (!e.dataTransfer) {
@@ -11,32 +8,31 @@ export class Drag {
             for (let item of e.dataTransfer.items) {
                 if (item.type === "text/uri-list" || item.kind === "file") {
                     e.preventDefault();
-                    modal.openModal();
+                    onDragStart();
                 }
             }
         })
-        modal.element.addEventListener("dragover", (e) => {
+        parent.addEventListener("dragover", (e) => {
             console.log("dragover")
             e.preventDefault();
         })
-        modal.element.addEventListener("drop", async (e) => {
+        parent.addEventListener("drop", async (e) => {
             if (!e.dataTransfer) {
                 return
             }
             for (let file of e.dataTransfer.files) {
-                await newVideo.openFile(file)
+                onDragFile(file);
             }
             for (let item of e.dataTransfer.items) {
                 if (item.type === "text/uri-list") {
-                    let url = e.dataTransfer.getData(item.type);
-                    await newVideo.openUrl(url)
+                    onDragUri(e.dataTransfer.getData(item.type));
                 }
             }
             e.preventDefault();
         });
-        modal.element.addEventListener("dragleave", () => {
+        parent.addEventListener("dragleave", () => {
             console.log("leave");
-            modal.closeModal()
+            onDragEnd();
         })
         document.addEventListener("dragend", () => {
             console.log("end")

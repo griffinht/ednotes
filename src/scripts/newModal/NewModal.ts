@@ -1,4 +1,5 @@
-import {UrlInput} from "./UrlInput.js"
+import {UrlInput} from "./UrlInput.js";
+import {Drag} from "./Drag.js";
 
 export class NewModal {
     static display = "flex";
@@ -8,6 +9,7 @@ export class NewModal {
 
     constructor(element: HTMLElement, openElement: HTMLElement, onSubmitUrl: (url: string) => void) {
         this.element = element;
+        
         // external openElement
         openElement.addEventListener("click", () => {
             this.openModal();
@@ -43,10 +45,19 @@ export class NewModal {
         
         // form elements
         this.urlInput = new UrlInput(this.form);
-
-        let submitButton = document.createElement("input");
-        this.form.appendChild(submitButton);
-        submitButton.type = "submit";
+        {
+            // submit button
+            let submitButton = document.createElement("input");
+            this.form.appendChild(submitButton);
+            submitButton.type = "submit";
+        }
+        new Drag(
+            this.element, 
+            () => this.openModal(), 
+            () => this.closeModal(), 
+            (uri: string) => { console.log(uri); }, 
+            (file: File) => { console.log(file); }
+        );
     }
     
     isOpen() {
