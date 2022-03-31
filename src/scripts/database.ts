@@ -64,7 +64,7 @@ class IndexedDatabase implements Database {
 }
 export async function loadDatabase(): Promise<Database> {
     let database = await new Promise<IDBDatabase>((resolve, reject) => {
-        indexedDB.deleteDatabase("ednotes");
+        //indexedDB.deleteDatabase("ednotes");
         let open = indexedDB.open("ednotes");
         open.addEventListener("error", (e) => {
             reject(e);
