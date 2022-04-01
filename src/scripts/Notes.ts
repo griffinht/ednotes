@@ -29,18 +29,11 @@ export class Notes {
      * Add note to database and browser
      */
     async add(note: Note): Promise<void> {
-        return new Promise(async (resolve, reject) => {
-            let id = new Uint8Array(4)
-            window.crypto.getRandomValues(id);
-            try {
-                await this.database.putNote(id, note);
-            } catch(e) {
-                reject(e);
-                return;
-            }
-            this.browser.add(note);
-            this.editor.open(note);
-            resolve();
-        });
+        let id = new Uint8Array(4)
+        window.crypto.getRandomValues(id);
+        await this.database.putNote(id, note);
+        this.browser.add(note);
+        this.editor.open(note);
+        
     }
 }

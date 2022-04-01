@@ -3,6 +3,17 @@ import { Database } from "../Database.js";
 import ByteBuffer from "../../common/ByteBuffer.js";
 import { deserialize } from "../../note/NoteType.js";
 
+function promisify(request: IDBRequest): Promise<void> {
+    return new Promise((resolve, reject) => {
+            request.addEventListener("success", () => {
+                resolve()
+            });
+            request.addEventListener("error", (e) => {
+                reject(e)
+            })
+        });
+}
+
 class IndexedDatabase implements Database {
     database: IDBDatabase
 
@@ -33,28 +44,14 @@ class IndexedDatabase implements Database {
 
     async removeNote(id: ArrayBuffer): Promise<void> {
         let request = this.database.transaction("notes", "readwrite").objectStore("notes").delete(id);
-        return new Promise((resolve, reject) => {
-            request.addEventListener("success", () => {
-                resolve()
-            });
-            request.addEventListener("error", (e) => {
-                reject(e)
-            })
-        });
+        await promisify(request);
     }
 
     async putNote(id: ArrayBuffer, note: Note): Promise<void> {
         let buffer = new ByteBuffer();
         note.serialize(buffer)
         let request = this.database.transaction("notes", "readwrite").objectStore("notes").put(buffer.getBuffer(), id);
-        return new Promise((resolve, reject) => {
-            request.addEventListener("success", () => {
-                resolve()
-            });
-            request.addEventListener("error", (e) => {
-                reject(e)
-            })
-        });
+        await promisify(request);
     }
 
 }
