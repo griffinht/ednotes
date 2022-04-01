@@ -33,7 +33,6 @@ export class Notes {
         window.crypto.getRandomValues(id);
         await this.database.putNote(id, note);
         this.browser.add(note);
-        this.editor.open(note);
-        
+        this.editor.open(note); 
     }
 }

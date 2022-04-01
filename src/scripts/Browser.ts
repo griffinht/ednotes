@@ -4,8 +4,6 @@ import {Note} from "./note/Note.js";
  * Represents a thumbnail element of a note
  */
 class Thumbnail {
-    //editor: Editor;
-    note: Note;
     element: HTMLElement;
     
     constructor(
