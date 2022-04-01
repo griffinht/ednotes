@@ -15,28 +15,32 @@ export class Notes {
         this.editor = editor;
         this.database
             .getNotes()
-            .then((notes: Map<ArrayBuffer, Note> | null) => {
-                if (notes === null) {
-                    alert("failed to load notes from db");
-                    return;
-                }
+            .then((notes: Map<ArrayBuffer, Note>) => {
                 for (let [id, note] of notes.entries()) {
                     this.browser.add(note)
                 }
+            })
+            .catch(() => {
+                alert("failed to load notes from db");
             });
     }
     
     /**
      * Add note to database and browser
      */
-    async add(note: Note) {
-        let id = new Uint8Array(4)
-        window.crypto.getRandomValues(id);
-        if (!(await this.database.putNote(id, note))) {
-            return false;
-        }
-        this.browser.add(note);
-        this.editor.open(note);
-        return true;
+    async add(note: Note): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+            let id = new Uint8Array(4)
+            window.crypto.getRandomValues(id);
+            try {
+                await this.database.putNote(id, note);
+            } catch(e) {
+                reject(e);
+                return;
+            }
+            this.browser.add(note);
+            this.editor.open(note);
+            resolve();
+        });
     }
 }
