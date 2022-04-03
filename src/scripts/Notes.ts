@@ -9,10 +9,12 @@ export class Notes {
     editor: Editor;
     items: Map<ArrayBuffer, Note> = new Map<ArrayBuffer, Note>();
     
-    constructor(database: Database, browser: Browser, editor: Editor) {
+    constructor(database: Database, editor: HTMLElement, browser: HTMLElement) {
         this.database = database;
-        this.browser = browser;
-        this.editor = editor;
+        this.editor = new Editor(editor);
+        this.browser = new Browser(
+            browser,
+            this.editor.open);
         this.database
             .getNotes()
             .then((notes: Map<ArrayBuffer, Note>) => {

@@ -1,5 +1,4 @@
 import {Note} from "./note/Note.js";
-import { Editor } from "./Editor.js";
 
 
 /**
@@ -97,16 +96,16 @@ class Thumbnail {
 
 export class Browser {
     element: HTMLElement;
-    editor: Editor;
+    openNote: (note: Note) => void;
 
     constructor(
         element: HTMLElement,
-        editor: Editor) {
+        openNote: (note: Note) => void) {
         this.element = element;
-        this.editor = editor;
+        this.openNote = openNote;
     }
     
     add(note: Note) {
-        new Thumbnail(this.element, note, () => this.editor.open(note), () => { return true; });
+        new Thumbnail(this.element, note, () => this.openNote(note), () => { return true; });
     }
 }

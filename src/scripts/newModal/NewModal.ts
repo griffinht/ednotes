@@ -52,6 +52,13 @@ export class NewModal {
             async (url: string) => { if (await onSubmitUrl(url)) { this.closeModal(); } }, 
             async (file: File) => { if (await onSubmitFile(file)) { this.closeModal(); } }
         );
+        
+        // kb shortcut
+        document.addEventListener("keypress", (e) => {
+          if (e.code === "Slash" && this.openModal()) {
+            e.preventDefault(); 
+          }
+        });
     }
     
     isOpen() {
