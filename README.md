@@ -28,8 +28,12 @@ COPY --from=stzups/ednotes /ednotes /usr/share/nginx/html
 ## Usage
 
 ### Keyboard shortcuts
-Open: Enter
-Close: Escape
-Add: /
-Remove: Delete
-Remove without confirmation: Shift + Delete
+Open: `Enter`
+
+Close: `Escape`
+
+Add: `/`
+
+Remove: `Delete`
+
+Remove without confirmation: `Shift` + `Delete`

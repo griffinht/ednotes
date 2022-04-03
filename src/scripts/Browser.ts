@@ -1,4 +1,6 @@
 import {Note} from "./note/Note.js";
+import { Editor } from "./Editor.js";
+
 
 /**
  * Represents a thumbnail element of a note
@@ -7,37 +9,34 @@ class Thumbnail {
     element: HTMLElement;
     
     constructor(
-        //editor: Editor,
         parent: HTMLElement,
-        note: Note) {
-        //this.editor = editor;
-        this.note = note;
+        note: Note,
+        openNote: () => void,
+        removeNote: () => boolean) {
         let thumbnail = document.createElement("div");
         this.element = thumbnail;
         parent.appendChild(thumbnail);
         thumbnail.classList.add("card");
         thumbnail.tabIndex = 0;
         thumbnail.title = "Open (Enter)";
-        thumbnail.addEventListener("click", () => {
-            //this.editor.open(note);
-        })
-        thumbnail.addEventListener("keypress", async (e) => {
-            switch (e.key) {
-                case "Enter":
-                    open();
-                    break;
-                case "Delete":
-                    //if (await this.remove(removeVideo, !e.ctrlKey)) { thumbnail.remove(); }
-                    break;
-                default:
-                    return;
-            }
-            e.stopPropagation();
-        })
-        thumbnail.addEventListener("keydown", (e) => {
+        thumbnail.addEventListener("click", openNote);
+        
+        let confirmRemove = (e: { shiftKey: boolean }) => {
+            return e.shiftKey || window.confirm("Remove \"" + note.title +  "\"?");
+        }
+
+        thumbnail.addEventListener("keydown", async (e) => {
             switch (e.key) {
                 case "F2":
                     //this.rename(updateVideo);
+               case "Enter":
+                    openNote();
+                    break;
+                case "Delete":
+                    if (confirmRemove(e) && await removeNote()) { 
+                        thumbnail.remove(); 
+                    }
+                    break;
                 default:
                     return;
             }
@@ -77,7 +76,9 @@ class Thumbnail {
                     deleteButton.classList.add("danger");
                     deleteButton.addEventListener("click", async (e) => {
                         e.stopPropagation();
-                        //if (await this.remove(removeVideo, true)) { thumbnail.remove(); }
+                        if (confirmRemove(e) && await removeNote()) { 
+                            thumbnail.remove(); 
+                        }
                     });
                 }
             }
@@ -96,13 +97,16 @@ class Thumbnail {
 
 export class Browser {
     element: HTMLElement;
+    editor: Editor;
 
     constructor(
-        element: HTMLElement) {
+        element: HTMLElement,
+        editor: Editor) {
         this.element = element;
+        this.editor = editor;
     }
     
     add(note: Note) {
-        new Thumbnail(this.element, note);
+        new Thumbnail(this.element, note, () => this.editor.open(note), () => { return true; });
     }
 }

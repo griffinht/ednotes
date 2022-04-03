@@ -9,8 +9,10 @@ import { Notes } from "./Notes.js";
 import {TextNote} from "./note/notes/TextNote.js";
 
 const database = await loadDatabase();
-const browser = new Browser(document.getElementsByClassName("browser")[0] as HTMLElement);
 const editor = new Editor(document.getElementsByClassName("viewer")[0] as HTMLElement);
+const browser = new Browser(
+    document.getElementsByClassName("browser")[0] as HTMLElement,
+    editor);
 const notes = new Notes(database, browser, editor);
 
 
