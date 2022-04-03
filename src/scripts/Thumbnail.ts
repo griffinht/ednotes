@@ -10,7 +10,8 @@ export default class Thumbnail {
         parent: HTMLElement,
         note: Note,
         openNote: () => void,
-        removeNote: () => boolean) {
+        removeNote: () => boolean,
+        updateNote: () => boolean) {
         let thumbnail = document.createElement("div");
         this.element = thumbnail;
         parent.appendChild(thumbnail);
@@ -19,21 +20,37 @@ export default class Thumbnail {
         thumbnail.title = "Open (Enter)";
         thumbnail.addEventListener("click", openNote);
         
-        let confirmRemove = (e: { shiftKey: boolean }) => {
-            return e.shiftKey || window.confirm("Remove \"" + note.title +  "\"?");
-        }
+        let remove = async (e: { shiftKey: boolean }) => {
+            if ((e.shiftKey || window.confirm("Remove \"" + note.title +  "\"?"))) {
+                if (await removeNote()) {
+                    thumbnail.remove();
+                } else {
+                    console.error("error removing");
+                }
+            }
+            return;
+        };
+        
+        let rename = async () => {
+            let title = window.prompt("New title: ");
+            if (title) {
+                note.title = title;
+                if (!await updateNote()) {
+                    console.error("error updating");
+                }
+            }
+        };
 
-        thumbnail.addEventListener("keydown", async (e) => {
+        thumbnail.addEventListener("keydown", (e) => {
             switch (e.key) {
                 case "F2":
-                    //this.rename(updateVideo);
+                    rename();
+                    break;
                case "Enter":
                     openNote();
                     break;
                 case "Delete":
-                    if (confirmRemove(e) && await removeNote()) { 
-                        thumbnail.remove(); 
-                    }
+                    remove(e);
                     break;
                 default:
                     return;
@@ -59,9 +76,9 @@ export default class Thumbnail {
                     renameButton.title = "Rename (F2)";
                     renameButton.innerText = "✎";
                     renameButton.classList.add("icon");
-                    renameButton.addEventListener("click", async (e) => {
+                    renameButton.addEventListener("click", (e) => {
                         e.stopPropagation();
-                        //this.rename(updateVideo);
+                        rename();
                     });
                 }
                 {
@@ -72,11 +89,9 @@ export default class Thumbnail {
                     deleteButton.innerText = "🗑";
                     deleteButton.classList.add("icon");
                     deleteButton.classList.add("danger");
-                    deleteButton.addEventListener("click", async (e) => {
+                    deleteButton.addEventListener("click", (e) => {
                         e.stopPropagation();
-                        if (confirmRemove(e) && await removeNote()) { 
-                            thumbnail.remove(); 
-                        }
+                        remove(e);
                     });
                 }
             }

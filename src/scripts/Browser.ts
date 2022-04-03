@@ -13,6 +13,6 @@ export class Browser {
     }
     
     add(note: Note) {
-        new Thumbnail(this.element, note, () => this.openNote(note), () => { return true; });
+        new Thumbnail(this.element, note, () => this.openNote(note), () => { return true; },  () => { return true; });
     }
 }
