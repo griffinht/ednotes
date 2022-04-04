@@ -19,37 +19,8 @@ export default class Thumbnail {
         thumbnail.title = "Open (Enter)";
         thumbnail.addEventListener("click", openNote);
         
-        let remove = async (e: { shiftKey: boolean }) => {
-            if (!e.shiftKey && !window.confirm("Remove \"" + note.data.title +  "\"?")) {
-                return;
-            }
-
-            try {
-                await note.remove();
-            } catch (e) {
-                console.error(e, "error removing");
-                return;
-            }
-            thumbnail.remove();
-        };
-        
-
-
-        thumbnail.addEventListener("keydown", (e) => {
-            switch (e.key) {
-               case "Enter":
-                    openNote();
-                    break;
-                case "Delete":
-                    remove(e);
-                    break;
-                default:
-                    return;
-            }
-            e.stopPropagation();
-        });
         //thumbnail.append(this.getThumbnail());
-        thumbnail.append(new Title(note, thumbnail, remove).element);
+        thumbnail.append(new TitleContainer(note, this).element);
         {
             let p = document.createElement("p");
             thumbnail.append(p);
@@ -57,64 +28,61 @@ export default class Thumbnail {
         }
     }
     
-    remove() {
-        this.element.remove();
-    }
+    
 }
 
-class Title {
+class TitleContainer {
     element: HTMLElement;
     
     constructor(
         note: Data<Note>,
-        keyboardInputElement: HTMLElement,
-        remove: (e: { shiftKey: boolean }) => Promise<void>) {
+        thumbnail: Thumbnail) {
         this.element = document.createElement("div");
         
-        let titleHeading = new TitleHeading(note, keyboardInputElement);
+        let titleHeading = new TitleHeading(note, thumbnail);
         this.element.append(titleHeading.element);
         
-        
-        {
-            let buttonDiv = document.createElement("div");
-            this.element.append(buttonDiv);
-            {
-                let renameButton = document.createElement("button");
-                buttonDiv.append(renameButton);
-                renameButton.tabIndex = -1;
-                renameButton.title = "Rename (F2)";
-                renameButton.innerText = "✎";
-                renameButton.classList.add("icon");
-                renameButton.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    titleHeading.rename();
-                });
-            }
-            {
-                let deleteButton = document.createElement("button");
-                buttonDiv.append(deleteButton);
-                deleteButton.tabIndex = -1;
-                deleteButton.title = "Delete (Delete)";
-                deleteButton.innerText = "🗑";
-                deleteButton.classList.add("icon");
-                deleteButton.classList.add("danger");
-                deleteButton.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    remove(e);
-                });
-            }
-        }
+        this.element.append(new TitleButtonContainer(note, titleHeading, thumbnail).element);
     }
 }
 class TitleHeading {
     element: HTMLElement;
     note: Data<Note>;
     
-    constructor(note: Data<Note>, keyboardInputElement: HTMLElement) {
+    constructor(note: Data<Note>, thumbnail: Thumbnail) {
         this.note = note;
         this.element = document.createElement("h2");
         this.element.innerText = this.note.data.title;
-        keyboardInputElement.addEventListener("keydown", (e) => {
+    }
+}
+class TitleButtonContainer {
+    element: HTMLElement;
+    
+    constructor(note: Data<Note>, titleHeading: TitleHeading, thumbnail: Thumbnail) {
+        this.element = document.createElement("div");
+        this.element.append(new RenameButton(titleHeading, note, thumbnail).element);
+        this.element.append(new DeleteButton(note, thumbnail).element);
+    }
+}
+
+class RenameButton {
+    element: HTMLElement;
+    titleHeading: TitleHeading;
+    note: Data<Note>;
+    
+    constructor(titleHeading: TitleHeading, note: Data<Note>, thumbnail: Thumbnail) {
+        this.titleHeading = titleHeading;
+        this.note = note;
+        this.element = document.createElement("button");
+        this.element.tabIndex = -1;
+        this.element.title = "Rename (F2)";
+        this.element.innerText = "✎";
+        this.element.classList.add("icon");
+        this.element.addEventListener("click", (e) => {
+            e.stopPropagation();
+            this.rename();
+        });
+        thumbnail.element.addEventListener("keydown", (e) => {
             if (e.key !== "F2") {
                 return;
             }
@@ -122,6 +90,7 @@ class TitleHeading {
             this.rename();
         });
     }
+    
 
     /**
      * Prompt user for new name, then set and update the underlying note
@@ -136,7 +105,49 @@ class TitleHeading {
                 console.error(e, "error updating");
                 return;
             }
-            this.element.innerText = this.note.data.title;
+            this.titleHeading.element.innerText = this.note.data.title;
         }
+    }
+}
+
+class DeleteButton {
+    element: HTMLElement;
+    thumbnail: Thumbnail
+    note: Data<Note>
+    
+    constructor(note: Data<Note>, thumbnail: Thumbnail) {
+        this.note = note;
+        this.thumbnail = thumbnail;
+        this.element = document.createElement("button");
+        this.element.tabIndex = -1;
+        this.element.title = "Delete (Delete)";
+        this.element.innerText = "🗑";
+        this.element.classList.add("icon");
+        this.element.classList.add("danger");
+        this.element.addEventListener("click", (e) => {
+            e.stopPropagation();
+            this.remove(e);
+        });
+        thumbnail.element.addEventListener("keydown", (e) => {
+            if (e.key !== "Delete") {
+                return;
+            }
+            e.stopPropagation();
+            this.remove(e);
+        });
+    }
+    
+    async remove(e: { shiftKey: boolean }) {
+        if (!e.shiftKey && !window.confirm("Remove \"" + this.note.data.title +  "\"?")) {
+            return;
+        }
+
+        try {
+            await this.note.remove();
+        } catch (e) {
+            console.error(e, "error removing");
+            return;
+        }
+        this.thumbnail.element.remove();
     }
 }
