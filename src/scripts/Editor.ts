@@ -34,15 +34,13 @@ export class Editor {
 }
 
 function closeButton(onSubmit: () => void): HTMLElement {
-    let form = document.createElement("form");
-    form.addEventListener("submit", (e) => {
+    let element = document.createElement("button");
+    element.addEventListener("click", (e) => {
         e.preventDefault();
         onSubmit();
     });
-    let element = document.createElement("button");
-    form.append(element);
     element.innerText = "x";
-    return form;
+    return element;
 }
 /*
 function close() {
