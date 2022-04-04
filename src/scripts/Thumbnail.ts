@@ -34,23 +34,10 @@ export default class Thumbnail {
             thumbnail.remove();
         };
         
-        let rename = async () => {
-            let title = window.prompt("New title: ");
-            if (title) {
-                note.title = title;
-                try {
-                    await updateNote();
-                } catch (e) {
-                    console.error(e, "error removing");
-                }
-            }
-        };
+
 
         thumbnail.addEventListener("keydown", (e) => {
             switch (e.key) {
-                case "F2":
-                    rename();
-                    break;
                case "Enter":
                     openNote();
                     break;
@@ -66,11 +53,28 @@ export default class Thumbnail {
         {
             let titleDiv = document.createElement("div");
             thumbnail.append(titleDiv);
+            
+            let rename: () => Promise<void>;
+            
             {
                 let title = document.createElement("h2");
                 titleDiv.append(title);
                 title.innerText = note.title;
+                rename = async () => {
+                    let newTitle = window.prompt("Rename", note.title);
+                    if (newTitle) {
+                        note.title = newTitle;
+                        try {
+                            await updateNote();
+                        } catch (e) {
+                            console.error(e, "error updating");
+                            return;
+                        }
+                        title.innerText = note.title;
+                    }
+                };
             }
+            
             {
                 let buttonDiv = document.createElement("div");
                 titleDiv.append(buttonDiv);
@@ -82,6 +86,13 @@ export default class Thumbnail {
                     renameButton.innerText = "✎";
                     renameButton.classList.add("icon");
                     renameButton.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        rename();
+                    });
+                    thumbnail.addEventListener("keydown", (e) => {
+                        if (e.key !== "F2") {
+                            return;
+                        }
                         e.stopPropagation();
                         rename();
                     });
