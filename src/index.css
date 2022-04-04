@@ -57,24 +57,28 @@ input[type=file]:focus + label {
     grid-gap: 2em;
     padding: 1em;
 }
-.browser > .card {
+.browser > button {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: var(--neutral-background);
+    border: unset;
+    padding: unset;
+    font-family: unset;
+    font-size: unset;
 }
-.browser > .card > video {
+.browser > button > video {
     width: 100%;
     height: auto;
 }
-.browser > .card > div {
+.browser > button > div {
     display: flex;
     color: var(--primary-foreground);
     background-color: var(--primary);
     justify-content: space-between;
     width: 100%;
 }
-.browser > .card > div > div {
+.browser > button > div > div {
     display: flex;
 }
 /* editor */
