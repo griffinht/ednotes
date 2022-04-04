@@ -14,9 +14,6 @@ export class Browser {
     }
     
     add(note: Data<Note>) {
-        new Thumbnail(
-            this.element,
-            note,
-            () => this.openNote(note));
+        this.element.append(new Thumbnail(note, () => this.openNote(note)).element);
     }
 }

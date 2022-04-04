@@ -8,24 +8,17 @@ export default class Thumbnail {
     element: HTMLElement;
     
     constructor(
-        parent: HTMLElement,
         note: Data<Note>,
         openNote: () => void) {
-        let thumbnail = document.createElement("div");
-        this.element = thumbnail;
-        parent.appendChild(thumbnail);
-        thumbnail.classList.add("card");
-        thumbnail.tabIndex = 0;
-        thumbnail.title = "Open (Enter)";
-        thumbnail.addEventListener("click", openNote);
+        this.element = document.createElement("div");
+        this.element.classList.add("card");
+        this.element.tabIndex = 0;
+        this.element.title = "Open (Enter)";
+        this.element.addEventListener("click", openNote);
         
-        //thumbnail.append(this.getThumbnail());
-        thumbnail.append(new TitleContainer(note, this).element);
-        {
-            let p = document.createElement("p");
-            thumbnail.append(p);
-            p.innerText = "a new note";
-        }
+        //this.element.append(this.getThumbnail());
+        this.element.append(new TitleContainer(note, this).element);
+        this.element.append(new Description(note).element);
     }
     
     
@@ -137,6 +130,9 @@ class DeleteButton {
         });
     }
     
+    /**
+     * Prompt user for confirmation unless the shift key is pressed, then delete the thumbnail
+     */
     async remove(e: { shiftKey: boolean }) {
         if (!e.shiftKey && !window.confirm("Remove \"" + this.note.data.title +  "\"?")) {
             return;
@@ -149,5 +145,15 @@ class DeleteButton {
             return;
         }
         this.thumbnail.element.remove();
+    }
+}
+class Description {
+    element: HTMLElement;
+    note: Data<Note>;
+    
+    constructor(note: Data<Note>) {
+        this.note = note;
+        this.element = document.createElement("p");
+        this.element.innerText = "a new note";
     }
 }
