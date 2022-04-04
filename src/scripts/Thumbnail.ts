@@ -1,4 +1,5 @@
 import { Note } from "./note/Note.js";
+import Data from "./common/Data.js";
 
 /**
  * Represents a thumbnail element of a note
@@ -8,10 +9,8 @@ export default class Thumbnail {
     
     constructor(
         parent: HTMLElement,
-        note: Note,
-        openNote: () => void,
-        removeNote: () => Promise<void>,
-        updateNote: () => Promise<void>) {
+        note: Data<Note>,
+        openNote: () => void) {
         let thumbnail = document.createElement("div");
         this.element = thumbnail;
         parent.appendChild(thumbnail);
@@ -21,12 +20,12 @@ export default class Thumbnail {
         thumbnail.addEventListener("click", openNote);
         
         let remove = async (e: { shiftKey: boolean }) => {
-            if (!e.shiftKey && !window.confirm("Remove \"" + note.title +  "\"?")) {
+            if (!e.shiftKey && !window.confirm("Remove \"" + note.data.title +  "\"?")) {
                 return;
             }
 
             try {
-                await removeNote();
+                await note.remove();
             } catch (e) {
                 console.error(e, "error removing");
                 return;
@@ -54,26 +53,9 @@ export default class Thumbnail {
             let titleDiv = document.createElement("div");
             thumbnail.append(titleDiv);
             
-            let rename: () => Promise<void>;
+            let title = new Title(note, thumbnail);
+            titleDiv.append(title.element);
             
-            {
-                let title = document.createElement("h2");
-                titleDiv.append(title);
-                title.innerText = note.title;
-                rename = async () => {
-                    let newTitle = window.prompt("Rename", note.title);
-                    if (newTitle) {
-                        note.title = newTitle;
-                        try {
-                            await updateNote();
-                        } catch (e) {
-                            console.error(e, "error updating");
-                            return;
-                        }
-                        title.innerText = note.title;
-                    }
-                };
-            }
             
             {
                 let buttonDiv = document.createElement("div");
@@ -87,14 +69,7 @@ export default class Thumbnail {
                     renameButton.classList.add("icon");
                     renameButton.addEventListener("click", (e) => {
                         e.stopPropagation();
-                        rename();
-                    });
-                    thumbnail.addEventListener("keydown", (e) => {
-                        if (e.key !== "F2") {
-                            return;
-                        }
-                        e.stopPropagation();
-                        rename();
+                        title.rename();
                     });
                 }
                 {
@@ -121,5 +96,40 @@ export default class Thumbnail {
     
     remove() {
         this.element.remove();
+    }
+}
+
+class Title {
+    element: HTMLElement;
+    note: Data<Note>;
+    
+    constructor(note: Data<Note>, keyboardInputElement: HTMLElement) {
+        this.note = note;
+        this.element = document.createElement("h2");
+        this.element.innerText = this.note.data.title;
+        keyboardInputElement.addEventListener("keydown", (e) => {
+            if (e.key !== "F2") {
+                return;
+            }
+            e.stopPropagation();
+            this.rename();
+        });
+    }
+
+    /**
+     * Prompt user for new name, then set and update the underlying note
+     */
+    rename() {
+        let title = window.prompt("Rename", this.note.data.title);
+        if (title) {
+            this.note.data.title = title;
+            try {
+                this.note.update();
+            } catch (e) {
+                console.error(e, "error updating");
+                return;
+            }
+            this.element.innerText = this.note.data.title;
+        }
     }
 }
