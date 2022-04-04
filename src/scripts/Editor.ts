@@ -6,6 +6,13 @@ export class Editor {
     
     constructor(element: HTMLElement) {
         this.element = element;
+        this.element.append(closeButton(() => this.close()));
+        document.addEventListener("keydown", (e) => {
+            if (e.key !== "Escape") {
+                return;
+            }
+            this.close();
+        });
     }
     
     open(note: Note) {
@@ -19,11 +26,23 @@ export class Editor {
     
     close() {
         if (this.note === null) {
-            console.warn("tried to close when there is no note to close");
+            return;
         }
         this.element.style.display = "none";
         this.note = null;
     }
+}
+
+function closeButton(onSubmit: () => void): HTMLElement {
+    let form = document.createElement("form");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        onSubmit();
+    });
+    let element = document.createElement("button");
+    form.append(element);
+    element.innerText = "x";
+    return form;
 }
 /*
 function close() {
