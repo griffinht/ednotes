@@ -1,5 +1,5 @@
 import {Form} from "./Form.js";
-import {Drag} from "./Drag.js";
+import drag from "./drag.js";
 
 export class NewModal {
     static display = "flex";
@@ -35,7 +35,6 @@ export class NewModal {
 
         // form
         this.form = new Form(
-            this.element,
             async (url: string) => {
                 if (url !== "") {
                     if (await onSubmitUrl(url)) { this.closeModal(); }
@@ -43,15 +42,15 @@ export class NewModal {
                     if (await onSubmit()) { this.closeModal(); }
                 }
             });
+        this.element.append(this.form.element);
 
         // drag
-        new Drag(
-            this.element, 
+        drag(
+            this.element,
             () => this.openModal(),
             () => this.closeModal(),
             async (url: string) => { if (await onSubmitUrl(url)) { this.closeModal(); } }, 
-            async (file: File) => { if (await onSubmitFile(file)) { this.closeModal(); } }
-        );
+            async (file: File) => { if (await onSubmitFile(file)) { this.closeModal(); } });
         
         // kb shortcut
         document.addEventListener("keypress", (e) => {

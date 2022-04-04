@@ -10,23 +10,17 @@ export class Form {
     urlInput: UrlInput;
     
     constructor(
-        parent: HTMLElement,
         onSubmit: (url: string) => void) {
         this.element = document.createElement("form");
-        parent.appendChild(this.element);
         this.element.addEventListener("submit", (e) => { 
                 e.preventDefault(); // prevent page reload 
                 onSubmit(this.urlInput.getValue());
             });
         
         // form elements
-        this.urlInput = new UrlInput(this.element);
-        {
-            // submit button
-            let submitButton = document.createElement("input");
-            this.element.appendChild(submitButton);
-            submitButton.type = "submit";
-        }
+        this.urlInput = new UrlInput();
+        this.element.append(this.urlInput.element);
+        this.element.append(submitButton());
     }
     
     blur() {
@@ -36,4 +30,10 @@ export class Form {
     focus() {
         this.urlInput.focus();
     }
+}
+
+function submitButton(): HTMLElement {
+    let element = document.createElement("input");
+    element.type = "submit";
+    return element;
 }

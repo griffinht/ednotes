@@ -4,11 +4,10 @@
 export class UrlInput {
     element: HTMLInputElement;
     
-    constructor(parent: HTMLElement) {
+    constructor() {
         this.element = document.createElement("input") as HTMLInputElement;
         this.element.type = "text";
         this.element.placeholder = "enter url";
-        parent.appendChild(this.element);
     }
     
     getValue(): string {
