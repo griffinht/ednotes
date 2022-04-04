@@ -10,8 +10,8 @@ export default class Thumbnail {
         parent: HTMLElement,
         note: Note,
         openNote: () => void,
-        removeNote: () => boolean,
-        updateNote: () => boolean) {
+        removeNote: () => Promise<void>,
+        updateNote: () => Promise<void>) {
         let thumbnail = document.createElement("div");
         this.element = thumbnail;
         parent.appendChild(thumbnail);
@@ -21,22 +21,27 @@ export default class Thumbnail {
         thumbnail.addEventListener("click", openNote);
         
         let remove = async (e: { shiftKey: boolean }) => {
-            if ((e.shiftKey || window.confirm("Remove \"" + note.title +  "\"?"))) {
-                if (await removeNote()) {
-                    thumbnail.remove();
-                } else {
-                    console.error("error removing");
-                }
+            if (!e.shiftKey && !window.confirm("Remove \"" + note.title +  "\"?")) {
+                return;
             }
-            return;
+
+            try {
+                await removeNote();
+            } catch (e) {
+                console.error(e, "error removing");
+                return;
+            }
+            thumbnail.remove();
         };
         
         let rename = async () => {
             let title = window.prompt("New title: ");
             if (title) {
                 note.title = title;
-                if (!await updateNote()) {
-                    console.error("error updating");
+                try {
+                    await updateNote();
+                } catch (e) {
+                    console.error(e, "error removing");
                 }
             }
         };

@@ -14,12 +14,14 @@ export class Notes {
         this.editor = new Editor(editor);
         this.browser = new Browser(
             browser,
-            this.editor.open);
+            (note: Note) => this.editor.open(note),
+            (id: ArrayBuffer) => this.database.removeNote(id),
+            (id: ArrayBuffer, note: Note) => this.database.putNote(id, note));
         this.database
             .getNotes()
             .then((notes: Map<ArrayBuffer, Note>) => {
                 for (let [id, note] of notes.entries()) {
-                    this.browser.add(note)
+                    this.browser.add(id, note)
                 }
             })
             .catch(() => {
@@ -34,7 +36,7 @@ export class Notes {
         let id = new Uint8Array(4)
         window.crypto.getRandomValues(id);
         await this.database.putNote(id, note);
-        this.browser.add(note);
+        this.browser.add(id, note);
         this.editor.open(note); 
     }
 }
