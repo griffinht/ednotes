@@ -49,44 +49,7 @@ export default class Thumbnail {
             e.stopPropagation();
         });
         //thumbnail.append(this.getThumbnail());
-        {
-            let titleDiv = document.createElement("div");
-            thumbnail.append(titleDiv);
-            
-            let title = new Title(note, thumbnail);
-            titleDiv.append(title.element);
-            
-            
-            {
-                let buttonDiv = document.createElement("div");
-                titleDiv.append(buttonDiv);
-                {
-                    let renameButton = document.createElement("button");
-                    buttonDiv.append(renameButton);
-                    renameButton.tabIndex = -1;
-                    renameButton.title = "Rename (F2)";
-                    renameButton.innerText = "✎";
-                    renameButton.classList.add("icon");
-                    renameButton.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        title.rename();
-                    });
-                }
-                {
-                    let deleteButton = document.createElement("button");
-                    buttonDiv.append(deleteButton);
-                    deleteButton.tabIndex = -1;
-                    deleteButton.title = "Delete (Delete)";
-                    deleteButton.innerText = "🗑";
-                    deleteButton.classList.add("icon");
-                    deleteButton.classList.add("danger");
-                    deleteButton.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        remove(e);
-                    });
-                }
-            }
-        }
+        thumbnail.append(new Title(note, thumbnail, remove).element);
         {
             let p = document.createElement("p");
             thumbnail.append(p);
@@ -100,6 +63,50 @@ export default class Thumbnail {
 }
 
 class Title {
+    element: HTMLElement;
+    
+    constructor(
+        note: Data<Note>,
+        keyboardInputElement: HTMLElement,
+        remove: (e: { shiftKey: boolean }) => Promise<void>) {
+        this.element = document.createElement("div");
+        
+        let titleHeading = new TitleHeading(note, keyboardInputElement);
+        this.element.append(titleHeading.element);
+        
+        
+        {
+            let buttonDiv = document.createElement("div");
+            this.element.append(buttonDiv);
+            {
+                let renameButton = document.createElement("button");
+                buttonDiv.append(renameButton);
+                renameButton.tabIndex = -1;
+                renameButton.title = "Rename (F2)";
+                renameButton.innerText = "✎";
+                renameButton.classList.add("icon");
+                renameButton.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    titleHeading.rename();
+                });
+            }
+            {
+                let deleteButton = document.createElement("button");
+                buttonDiv.append(deleteButton);
+                deleteButton.tabIndex = -1;
+                deleteButton.title = "Delete (Delete)";
+                deleteButton.innerText = "🗑";
+                deleteButton.classList.add("icon");
+                deleteButton.classList.add("danger");
+                deleteButton.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    remove(e);
+                });
+            }
+        }
+    }
+}
+class TitleHeading {
     element: HTMLElement;
     note: Data<Note>;
     
