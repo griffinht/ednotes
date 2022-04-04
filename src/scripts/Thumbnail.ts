@@ -10,7 +10,7 @@ export default class Thumbnail {
     constructor(
         note: Data<Note>,
         openNote: () => void) {
-        this.element = document.createElement("div");
+        this.element = document.createElement("button");
         this.element.classList.add("card");
         this.element.tabIndex = 0;
         this.element.title = "Open (Enter)";
