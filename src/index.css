@@ -78,6 +78,9 @@ input[type=file]:focus + label {
     display: flex;
 }
 /* editor */
+.editor {
+    display: none;
+}
 .editor > section {
     display: flex;
 }

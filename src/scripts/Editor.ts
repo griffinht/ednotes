@@ -12,6 +12,7 @@ export class Editor {
         if (this.note !== null) {
             this.close();
         }
+        this.element.style.display = "flex";
         this.note = note;
         console.log("open note " + note);
     }
@@ -20,6 +21,7 @@ export class Editor {
         if (this.note === null) {
             console.warn("tried to close when there is no note to close");
         }
+        this.element.style.display = "none";
         this.note = null;
     }
 }
