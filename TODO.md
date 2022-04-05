@@ -1,14 +1,9 @@
+# now
+- video notes via yt embed
+
 # TODO
-- player controls
-- notes
-- changeable title
 - screen capture
-- youtube embed
 - local file upload
 - export
 - import
 - server backend/accounts/store/sync
-
-# bugs
-- firefox kb shortcuts don't work
-- make video state mutable
