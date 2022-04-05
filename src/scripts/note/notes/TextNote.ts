@@ -1,6 +1,5 @@
 import { Note } from "../Note.js"
 import ByteBuffer from "../../common/ByteBuffer.js";
-import { Video } from "../../video/Video.js";
 import { NoteType } from "../NoteType.js";
 import Data from "../../common/Data.js";
 
