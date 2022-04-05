@@ -7,6 +7,7 @@ export class UrlInput {
     constructor() {
         this.element = document.createElement("input") as HTMLInputElement;
         this.element.type = "text";
+        this.element.enterKeyHint = "done";
         this.element.placeholder = "enter url";
     }
     
