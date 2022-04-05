@@ -40,6 +40,7 @@ function closeButton(onSubmit: () => void): HTMLElement {
         onSubmit();
     });
     element.innerText = "x";
+    element.classList.add("icon");
     return element;
 }
 /*

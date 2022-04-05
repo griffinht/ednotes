@@ -7,7 +7,6 @@
     --primary-lowlight: #051367;
     --primary: #2D31FA;
     --primary-highlight: #5D8BF4;
-    --very-bright: #DFF6FF;
     --primary-foreground: white;
 
     --neutral-foreground: black;
@@ -31,24 +30,22 @@ header {
     z-index: 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     background-color: var(--primary-lowlight);
     color: var(--neutral-background);
-    box-shadow: 0em .5em 1.5em -.5em var(--neutral);
-    padding-left: 1%;
-    padding-right: 1%;
-    max-height: 10%;
-    
+    box-shadow: 0em .5em 1.5em -.5em var(--neutral);   
 }
 /* todo use padding instead? and move to index.css */
 .logo {
-    max-height: 50%;
+    max-height: 4em;
+    padding: 1em;
 }
 
 
 footer {
     margin-top: auto;
 }
+
 .modal {
     display: none;
     position: absolute;
