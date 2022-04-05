@@ -3,15 +3,17 @@ import {Note} from "./note/Note.js";
 export class Editor {
     element: HTMLElement;
     note: Note | null = null;
+    header: Header;
     
-    constructor(element: HTMLElement) {
+    constructor(element: HTMLElement, onClose: () => void) {
         this.element = element;
-        this.element.append(closeButton(() => this.close()));
+        this.header = new Header(onClose);
+        this.element.append(this.header.element);
         document.addEventListener("keydown", (e) => {
             if (e.key !== "Escape") {
                 return;
             }
-            this.close();
+            onClose();
         });
     }
     
@@ -21,6 +23,7 @@ export class Editor {
         }
         this.element.style.display = "flex";
         this.note = note;
+        this.header.title.update(note.title);
         console.log("open note " + note);
     }
     
@@ -30,6 +33,28 @@ export class Editor {
         }
         this.element.style.display = "none";
         this.note = null;
+    }
+}
+class Header {
+    element: HTMLElement;
+    title: Title;
+    
+    constructor(onSubmit: () => void) {
+        this.element = document.createElement("header");
+        this.title = new Title();
+        this.element.append(this.title.element);
+        this.element.append(closeButton(onSubmit));
+    }
+}
+class Title {
+    element: HTMLElement;
+    
+    constructor() {   
+        this.element = document.createElement("h2");
+    }
+    
+    update(title: string) {
+        this.element.innerText = title;
     }
 }
 

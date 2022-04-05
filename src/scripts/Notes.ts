@@ -8,13 +8,19 @@ export class Notes {
     database: Database;
     browser: Browser;
     editor: Editor;
+    header: HTMLElement;
     
-    constructor(database: Database, editor: HTMLElement, browser: HTMLElement) {
+    constructor(
+        database: Database,
+        editor: HTMLElement,
+        browser: HTMLElement,
+        header: HTMLElement) {
         this.database = database;
-        this.editor = new Editor(editor);
+        this.header = header;
+        this.editor = new Editor(editor, () => this.close());
         this.browser = new Browser(
             browser,
-            (note: Data<Note>) => this.editor.open(note.data));
+            (note: Data<Note>) => this.open(note));
         this.database
             .getNotes()
             .then((notes: Map<ArrayBuffer, Note>) => {
@@ -43,5 +49,17 @@ export class Notes {
         await note.update();
         this.browser.add(note);
         this.editor.open(note.data); 
+    }
+    
+    open(note: Data<Note>) {
+        this.editor.open(note.data);
+        this.browser.close();
+        this.header.style.display = "none";
+    }
+    
+    close() {
+        this.editor.close();
+        this.browser.open();
+        this.header.style.display = "flex";
     }
 }

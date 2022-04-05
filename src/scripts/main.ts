@@ -10,7 +10,8 @@ const database = await loadDatabase();
 const notes = new Notes(
     database, 
     document.getElementsByClassName("editor")[0] as HTMLElement, 
-    document.getElementsByClassName("browser")[0] as HTMLElement);
+    document.getElementsByClassName("browser")[0] as HTMLElement,
+    document.getElementsByTagName("header")[0] as HTMLElement);
 
 const modal = new NewModal(
     document.getElementById("newModal")!, 

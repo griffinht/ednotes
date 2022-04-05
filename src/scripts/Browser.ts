@@ -16,4 +16,12 @@ export class Browser {
     add(note: Data<Note>) {
         this.element.append(new Thumbnail(note, () => this.openNote(note)).element);
     }
+    
+    open() {
+        this.element.style.display = "grid";
+    }
+    
+    close() {
+        this.element.style.display = "none";
+    }
 }
