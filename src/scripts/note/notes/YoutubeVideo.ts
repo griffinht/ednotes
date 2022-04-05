@@ -16,7 +16,7 @@ export class YoutubeVideo extends Note {
             } else if (buffer.startsWith("https://www.youtube.com/watch?v=")) {
                 this.id = buffer.substring(32, 11);
             } else {
-                throw new Error("url is not a valid youtube video url");
+                throw new Error(buffer + " is not a valid youtube video url");
             }
         }
     }
