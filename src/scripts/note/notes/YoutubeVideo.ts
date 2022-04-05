@@ -6,9 +6,19 @@ import {NoteType} from "../NoteType.js";
 export class YoutubeVideo extends Note {
     id: string;
 
-    constructor(buffer: ByteBuffer) {
+    constructor(buffer: ByteBuffer | string) {
         super(buffer)
-        this.id = buffer.readString8();
+        if (buffer instanceof ByteBuffer) {
+            this.id = buffer.readString8();
+        } else {
+            if (buffer.startsWith("https://youtu.be/")) {
+                this.id = buffer.substring(17, 11);
+            } else if (buffer.startsWith("https://www.youtube.com/watch?v=")) {
+                this.id = buffer.substring(32, 11);
+            } else {
+                throw new Error("url is not a valid youtube video url");
+            }
+        }
     }
     
     getEditor(data: Data<Note>): HTMLElement {
@@ -29,10 +39,6 @@ export class YoutubeVideo extends Note {
         super.serialize(buffer);
         buffer.writeString8(this.id);
     }
-}
-
-export function isYoutubeVideo(url: string) {
-    return url.startsWith("https://www.youtube.com") || url.startsWith("https://youtu.be/")
 }
 
 class YoutubeVideoEditor {

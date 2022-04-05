@@ -9,9 +9,9 @@ export class NewModal {
     constructor(
         element: HTMLElement, 
         openElement: HTMLElement, 
-        onSubmit: () => Promise<boolean>, 
-        onSubmitUrl: (url: string) => Promise<boolean>, 
-        onSubmitFile: (file: File) => Promise<boolean>) {
+        onSubmit: () => Promise<void>, 
+        onSubmitUrl: (url: string) => Promise<void>, 
+        onSubmitFile: (file: File) => Promise<void>) {
         this.element = element;
         
         // external openElement
@@ -37,9 +37,21 @@ export class NewModal {
         this.form = new Form(
             async (url: string) => {
                 if (url !== "") {
-                    if (await onSubmitUrl(url)) { this.closeModal(); }
+                    try {
+                        await onSubmitUrl(url);
+                    } catch (e) {
+                        alert(e);
+                        return;
+                    }
+                    this.closeModal();
                 } else {
-                    if (await onSubmit()) { this.closeModal(); }
+                    try {
+                        await onSubmit();
+                    } catch (e) {
+                        alert(e);
+                        return;
+                    }
+                    this.closeModal();
                 }
             });
         this.element.append(this.form.element);
@@ -49,9 +61,25 @@ export class NewModal {
             this.element,
             () => this.openModal(),
             () => this.closeModal(),
-            async (url: string) => { if (await onSubmitUrl(url)) { this.closeModal(); } }, 
-            async (file: File) => { if (await onSubmitFile(file)) { this.closeModal(); } });
-        
+            async (url: string) => { 
+                try {
+                    await onSubmitUrl(url);
+                } catch (e) {
+                    alert(e);
+                    return;
+                }
+                this.closeModal();
+            },
+            async (file: File) => {
+                try {
+                    await onSubmitFile(file)
+                } catch (e) {
+                    alert(e);
+                    return;     
+                }
+                this.closeModal();
+            }
+        );
         // kb shortcut
         document.addEventListener("keypress", (e) => {
           if (e.code === "Slash" && this.openModal()) {

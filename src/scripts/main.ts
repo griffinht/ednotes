@@ -4,6 +4,8 @@ import { Notes } from "./Notes.js";
 
 
 
+
+import { YoutubeVideo } from "./note/notes/YoutubeVideo.js"
 import {TextNote} from "./note/notes/TextNote.js";
 
 const database = await loadDatabase();
@@ -18,12 +20,11 @@ const modal = new NewModal(
     document.getElementById("newModalOpenButton")!,
     async () => {
         notes.add(new TextNote());
-        return true;
     },
     async (url: string) => {
-        return true;
+        notes.add(new YoutubeVideo(url));
     },
     async (file: File) => {
-        return true;
+        
     });
 
