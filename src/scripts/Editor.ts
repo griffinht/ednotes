@@ -23,9 +23,11 @@ export class Editor {
             this.close();
         }
         this.element.style.display = "flex";
-        this.note = note.data.getEditor(note);
         this.header.title.update(note.data.title);
+        this.note = note.data.getEditor(note);
         this.element.append(this.note);
+        this.note.classList.add("note");
+        this.note.focus();
     }
     
     close() {

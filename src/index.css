@@ -69,11 +69,10 @@ input[type=file]:focus + label {
 .editor {
     display: none;
     flex-direction: column;
+    justify-content: stretch;
+    flex: 1;
 }
-.editor > section {
-    display: flex;
-}
-.editor > section > div {
-    height: auto;
+.editor > .note {
+    flex: 1;
 }
 
