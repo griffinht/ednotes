@@ -68,6 +68,7 @@ input[type=file]:focus + label {
 /* editor */
 .editor {
     display: none;
+    flex-direction: column;
 }
 .editor > section {
     display: flex;
@@ -75,8 +76,4 @@ input[type=file]:focus + label {
 .editor > section > div {
     height: auto;
 }
-.editor > header {
-    justify-content: flex-end;
-}
-
 

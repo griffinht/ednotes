@@ -1,5 +1,6 @@
 import ByteBuffer from "../common/ByteBuffer.js";
 import {NoteType} from "./NoteType.js";
+import Data from "../common/Data.js";
 
 export abstract class Note {
     created: Date;
@@ -16,6 +17,8 @@ export abstract class Note {
     }
     
     abstract getType(): NoteType;
+    
+    abstract getEditor(data: Data<Note>): HTMLElement;
     
     serialize(buffer: ByteBuffer) {
         buffer.writeUint8(this.getType());

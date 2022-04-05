@@ -1,8 +1,9 @@
 import {Note} from "./note/Note.js";
+import Data from "./common/Data.js";
 
 export class Editor {
     element: HTMLElement;
-    note: Note | null = null;
+    note: HTMLElement | null = null;
     header: Header;
     
     constructor(element: HTMLElement, onClose: () => void) {
@@ -17,14 +18,14 @@ export class Editor {
         });
     }
     
-    open(note: Note) {
+    open(note: Data<Note>) {
         if (this.note !== null) {
             this.close();
         }
         this.element.style.display = "flex";
-        this.note = note;
-        this.header.title.update(note.title);
-        console.log("open note " + note);
+        this.note = note.data.getEditor(note);
+        this.header.title.update(note.data.title);
+        this.element.append(this.note);
     }
     
     close() {
@@ -32,6 +33,7 @@ export class Editor {
             return;
         }
         this.element.style.display = "none";
+        this.note.remove();
         this.note = null;
     }
 }

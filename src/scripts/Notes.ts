@@ -48,11 +48,11 @@ export class Notes {
             () => this.database.removeNote(id));
         await note.update();
         this.browser.add(note);
-        this.editor.open(note.data); 
+        this.open(note); 
     }
     
     open(note: Data<Note>) {
-        this.editor.open(note.data);
+        this.editor.open(note);
         this.browser.close();
         this.header.style.display = "none";
     }
