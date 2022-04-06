@@ -6,25 +6,37 @@ import Data from "./common/Data.js";
  */
 export default class Thumbnail {
     element: HTMLElement;
+    data: Data<Note>;
+    thumbnail: HTMLElement;
     
     constructor(
-        note: Data<Note>,
+        data: Data<Note>,
         openNote: () => void) {
+        this.data = data;
         this.element = document.createElement("button");
         this.element.classList.add("card");
         this.element.tabIndex = 0;
         this.element.title = "Open (Enter)";
         this.element.addEventListener("click", openNote);
         
-        let thumbnail = note.data.getThumbnail();
-        thumbnail.tabIndex = -1;
-        thumbnail.classList.add("thumbnail");
-        this.element.append(thumbnail);
+        this.thumbnail = thumbnailThumbnail(this.data.data);
+        this.element.append(this.thumbnail);
 
-        this.element.append(new TitleContainer(note, this).element);
+        this.element.append(new TitleContainer(this.data, this).element);
     }
-    
-    
+
+    update() {
+        let thumbnail = thumbnailThumbnail(this.data.data);
+        this.element.replaceChild(thumbnail, this.thumbnail);
+        this.thumbnail = thumbnail;
+    }
+}
+
+function thumbnailThumbnail(note: Note): HTMLElement {
+    let element = note.getThumbnail();
+    element.tabIndex = -1;
+    element.classList.add("thumbnail");
+    return element;
 }
 
 class TitleContainer {
