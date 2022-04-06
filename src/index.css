@@ -52,6 +52,9 @@ input[type=file]:focus + label {
     font-size: unset;
     color: var(--neutral-foreground);
 }
+.browser > button > .thumbnail {
+    flex: 1;
+}
 .browser > button > div {
     display: flex;
     color: var(--primary-foreground);

@@ -29,6 +29,7 @@ export class TextNote extends Note {
         element.readOnly = true;
         element.style.resize = "none";
         element.style.border = "none";
+        element.style.overflow = "hidden";
         return element;
     }
     
