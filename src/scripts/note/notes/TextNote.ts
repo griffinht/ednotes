@@ -23,6 +23,10 @@ export class TextNote extends Note {
         return new TextNoteEditor(this, note).element;
     }
     
+    getThumbnail() {
+        return null;
+    }
+    
     serialize(buffer: ByteBuffer) {
         super.serialize(buffer);
         buffer.writeString16(this.text);

@@ -5,7 +5,7 @@ import { Notes } from "./Notes.js";
 
 
 
-import { YoutubeVideo } from "./note/notes/YoutubeVideo.js"
+import { Video } from "./note/notes/Video.js"
 import {TextNote} from "./note/notes/TextNote.js";
 
 const database = await loadDatabase();
@@ -22,7 +22,7 @@ const modal = new NewModal(
         notes.add(new TextNote());
     },
     async (url: string) => {
-        notes.add(new YoutubeVideo(url));
+        notes.add(new Video(url));
     },
     async (file: File) => {
         

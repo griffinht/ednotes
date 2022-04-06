@@ -1,19 +1,19 @@
 import ByteBuffer from "../common/ByteBuffer.js";
 import {Note} from "./Note.js";
 import {TextNote} from "./notes/TextNote.js";
-import {YoutubeVideo} from "./notes/YoutubeVideo.js";
+import {Video} from "./notes/Video.js";
 
 export enum NoteType {
     TEXT,
-    YOUTUBE_VIDEO,
+    VIDEO,
 }
 
 export function deserialize(buffer: ByteBuffer): Note {
     switch (buffer.readUint8()) {
         case NoteType.TEXT:
-            return new TextNote(buffer)
-        case NoteType.YOUTUBE_VIDEO:
-            return new YoutubeVideo(buffer);
+            return new TextNote(buffer);
+        case NoteType.VIDEO:
+            return new Video(buffer);
         default:
             throw new Error("unknown note type");
     }

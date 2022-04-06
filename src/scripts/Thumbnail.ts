@@ -16,7 +16,11 @@ export default class Thumbnail {
         this.element.title = "Open (Enter)";
         this.element.addEventListener("click", openNote);
         
-        //this.element.append(this.getThumbnail());
+        let thumb = note.data.getThumbnail();
+        if (thumb !== null) {
+            this.element.append(thumb);
+        }
+
         this.element.append(new TitleContainer(note, this).element);
         this.element.append(new Description(note).element);
     }

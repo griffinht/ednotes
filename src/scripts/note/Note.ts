@@ -20,6 +20,8 @@ export abstract class Note {
     
     abstract getEditor(data: Data<Note>): HTMLElement;
     
+    abstract getThumbnail(): HTMLElement | null;
+    
     serialize(buffer: ByteBuffer) {
         buffer.writeUint8(this.getType());
         buffer.writeUint32(this.created.getTime());
