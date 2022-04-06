@@ -32,7 +32,13 @@ class IndexedDatabase implements Database {
                     return;
                 }
                 if (cursor.primaryKey && cursor.value) {
-                    map.set(cursor.primaryKey, deserialize(new ByteBuffer(cursor.value)));
+                    let note;
+                    try {
+                        note = deserialize(new ByteBuffer(cursor.value));
+                    } catch (e) {
+                        reject(e);
+                    }
+                    map.set(cursor.primaryKey, note);
                 }
                 cursor.continue();
             });

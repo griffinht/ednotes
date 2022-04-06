@@ -31,8 +31,8 @@ export class Notes {
                         () => this.database.removeNote(id)));
                 }
             })
-            .catch(() => {
-                alert("failed to load notes from db");
+            .catch((e) => {
+                alert("Error getting notes from database:\n" + e);
             });
     }
     

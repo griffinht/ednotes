@@ -7,15 +7,42 @@ import {NoteType} from "../NoteType.js";
 https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm
 */
 
+class VideoNote {
+    time: number
+    contents: string
+    
+    constructor(buffer: ByteBuffer | number) {
+        if (buffer instanceof ByteBuffer) {
+            this.time = buffer.readUint32();
+            this.contents = buffer.readString16();
+        } else {
+            this.time = buffer;
+            this.contents = "";
+        }
+    }
+    
+    serialize(buffer: ByteBuffer) {
+        buffer.writeUint32(this.time);
+        buffer.writeString16(this.contents);
+    }
+}
+
 export class Video extends Note {
     src: string;
+    videoNotes: VideoNote[];
 
     constructor(buffer: ByteBuffer | string) {
         super(buffer)
         if (buffer instanceof ByteBuffer) {
             this.src = buffer.readString8();
+            this.videoNotes = [];
+            let length = buffer.readUint8();
+            for (let i = 0; i < length; i++) {
+                this.videoNotes.push(new VideoNote(buffer));
+            }
         } else {
             this.src = buffer;
+            this.videoNotes = [];
         }
     }
     
@@ -36,6 +63,10 @@ export class Video extends Note {
     serialize(buffer: ByteBuffer) {
         super.serialize(buffer);
         buffer.writeString8(this.src);
+        buffer.writeUint8(this.videoNotes.length);
+        for (let videoNote of this.videoNotes) {
+            videoNote.serialize(buffer);
+        }
     }
 }
 
