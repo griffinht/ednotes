@@ -16,13 +16,9 @@ export default class Thumbnail {
         this.element.title = "Open (Enter)";
         this.element.addEventListener("click", openNote);
         
-        let thumb = note.data.getThumbnail();
-        if (thumb !== null) {
-            this.element.append(thumb);
-        }
+        this.element.append(note.data.getThumbnail());
 
         this.element.append(new TitleContainer(note, this).element);
-        this.element.append(new Description(note).element);
     }
     
     
@@ -149,15 +145,5 @@ class DeleteButton {
             return;
         }
         this.thumbnail.element.remove();
-    }
-}
-class Description {
-    element: HTMLElement;
-    note: Data<Note>;
-    
-    constructor(note: Data<Note>) {
-        this.note = note;
-        this.element = document.createElement("p");
-        this.element.innerText = "a new note";
     }
 }

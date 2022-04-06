@@ -24,7 +24,12 @@ export class TextNote extends Note {
     }
     
     getThumbnail() {
-        return null;
+        let element = document.createElement("textarea") as HTMLTextAreaElement;
+        element.value = this.text;
+        element.readOnly = true;
+        element.style.resize = "none";
+        element.style.border = "none";
+        return element;
     }
     
     serialize(buffer: ByteBuffer) {

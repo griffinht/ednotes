@@ -43,8 +43,8 @@ input[type=file]:focus + label {
 .browser > button {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+    align-items: stretch;
+    justify-content: space-between;
     background-color: var(--neutral-background);
     border: unset;
     padding: unset;
@@ -52,16 +52,12 @@ input[type=file]:focus + label {
     font-size: unset;
     color: var(--neutral-foreground);
 }
-.browser > button > video {
-    width: 100%;
-    height: auto;
-}
 .browser > button > div {
     display: flex;
     color: var(--primary-foreground);
     background-color: var(--primary);
     justify-content: space-between;
-    width: 100%;
+    align-self: right;
 }
 .browser > button > div > div {
     display: flex;
