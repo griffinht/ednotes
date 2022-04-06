@@ -24,12 +24,10 @@ export class TextNote extends Note {
     }
     
     getThumbnail() {
-        let element = document.createElement("textarea") as HTMLTextAreaElement;
-        element.value = this.text;
-        element.readOnly = true;
-        element.style.resize = "none";
-        element.style.border = "none";
+        let element = document.createElement("pre") as HTMLElement;
+        element.innerText = this.text;
         element.style.overflow = "hidden";
+        element.style.textAlign = "left";
         return element;
     }
     
