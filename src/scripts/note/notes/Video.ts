@@ -4,7 +4,9 @@ import ByteBuffer from "../../common/ByteBuffer.js";
 import {NoteType} from "../NoteType.js";
 
 /*
+
 https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm
+
 */
 
 class VideoNote {
@@ -76,7 +78,37 @@ class Editor {
     constructor(video: Video, data: Data<Note>) {
         this.element = document.createElement("div");
         let player = new Player(video.src);
-        this.element.append(player.element);    
+        this.element.append(player.element);
+        let videoNotes = new VideoNotes(video, data);  
+        player.element.addEventListener("timeupdate", (e) => {
+            videoNotes.update(e.timeStamp);
+        });
+    }
+}
+
+class VideoNotes {
+    element: HTMLElement;
+    data: Data<Note>;
+    video: Video;
+    
+    constructor(video: Video, data: Data<Note>) {
+        this.data = data;
+        this.video = video;
+        this.element = document.createElement("div");
+        
+    }
+    
+    update(time: number) {
+        let videoNote = null;
+        for (let i = this.video.videoNotes.length - 1; i >= 0; i--) {
+            if (this.video.videoNotes[i].time < time) {
+                videoNote = this.video.videoNotes[i];
+            }
+        }
+        if (videoNote === null) {
+            return;
+        }
+        console.log(videoNote);
     }
 }
 
@@ -86,5 +118,6 @@ class Player {
     constructor(src: string) {
         this.element = document.createElement("video") as HTMLVideoElement;
         this.element.src = src;
+        this.element.controls = true;
     }
 }
