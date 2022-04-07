@@ -78,20 +78,22 @@ input[type=file]:focus + label {
 
 .videoEditor {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(50em, 1fr));
+    grid-template-columns: [video] minmax(0, 1fr) [textarea] 50em;
 }
 .videoEditor > textarea {
     resize: none;
+    grid-area: textarea;
+    grid-column-start: 
 }
 .videoEditor > div {
     display: flex;
+    grid-area: video;
     flex-direction: column;
 }
 .timeline {
     display: flex;
 }
 .timeline > div {
-    flex: 1;
     display: flex;
     overflow-x: scroll;
 }
