@@ -7,3 +7,4 @@
 - export
 - import
 - server backend/accounts/store/sync
+- you have unsaved changes prompt/save when that happens
