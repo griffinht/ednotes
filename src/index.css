@@ -77,19 +77,21 @@ input[type=file]:focus + label {
 }
 
 .videoEditor {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 50em;
-    grid-template-rows: repeat(auto);
+    display: flex;
+    flex-wrap: wrap;
 }
 .videoEditor > textarea {
     resize: none;
-    grid-column: 2;
+    flex: 1;
+    min-width: 20em;
 }
 .videoEditor > div {
     display: flex;
-    grid-area: 1;
     flex-direction: column;
+    min-width: 75vw;
+    flex: 1;
 }
+
 .timeline {
     display: flex;
 }
