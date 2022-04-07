@@ -114,6 +114,10 @@ class Editor {
     open(videoNote: VideoNote) {
         this.editorEditor.open(videoNote);
     }
+    
+    close() {
+        this.editorEditor.save();
+    }
 }
 
 class EditorEditor {
@@ -124,17 +128,19 @@ class EditorEditor {
     constructor(data: Data<Note>) {
         this.data = data;
         this.element = document.createElement("textarea") as HTMLTextAreaElement;
-        this.element.addEventListener("change", () => {
-            if (this.videoNote === null) { return; }
-            
-            this.videoNote.contents = this.element.value;
-            this.data.update();
-        });
+        this.element.addEventListener("change", () => this.save());
     }
     
     open(videoNote: VideoNote) {
         this.videoNote = videoNote;
         this.element.value = this.videoNote.contents;
+    }
+    
+    save() {
+        if (this.videoNote === null) { return; }
+            
+        this.videoNote.contents = this.element.value;
+        this.data.update();
     }
 }
 
