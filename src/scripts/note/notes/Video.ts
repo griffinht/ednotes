@@ -74,6 +74,7 @@ export class Video extends Note {
 
 class Editor {
     element: HTMLElement;
+    editorEditor: EditorEditor;
     
     constructor(video: Video, data: Data<Note>) {
         this.element = document.createElement("div");
@@ -96,23 +97,39 @@ class Editor {
             });
         container.append(timeline.element);  
         
-        let editorEditor = new EditorEditor(data);
-        this.element.append(editorEditor.element);
+        this.editorEditor = new EditorEditor(data);
+        this.element.append(this.editorEditor.element);
+        
         /*
         player.element.addEventListener("timeupdate", (e) => {
             videoNotes.update(e.timeStamp);
         });*/
     }
+    
+    open(videoNote: VideoNote) {
+        this.editorEditor.open(videoNote);
+    }
 }
 
 class EditorEditor {
-    element: HTMLElement;
+    element: HTMLTextAreaElement;
     videoNote: VideoNote | null = null;
     data: Data<Note>;
     
     constructor(data: Data<Note>) {
         this.data = data;
-        this.element = document.createElement("textarea");
+        this.element = document.createElement("textarea") as HTMLTextAreaElement;
+        this.element.addEventListener("update", () => {
+            if (this.videoNote === null) { return; }
+            
+            this.videoNote.contents = this.element.value;
+            this.data.update();
+        });
+    }
+    
+    open(videoNote: VideoNote) {
+        this.videoNote = videoNote;
+        this.element.value = this.videoNote.contents;
     }
 }
 
