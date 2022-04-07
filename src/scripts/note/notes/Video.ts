@@ -77,9 +77,13 @@ class Editor {
     
     constructor(video: Video, data: Data<Note>) {
         this.element = document.createElement("div");
+        this.element.classList.add("videoEditor");
+        let container = document.createElement("div");
+        this.element.append(container);
         let player = new Player(video.src);
-        this.element.append(player.element);
-        this.element.append(new Timeline(video, data, player).element);  
+        container.append(player.element);
+        container.append(new Timeline(video, data, player).element);  
+        this.element.append(document.createElement("textarea"));
         /*
         player.element.addEventListener("timeupdate", (e) => {
             videoNotes.update(e.timeStamp);

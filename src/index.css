@@ -76,3 +76,12 @@ input[type=file]:focus + label {
     flex: 1;
 }
 
+.videoEditor {
+    display: flex;
+}
+.timeline {
+    display: flex;
+}
+.timeline > div {
+
+}
