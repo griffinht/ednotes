@@ -89,22 +89,31 @@ class Editor {
 
 class Timeline {
     element: HTMLElement;
-    videoNotes: VideoNotes;
-    player: Player;
     
     constructor(video: Video, data: Data<Note>, player: Player) {
-        this.player = player;
         this.element = document.createElement("div");
         this.element.classList.add("timeline");
-        this.videoNotes = new VideoNotes();
-        this.element.append(this.videoNotes.element);
+        let videoNotes = new VideoNotes(video.videoNotes);
+        this.element.append(videoNotes.element);
         this.element.append(button(() => {
             let videoNote = new VideoNote(player.element.currentTime);
-            video.videoNotes.push(videoNote);
-            this.videoNotes.add(videoNote);
+            let index = getIndex(video.videoNotes, videoNote.currentTime);
+            video.videoNotes.splice(index, 0, videoNote);
+            data.update();
+            videoNotes.add(videoNote, index);
             console.log("add to timeline", this);
         }));
     }
+}
+
+function getIndex(videoNotes: VideoNote[], currentTime: number): number {
+    for (let i = 0; i < videoNotes.length; i++) {
+        console.log(currentTime, videoNotes[i].currentTime);
+        if (currentTime < videoNotes[i].currentTime) {
+            return i;
+        }
+    }
+    return videoNotes.length;
 }
 
 function button(onClick: () => void): HTMLElement {
@@ -118,26 +127,22 @@ function button(onClick: () => void): HTMLElement {
 class VideoNotes {
     element: HTMLElement;
     
-    constructor() {
+    constructor(videoNotes: VideoNote[]) {
         this.element = document.createElement("div");
+        for (let videoNote of videoNotes) {
+            this.add(videoNote);
+        }
     }
     
-    add(videoNote: VideoNote) {
-        this.element.append(thumbnail(videoNote));
+    add(videoNote: VideoNote, index?: number) {
+        let element = thumbnail(videoNote);
+        if (index !== undefined) {
+            console.log(index);
+            this.element.insertBefore(element, this.element.children.item(index));
+        } else {
+            this.element.append(element);
+        }
     }
-
-    /*
-        let videoNote = null;
-        for (let i = this.video.videoNotes.length - 1; i >= 0; i--) {
-            if (this.video.videoNotes[i].time < time) {
-                videoNote = this.video.videoNotes[i];
-            }
-        }
-        if (videoNote === null) {
-            return;
-        }
-        console.log(videoNote);*/
-
 }
 
 function thumbnail(videoNote: VideoNote): HTMLElement {
