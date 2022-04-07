@@ -101,10 +101,14 @@ class Editor {
         this.editorEditor = new EditorEditor(data);
         this.element.append(this.editorEditor.element);
         
-        /*
+        
         player.element.addEventListener("timeupdate", (e) => {
-            videoNotes.update(e.timeStamp);
-        });*/
+            let index = getIndex(video.videoNotes, player.element.currentTime);
+            if (video.videoNotes[index] === this.editorEditor.videoNote) {
+                return;
+            }
+            this.open(video.videoNotes[index]);
+        });
     }
     
     open(videoNote: VideoNote) {
