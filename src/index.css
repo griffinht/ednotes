@@ -80,7 +80,7 @@ input[type=file]:focus + label {
     display: flex;
     flex-wrap: wrap;
 }
-.videoEditor > textarea {
+.videoEditor > .veditor {
     resize: none;
     flex: 1;
     min-width: 20em;

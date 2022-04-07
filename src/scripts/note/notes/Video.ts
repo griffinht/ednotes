@@ -80,11 +80,12 @@ class Editor {
         this.element = document.createElement("div");
         this.element.classList.add("videoEditor");
         
-        let container = document.createElement("div");
-        this.element.append(container);
+        let wrapper = document.createElement("div");
+        wrapper.classList.add("wrapper");
+        this.element.append(wrapper);
         
         let player = new Player(video.src);
-        container.append(player.element);
+        wrapper.append(player.element);
         
         let timeline = new Timeline(
             video.videoNotes, 
@@ -96,7 +97,7 @@ class Editor {
                 return [ videoNote, index ];
             },
             this);
-        container.append(timeline.element);  
+        wrapper.append(timeline.element);  
         
         this.editorEditor = new EditorEditor(data);
         this.element.append(this.editorEditor.element);
@@ -124,6 +125,7 @@ class EditorEditor {
     constructor(data: Data<Note>) {
         this.data = data;
         this.element = document.createElement("textarea") as HTMLTextAreaElement;
+        this.element.classList.add("veditor");
         this.element.addEventListener("change", () => this.save());
     }
     
