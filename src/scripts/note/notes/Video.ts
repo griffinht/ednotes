@@ -104,7 +104,7 @@ class Editor {
         
         player.element.addEventListener("timeupdate", (e) => {
             let index = getIndex(video.videoNotes, player.element.currentTime);
-            if (video.videoNotes[index] === this.editorEditor.videoNote) {
+            if (index >= video.videoNotes.length || video.videoNotes[index] === this.editorEditor.videoNote) {
                 return;
             }
             this.open(video.videoNotes[index]);
@@ -113,10 +113,6 @@ class Editor {
     
     open(videoNote: VideoNote) {
         this.editorEditor.open(videoNote);
-    }
-    
-    close() {
-        this.editorEditor.save();
     }
 }
 
@@ -132,13 +128,15 @@ class EditorEditor {
     }
     
     open(videoNote: VideoNote) {
+        this.save();
         this.videoNote = videoNote;
         this.element.value = this.videoNote.contents;
     }
     
     save() {
         if (this.videoNote === null) { return; }
-            
+        if (this.videoNote.contents === this.element.value) { return; }
+ 
         this.videoNote.contents = this.element.value;
         this.data.update();
     }
@@ -164,7 +162,6 @@ class Timeline {
 
 function getIndex(videoNotes: VideoNote[], currentTime: number): number {
     for (let i = 0; i < videoNotes.length; i++) {
-        console.log(currentTime, videoNotes[i].currentTime);
         if (currentTime < videoNotes[i].currentTime) {
             return i;
         }
