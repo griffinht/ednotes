@@ -78,12 +78,26 @@ class Editor {
     constructor(video: Video, data: Data<Note>) {
         this.element = document.createElement("div");
         this.element.classList.add("videoEditor");
+        
         let container = document.createElement("div");
         this.element.append(container);
+        
         let player = new Player(video.src);
         container.append(player.element);
-        container.append(new Timeline(video, data, player).element);  
-        this.element.append(document.createElement("textarea"));
+        
+        let timeline = new Timeline(
+            video.videoNotes, 
+            () => {
+                let videoNote = new VideoNote(player.element.currentTime);
+                let index = getIndex(video.videoNotes, videoNote.currentTime);
+                video.videoNotes.splice(index, 0, videoNote);
+                data.update();
+                return [ videoNote, index ];
+            });
+        container.append(timeline.element);  
+        
+        let editorEditor = new EditorEditor(data);
+        this.element.append(editorEditor.element);
         /*
         player.element.addEventListener("timeupdate", (e) => {
             videoNotes.update(e.timeStamp);
@@ -91,21 +105,28 @@ class Editor {
     }
 }
 
+class EditorEditor {
+    element: HTMLElement;
+    videoNote: VideoNote | null = null;
+    data: Data<Note>;
+    
+    constructor(data: Data<Note>) {
+        this.data = data;
+        this.element = document.createElement("textarea");
+    }
+}
+
 class Timeline {
     element: HTMLElement;
     
-    constructor(video: Video, data: Data<Note>, player: Player) {
+    constructor(videoNoteArray: VideoNote[], add: () => [ VideoNote, number ]) {
         this.element = document.createElement("div");
         this.element.classList.add("timeline");
-        let videoNotes = new VideoNotes(video.videoNotes);
+        let videoNotes = new VideoNotes(videoNoteArray);
         this.element.append(videoNotes.element);
         this.element.append(button(() => {
-            let videoNote = new VideoNote(player.element.currentTime);
-            let index = getIndex(video.videoNotes, videoNote.currentTime);
-            video.videoNotes.splice(index, 0, videoNote);
-            data.update();
-            videoNotes.add(videoNote, index);
-            console.log("add to timeline", this);
+            let result = add();
+            videoNotes.add(result[0], result[1]);
         }));
     }
 }
