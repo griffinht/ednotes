@@ -118,6 +118,38 @@ class Editor {
 }
 
 class EditorEditor {
+    element: HTMLElement;
+    textEditor: TextEditor;
+    vTitle: VTitle = new VTitle();
+    videoNote: VideoNote | null = null;
+    
+    constructor(data: Data<Note>) {
+        this.element = document.createElement("div");
+        this.element.classList.add("veditor");
+        
+        this.element.append(this.vTitle.element);
+        
+        this.textEditor = new TextEditor(data);
+        this.element.append(this.textEditor.element);
+    }
+    
+    open(videoNote: VideoNote) {
+        this.vTitle.update(videoNote.currentTime);
+        this.textEditor.open(videoNote);
+    }
+}
+class VTitle {
+    element: HTMLElement;
+    
+    constructor() {
+        this.element = document.createElement("h2");
+    }
+    
+    update(currentTime: number) {
+        this.element.innerText = "" + currentTime;
+    }
+}
+class TextEditor {
     element: HTMLTextAreaElement;
     videoNote: VideoNote | null = null;
     data: Data<Note>;
@@ -125,7 +157,6 @@ class EditorEditor {
     constructor(data: Data<Note>) {
         this.data = data;
         this.element = document.createElement("textarea") as HTMLTextAreaElement;
-        this.element.classList.add("veditor");
         this.element.addEventListener("change", () => this.save());
     }
     
