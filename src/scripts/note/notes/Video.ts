@@ -94,7 +94,8 @@ class Editor {
                 video.videoNotes.splice(index, 0, videoNote);
                 data.update();
                 return [ videoNote, index ];
-            });
+            },
+            this);
         container.append(timeline.element);  
         
         this.editorEditor = new EditorEditor(data);
@@ -119,7 +120,7 @@ class EditorEditor {
     constructor(data: Data<Note>) {
         this.data = data;
         this.element = document.createElement("textarea") as HTMLTextAreaElement;
-        this.element.addEventListener("update", () => {
+        this.element.addEventListener("change", () => {
             if (this.videoNote === null) { return; }
             
             this.videoNote.contents = this.element.value;
@@ -136,10 +137,13 @@ class EditorEditor {
 class Timeline {
     element: HTMLElement;
     
-    constructor(videoNoteArray: VideoNote[], add: () => [ VideoNote, number ]) {
+    constructor(
+        videoNoteArray: VideoNote[],
+        add: () => [ VideoNote, number ],
+        editor: Editor) {
         this.element = document.createElement("div");
         this.element.classList.add("timeline");
-        let videoNotes = new VideoNotes(videoNoteArray);
+        let videoNotes = new VideoNotes(videoNoteArray, editor);
         this.element.append(videoNotes.element);
         this.element.append(button(() => {
             let result = add();
@@ -168,8 +172,10 @@ function button(onClick: () => void): HTMLElement {
 
 class VideoNotes {
     element: HTMLElement;
+    editor: Editor;
     
-    constructor(videoNotes: VideoNote[]) {
+    constructor(videoNotes: VideoNote[], editor: Editor) {
+        this.editor = editor;
         this.element = document.createElement("div");
         for (let videoNote of videoNotes) {
             this.add(videoNote);
@@ -177,7 +183,9 @@ class VideoNotes {
     }
     
     add(videoNote: VideoNote, index?: number) {
-        let element = thumbnail(videoNote);
+        let element = thumbnail(videoNote, () => {
+                this.editor.open(videoNote);
+            });
         if (index !== undefined) {
             console.log(index);
             this.element.insertBefore(element, this.element.children.item(index));
@@ -187,9 +195,10 @@ class VideoNotes {
     }
 }
 
-function thumbnail(videoNote: VideoNote): HTMLElement {
+function thumbnail(videoNote: VideoNote, onClick: () => void): HTMLElement {
     let element = document.createElement("div");
     element.append(title(videoNote.currentTime));
+    element.addEventListener("click", onClick);
     return element;
 }
 
