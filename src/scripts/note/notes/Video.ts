@@ -146,7 +146,7 @@ class VTitle {
     }
     
     update(currentTime: number) {
-        this.element.innerText = "" + currentTime;
+        this.element.innerText = "" + Math.round(currentTime * 10) / 10;
     }
 }
 class TextEditor {
@@ -256,9 +256,9 @@ function thumbnail(videoNote: VideoNote, onClick: () => void): HTMLElement {
     return element;
 }
 
-function title(currenttime: number): HTMLElement {
+function title(currentTime: number): HTMLElement {
     let element = document.createElement("h2");
-    element.innerText = "" + currenttime;
+    element.innerText = "" + Math.round(currentTime * 10) / 10;
     return element;
 }
 
