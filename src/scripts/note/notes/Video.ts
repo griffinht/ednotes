@@ -96,6 +96,7 @@ class Editor {
                 let index = getIndex(video.videoNotes, videoNote.currentTime);
                 video.videoNotes.splice(index, 0, videoNote);
                 data.update();
+                this.open(videoNote);
                 return [ videoNote, index ];
             },
             this);
