@@ -217,6 +217,7 @@ class VideoNotes {
     constructor(videoNotes: VideoNote[], editor: Editor) {
         this.editor = editor;
         this.element = document.createElement("div");
+        this.element.classList.add("thumbnails");
         for (let videoNote of videoNotes) {
             this.add(videoNote);
         }
@@ -233,10 +234,23 @@ class VideoNotes {
             this.element.append(element);
         }
     }
+    
+    open(index: number) {
+        let element = this.element.children.item(index)
+        if (element === null) { return; }
+        element.classList.add("active");
+    }
+    
+    close(index: number) {
+        let element = this.element.children.item(index)
+        if (element === null) { return; }
+        element.classList.remove("active");
+    }
 }
 
 function thumbnail(videoNote: VideoNote, onClick: () => void): HTMLElement {
     let element = document.createElement("div");
+    element.classList.add("thumbnailz");
     element.append(title(videoNote.currentTime));
     element.addEventListener("click", onClick);
     return element;
