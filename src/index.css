@@ -105,6 +105,12 @@ input[type=file]:focus + label {
 .videoEditor > .wrapper > .timelineContainer > .timeline {
     width: 100%;
 }
-.videoEditor > .wrapper > .timelineContainer > .timeline > .videoThumbnail.active {
-    background-color: var(--primary)
+.iconnnnn {
+    font-size: 1em;
+    border: none;
+    color: var(--primary-foreground);
+    background-color: var(--primary);
+}
+.iconnnnn:hover {
+    background-color: var(--primary-highlight);
 }

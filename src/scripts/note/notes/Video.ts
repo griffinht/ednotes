@@ -271,6 +271,7 @@ function thumbnail(videoNote: VideoNote, onClick: () => void): HTMLElement {
     element.classList.add("videoThumbnail");
     element.append(title(videoNote.currentTime));
     element.addEventListener("click", onClick);
+    element.classList.add("iconnnnn");
     return element;
 }
 
