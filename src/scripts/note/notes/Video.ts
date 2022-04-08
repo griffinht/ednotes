@@ -113,6 +113,9 @@ class Editor {
             }
             this.open(video.videoNotes[index]);
         });
+        if (video.videoNotes.length > 0) {
+            this.open(video.videoNotes[0], true)
+        }
     }
     
     open(videoNote: VideoNote, pause?: boolean) {
