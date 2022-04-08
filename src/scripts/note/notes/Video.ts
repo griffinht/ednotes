@@ -87,7 +87,7 @@ class Editor {
         let player = new Player(video.src);
         wrapper.append(player.element);
         
-        let timeline = new Timeline(
+        let timelineContainer = new TimelineContainer(
             video.videoNotes, 
             () => {
                 let videoNote = new VideoNote(player.element.currentTime);
@@ -97,7 +97,7 @@ class Editor {
                 return [ videoNote, index ];
             },
             this);
-        wrapper.append(timeline.element);  
+        wrapper.append(timelineContainer.element);  
         
         this.editorEditor = new EditorEditor(data);
         this.element.append(this.editorEditor.element);
@@ -175,7 +175,7 @@ class TextEditor {
     }
 }
 
-class Timeline {
+class TimelineContainer {
     element: HTMLElement;
     
     constructor(
@@ -183,12 +183,12 @@ class Timeline {
         add: () => [ VideoNote, number ],
         editor: Editor) {
         this.element = document.createElement("div");
-        this.element.classList.add("timeline");
-        let videoNotes = new VideoNotes(videoNoteArray, editor);
-        this.element.append(videoNotes.element);
+        this.element.classList.add("timelineContainer");
+        let timeline = new Timeline(videoNoteArray, editor);
+        this.element.append(timeline.element);
         this.element.append(button(() => {
             let result = add();
-            videoNotes.add(result[0], result[1]);
+            timeline.add(result[0], result[1]);
         }));
     }
 }
@@ -210,14 +210,14 @@ function button(onClick: () => void): HTMLElement {
     return element;
 }
 
-class VideoNotes {
+class Timeline {
     element: HTMLElement;
     editor: Editor;
     
     constructor(videoNotes: VideoNote[], editor: Editor) {
         this.editor = editor;
         this.element = document.createElement("div");
-        this.element.classList.add("thumbnails");
+        this.element.classList.add("timeline");
         for (let videoNote of videoNotes) {
             this.add(videoNote);
         }
@@ -250,7 +250,7 @@ class VideoNotes {
 
 function thumbnail(videoNote: VideoNote, onClick: () => void): HTMLElement {
     let element = document.createElement("div");
-    element.classList.add("thumbnailz");
+    element.classList.add("videoThumbnail");
     element.append(title(videoNote.currentTime));
     element.addEventListener("click", onClick);
     return element;

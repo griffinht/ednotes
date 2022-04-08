@@ -95,13 +95,13 @@ input[type=file]:focus + label {
     flex: 1;
 }
 
-.videoEditor > .wrapper > .timeline {
+.videoEditor > .wrapper > .timelineContainer {
     display: flex;
 }
-.videoEditor > .wrapper > .timeline > div {
+.videoEditor > .wrapper > .timelineContainer > div {
     display: flex;
     overflow-x: scroll;
 }
-.videoEditor > .wrapper > .timeline > .thumbnails > .thumbnailz.active {
+.videoEditor > .wrapper > .timelineContainer > .timeline > .videoThumbnail.active {
     background-color: var(--primary)
 }
