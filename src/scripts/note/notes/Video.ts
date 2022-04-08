@@ -106,7 +106,7 @@ class Editor {
         
         
         player.element.addEventListener("timeupdate", (e) => {
-            let index = getIndex(video.videoNotes, player.element.currentTime);
+            let index = getIndex2(video.videoNotes, player.element.currentTime);
             if (index >= video.videoNotes.length || video.videoNotes[index] === this.editorEditor.videoNote) {
                 return;
             }
@@ -199,7 +199,16 @@ class TimelineContainer {
     }
 }
 
-function getIndex(videoNotes: VideoNote[], currentTime: number): number {
+function getIndex2(videoNotes: VideoNote[], currentTime: number, seek?: boolean): number {
+    for (let i = 0; i < videoNotes.length; i++) {
+        if (currentTime + 0.01 < videoNotes[i].currentTime) {
+            return Math.max(i - 1, 0);
+        }
+    }
+    return videoNotes.length - 1;
+}
+
+function getIndex(videoNotes: VideoNote[], currentTime: number, seek?: boolean): number {
     for (let i = 0; i < videoNotes.length; i++) {
         if (currentTime < videoNotes[i].currentTime) {
             return i;
