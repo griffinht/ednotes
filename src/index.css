@@ -102,6 +102,9 @@ input[type=file]:focus + label {
     display: flex;
     overflow-x: scroll;
 }
+.videoEditor > .wrapper > .timelineContainer > .timeline {
+    width: 100%;
+}
 .videoEditor > .wrapper > .timelineContainer > .timeline > .videoThumbnail.active {
     background-color: var(--primary)
 }
