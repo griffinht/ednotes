@@ -75,6 +75,7 @@ export class Video extends Note {
 class Editor {
     element: HTMLElement;
     editorEditor: EditorEditor;
+    player: Player;
     
     constructor(video: Video, data: Data<Note>) {
         this.element = document.createElement("div");
@@ -86,6 +87,7 @@ class Editor {
         
         let player = new Player(video.src);
         wrapper.append(player.element);
+        this.player = player;
         
         let timelineContainer = new TimelineContainer(
             video.videoNotes, 
@@ -112,7 +114,11 @@ class Editor {
         });
     }
     
-    open(videoNote: VideoNote) {
+    open(videoNote: VideoNote, pause?: boolean) {
+        if (pause) {
+            this.player.element.pause();
+            this.player.element.currentTime = videoNote.currentTime;
+        }
         this.editorEditor.open(videoNote);
     }
 }
@@ -225,10 +231,9 @@ class Timeline {
     
     add(videoNote: VideoNote, index?: number) {
         let element = thumbnail(videoNote, () => {
-                this.editor.open(videoNote);
+                this.editor.open(videoNote, true);
             });
         if (index !== undefined) {
-            console.log(index);
             this.element.insertBefore(element, this.element.children.item(index));
         } else {
             this.element.append(element);
