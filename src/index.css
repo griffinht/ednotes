@@ -81,9 +81,12 @@ input[type=file]:focus + label {
     flex-wrap: wrap;
 }
 .videoEditor > .veditor {
-    resize: none;
     flex: 1;
     min-width: 20em;
+}
+.videoEditor > .veditor > textarea {
+    resize: none;
+    height: 100%;
 }
 .videoEditor > div {
     display: flex;
