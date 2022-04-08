@@ -1,5 +1,5 @@
 :root {
-    --font: tahoma, serif;
+    --font: sans-serif;
     
     
     /* colors */    
@@ -20,7 +20,7 @@
 h1, h2, h3, h4, h5, h6, p {
   padding-left: 0.5em;
   padding-right: 0.5em;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: var(--font);
 }
 body {
     font-family: var(--font);
@@ -87,5 +87,9 @@ button.icon.danger:hover {
 }
 
 textarea {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: var(--font);
+}
+
+pre {
+    font-family: var(--font);
 }
