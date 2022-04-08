@@ -20,6 +20,7 @@
 h1, h2, h3, h4, h5, h6, p {
   padding-left: 0.5em;
   padding-right: 0.5em;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 body {
     font-family: var(--font);
@@ -83,4 +84,8 @@ button.icon.danger:hover {
 }
 .card:active {
     box-shadow: inherit;
+}
+
+textarea {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
