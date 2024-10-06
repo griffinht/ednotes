@@ -1,5 +1,25 @@
 # EdNotes
 
+
+EdNotes is digital note-taking app.
+
+EdNotes allows students to take notes synced with lecture video timestamps. When it is time for review, students can "play back" their notes while their lecture video plays. Students can always keep reviewing their notes
+
+• Simplified studying with automatic note “playback” that aligns with the lecture video for seamless review
+• Integrated video storage with annotations, eliminating the need to switch between third-party services like Google Drive.
+
+[Live Demo](https://ednotes.griffinht.com)
+
+I want to add some kind of AI feature
+
+ask chatgpt
+- what do i need to study for the test
+- make kani cards (those memory quizlet card things)
+- make a quizlet for my friends and I
+- what are the core themes of the lecture
+- what is the main idea of lecture 5
+
+
 ## Development
 
 ### Live
