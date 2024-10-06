@@ -1,8 +1,5 @@
 # EdNotes
 
-
-EdNotes is digital note-taking app.
-
 EdNotes allows students to take notes synced with lecture video timestamps. When it is time for review, students can "play back" their notes while their lecture video plays. Students can always keep reviewing their notes
 
 • Simplified studying with automatic note “playback” that aligns with the lecture video for seamless review
